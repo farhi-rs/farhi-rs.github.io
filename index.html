@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Farhi Registration System</title>
+  
+  <!-- HTML -->
+  
+</head>
+
+<body>
+  
+  <!-- Toolbar -->
+  <div id="toolbar">
+    
+    <script src="./lib/lottie-player.js"></script>
+    <lottie-player id="toolbaranim" src="./anim/book.json" background="transparent" speed="1" loop autoplay direction="1" mode="normal"></lottie-player>
+    
+    <div id="toolbartitle">Farhi registration system</div>
+    
+  </div>
+  
+  <!-- head -->
+  <div id="mainlayout">
+    <table id="datatable" dir="rtl">
+      <thead id="datatablehead">
+        <tr id="titlesbar">
+          <th class="tabletitleitem">إسم الزبون</th>
+          <th class="tabletitleitem">رقم التعريف الوطني</th>
+          <th class="tabletitleitem">رقم الهاتف</th>
+          <th class="tabletitleitem">تاريخ الميلاد</th>
+          <th class="tabletitleitem">مكان الميلاد</th>
+          <th class="tabletitleitem">مكان الإقامة</th>
+          <th class="tabletitleitem">تاريخ بداية التجديد</th>
+          <th class="tabletitleitem">تاريخ نهاية التجديد</th>
+          <th class="tabletitleitem">حالة التسجيل</th>
+          <th class="tabletitleitem">المعرف الفريد</th>
+        </tr>
+      </thead>
+      <tbody id="datatablebody">
+        <!-- here all the data items get generated automatically -->
+      </tbody>
+    </table>
+    
+    <div id="realfab" class="fab">
+      <span id="realfabicon" class="material-symbols-outlined fabicon">
+        person_add
+      </span>
+      <div id="realfabtext" class="fabtext">إضافة زبون جديد</div>
+    </div>
+    
+  </div>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="./styling/material-symbols.css" />
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Project -->
+  <script type="module" src="main.js"></script>
+</body>
+</html>

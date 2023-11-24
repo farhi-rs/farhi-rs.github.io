@@ -1,0 +1,176 @@
+@import url('./styling/pagefont.css');
+
+
+@keyframes fadeInAnimation {
+
+    from {
+        opacity: 0;
+        transform: scale(0, 0)
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1, 1);
+    }
+}
+
+@keyframes fadeOutAnimation {
+
+    from {
+        opacity: 1;
+        transform: scale(1, 1)
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0, 0);
+    }
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+#toolbar {
+  position: fixed;
+  z-index: 1;
+  width: 96%; /* 96 + 2 + 2 as paddings */
+  height: 70px;
+  
+  padding-left: 2%;
+  padding-right: 2%;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  
+  background-color: #2196f3;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+#toolbaranim {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 60px;
+  height: 60px;
+}
+
+#toolbartitle {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85em;
+}
+
+#mainlayout {
+  position: relative;
+  top: 70px;
+  width: fit-content;
+  height: calc(96% - 70px);
+  padding: 2%;
+}
+
+#datatable {
+  float: right;
+  border-spacing: 5px;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  margin: 0 auto;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+#datatablehead {
+  position: sticky;
+  top: 80px;
+  z-index: 1;
+}
+
+.tabletitleitem {
+  font-family: 'Alexandria', sans-serif;
+  font-size: 0.8em;
+  color: #2196f3;
+  border: 3px dashed #2196f3;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  text-align: right;
+  padding: 10px;
+}
+
+.tabletitleitem:hover {
+  color: white;
+  background: #2196f3;
+  transform: scale(1.03, 1.03);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.tabledataitem {
+  font-family: 'Alexandria', sans-serif;
+  font-size: 0.8em;
+  color: black;
+  border: 3px solid black;
+  border-radius: 5px;
+  text-align: right;
+  direction: rtl;
+  padding: 10px;
+}
+
+.tabledataitem:hover {
+  color: white;
+  border-radius: 5px;
+  background: black;
+  transform: scale(1.03, 1.03);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+.fab {
+  position: fixed;
+  right: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  top: calc(96% - 70px);
+  border-radius: 25px;
+  background: #2196f3;
+  width: fit-content;
+  height: 70px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+.fab:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.fabtext {
+  white-space: nowrap;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: white;
+  font-family: 'Alexandria', sans-serif;
+  font-size: 0.85em;
+}
+
+.fabicon {
+  color: white;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: white;
+}
