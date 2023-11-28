@@ -2,12 +2,10 @@
 
 
 @keyframes fadeInAnimation {
-
     from {
         opacity: 0;
-        transform: scale(0, 0)
+        transform: scale(0, 0);
     }
-
     to {
         opacity: 1;
         transform: scale(1, 1);
@@ -15,18 +13,42 @@
 }
 
 @keyframes fadeOutAnimation {
-
     from {
         opacity: 1;
-        transform: scale(1, 1)
+        transform: scale(1, 1);
     }
-
     to {
         opacity: 0;
         transform: scale(0, 0);
     }
 }
 
+
+@keyframes enablingActionButtonAnimation {
+    from {
+        opacity: 0.3
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes disablingActionButtonAnimation {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.3;
+    }
+}
+
+
+
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -38,11 +60,11 @@ body {
 #toolbar {
   position: fixed;
   z-index: 1;
-  width: 96%; /* 96 + 2 + 2 as paddings */
+  width: 97.5%; /* 97.5 + 2 + 0.5 as paddings */
   height: 70px;
   
   padding-left: 2%;
-  padding-right: 2%;
+  padding-right: 0.5%;
   
   display: flex;
   flex-direction: row;
@@ -62,21 +84,102 @@ body {
 }
 
 #toolbartitle {
+  white-space: nowrap;
   margin-top: auto;
   margin-bottom: auto;
   padding-left: 10px;
   padding-right: 10px;
   color: white;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Alexandria', sans-serif;
   font-size: 0.85em;
+}
+
+#toolbarspacer {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  width: 100%;
+  height: 100%;
+}
+
+#toolbarsearchbutton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 50px;
+  height: 50px;
+}
+
+#toolbarsearchbutton:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 100%;
+}
+
+#toolbarsearchicon {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.styledtext {
+  font-family: 'Alexandria', sans-serif;
+  font-size: 0.75em;
+  width: fit-content;
+  min-width: 150px;
+  text-align: right;
+  direction: rtl;
+  padding: 10px;
+}
+
+#toolbarsearchfield {
+  opacity: 0;
+  pointer-events: none;
+  display: grid;
+  direction: rtl;
+  border: 3px dashed white;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+#toolbarsearchhint {
+  grid-area: 1/1;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: auto;
+  margin-bottom: auto;
+  z-index: 0;
+}
+
+#toolbarsearchinput {
+  color: white;
+  grid-area: 1/1;
+  white-space: nowrap;
+  direction: rtl;
+  max-width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  border-color: transparent;
+  z-index: 1;
+}
+
+#toolbarsearchinput:focus {
+  outline: 0;
+  outline-color: transparent;
+  outline-style: none;
 }
 
 #mainlayout {
   position: relative;
   top: 70px;
+  width: -moz-fit-content;
   width: fit-content;
   height: calc(96% - 70px);
   padding: 2%;
+  padding-top: calc(2% + 50px);
 }
 
 #datatable {
@@ -93,6 +196,57 @@ body {
   position: sticky;
   top: 80px;
   z-index: 1;
+}
+
+#datatableheadlayerscontainer {
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+#toplayerofdatatablehead {
+  position: fixed;
+  width: 97.5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  transform: translateY(-100%);
+}
+
+#bottomlayerofdatatablehead {
+  
+}
+
+.actionbutton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background: #2196f3;
+  border-radius: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 50px;
+  height: 50px;
+}
+
+.actionbutton:hover {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+  background: #86C5F6;
+}
+
+.actionbuttonicon {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+#upbutton {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+#upbuttonicon {
+  
 }
 
 .tabletitleitem {
@@ -137,12 +291,12 @@ body {
 .fab {
   position: fixed;
   right: 15px;
+  bottom: 20px;
   padding-left: 10px;
   padding-right: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  top: calc(96% - 70px);
   border-radius: 25px;
   background: #2196f3;
   width: fit-content;
@@ -153,6 +307,7 @@ body {
 
 .fab:hover {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  background: #86C5F6;
 }
 
 .fabtext {
@@ -172,5 +327,6 @@ body {
   margin-bottom: auto;
   margin-left: 10px;
   margin-right: 10px;
-  color: white;
+  text-align: center;
+  justify-content: center;
 }

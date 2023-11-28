@@ -7,8 +7,6 @@
 
   <title>Farhi Registration System</title>
   
-  <!-- HTML -->
-  
 </head>
 
 <body>
@@ -19,7 +17,21 @@
     <script src="./lib/lottie-player.js"></script>
     <lottie-player id="toolbaranim" src="./anim/book.json" background="transparent" speed="1" loop autoplay direction="1" mode="normal"></lottie-player>
     
-    <div id="toolbartitle">Farhi registration system</div>
+    <div id="toolbartitle">Farhi registration system | نظام فرحي للتسجيلات</div>
+    
+    <div id="toolbarspacer">
+      <div id="toolbarsearchfield">
+        <div id="toolbarsearchhint" class="styledtext">إبحث عن أي زبون بإستخدام المعرف الفريد</div>
+        <div id="toolbarsearchinput" contenteditable="true" class="styledtext" type="text"/>
+      </div>
+      
+      <div id="toolbarsearchbutton" class="fabicon">
+        <span id="toolbarsearchicon" class="material-symbols-outlined">
+        search
+        </span>
+      </div>
+    </div>
+    
     
   </div>
   
@@ -27,18 +39,57 @@
   <div id="mainlayout">
     <table id="datatable" dir="rtl">
       <thead id="datatablehead">
-        <tr id="titlesbar">
-          <th class="tabletitleitem">إسم الزبون</th>
-          <th class="tabletitleitem">رقم التعريف الوطني</th>
-          <th class="tabletitleitem">رقم الهاتف</th>
-          <th class="tabletitleitem">تاريخ الميلاد</th>
-          <th class="tabletitleitem">مكان الميلاد</th>
-          <th class="tabletitleitem">مكان الإقامة</th>
-          <th class="tabletitleitem">تاريخ بداية التجديد</th>
-          <th class="tabletitleitem">تاريخ نهاية التجديد</th>
-          <th class="tabletitleitem">حالة التسجيل</th>
-          <th class="tabletitleitem">المعرف الفريد</th>
-        </tr>
+       <div id="datatableheadlayerscontainer">
+         
+        <div id="toplayerofdatatablehead">
+        
+          <div id="leftbutton" class="fabicon actionbutton">
+            <span id="leftbuttonicon" class="material-symbols-outlined actionbuttonicon">
+              chevron_left
+            </span>
+          </div>
+          
+          <div id="rightbutton" class="fabicon actionbutton">
+            <span id="rightbuttonicon" class="material-symbols-outlined actionbuttonicon">
+              chevron_right
+            </span>
+          </div>
+          
+          <div id="downbutton" class="fabicon actionbutton">
+            <span id="downbuttonicon" class="material-symbols-outlined actionbuttonicon">
+              expand_more
+            </span>
+          </div>
+          
+          <div id="upbutton" class="fabicon actionbutton">
+            <span id="upbuttonicon" class="material-symbols-outlined actionbuttonicon">
+              expand_less
+            </span>
+          </div>
+        
+        </div>
+        
+        <div id="bottomlayerofdatatablehead">
+         <tr id="titlesbar">
+          <th id="tabletitlenameitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlenameitem')" onmouseenter="whenTitleItemHovered('tabletitlenameitem')" onmouseleave="whenTitleItemDismissed('tabletitlenameitem')">إسم الزبون</th>
+          <th id="tabletitleninitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitleninitem')" onmouseenter="whenTitleItemHovered('tabletitleninitem')" onmouseleave="whenTitleItemDismissed('tabletitleninitem')">الرقم البيومتري لبطاقة التعريف الوطنية | بطاقة مماثلة</th>
+          <th id="tabletitlecardnumberitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlecardnumberitem')" onmouseenter="whenTitleItemHovered('tabletitlecardnumberitem')" onmouseleave="whenTitleItemDismissed('tabletitlecardnumberitem')">رقم البطاقة</th>
+          <th id="tabletitlecardissuingdateitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlecardissuingdateitem')" onmouseenter="whenTitleItemHovered('tabletitlecardissuingdateitem')" onmouseleave="whenTitleItemDismissed('tabletitlecardissuingdateitem')">تاريخ إصدار البطاقة</th>
+          <th id="tabletitlecardexpiredateitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlecardexpiredateitem')" onmouseenter="whenTitleItemHovered('tabletitlecardexpiredateitem')" onmouseleave="whenTitleItemDismissed('tabletitlecardexpiredateitem')">تاريخ نهاية صلحية البطاقة</th>
+          <th id="tabletitlecardissuingplaceitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlecardissuingplaceitem')" onmouseenter="whenTitleItemHovered('tabletitlecardissuingplaceitem')" onmouseleave="whenTitleItemDismissed('tabletitlecardissuingplaceitem')">بلدية الإصدار</th>
+          <th id="tabletitlephonenumberitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlephonenumberitem')" onmouseenter="whenTitleItemHovered('tabletitlephonenumberitem')" onmouseleave="whenTitleItemDismissed('tabletitlephonenumberitem')">رقم الهاتف</th>
+          <th id="tabletitlebirthdateitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlebirthdateitem')" onmouseenter="whenTitleItemHovered('tabletitlebirthdateitem')" onmouseleave="whenTitleItemDismissed('tabletitlebirthdateitem')">تاريخ الميلاد</th>
+          <th id="tabletitlebirthplaceitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlebirthplaceitem')" onmouseenter="whenTitleItemHovered('tabletitlebirthplaceitem')" onmouseleave="whenTitleItemDismissed('tabletitlebirthplaceitem')">مكان الميلاد</th>
+          <th id="tabletitlebirthcertificatenumberitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlebirthcertificatenumberitem')" onmouseenter="whenTitleItemHovered('tabletitlebirthcertificatenumberitem')" onmouseleave="whenTitleItemDismissed('tabletitlebirthcertificatenumberitem')">رقم شهادة الميلاد</th>
+          <th id="tabletitleresidenceitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitleresidenceitem')" onmouseenter="whenTitleItemHovered('tabletitleresidenceitem')" onmouseleave="whenTitleItemDismissed('tabletitleresidenceitem')">مكان الإقامة</th>
+          <th id="tabletitlerenewingstartdateitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlerenewingstartdateitem')" onmouseenter="whenTitleItemHovered('tabletitlerenewingstartdateitem')" onmouseleave="whenTitleItemDismissed('tabletitlerenewingstartdateitem')">تاريخ بداية التجديد</th>
+          <th id="tabletitlerenewingenddateitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlerenewingenddateitem')" onmouseenter="whenTitleItemHovered('tabletitlerenewingenddateitem')" onmouseleave="whenTitleItemDismissed('tabletitlerenewingenddateitem')">تاريخ نهاية التجديد</th>
+          <th id="tabletitlestatusitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlestatusitem')" onmouseenter="whenTitleItemHovered('tabletitlestatusitem')" onmouseleave="whenTitleItemDismissed('tabletitlestatusitem')">حالة التسجيل</th>
+          <th id="tabletitleuiditem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitleuiditem')" onmouseenter="whenTitleItemHovered('tabletitleuiditem')" onmouseleave="whenTitleItemDismissed('tabletitleuiditem')">المعرف الفريد</th>
+         </tr>
+        </div>
+       
+       </div>
       </thead>
       <tbody id="datatablebody">
         <!-- here all the data items get generated automatically -->
@@ -55,10 +106,10 @@
   </div>
   
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="./styling/material-symbols.css" />
   <link rel="stylesheet" href="style.css">
   
   <!-- Project -->
-  <script type="module" src="main.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
