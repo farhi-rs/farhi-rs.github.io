@@ -1,0 +1,17 @@
+{
+  "name": "Farhi Registration System",
+  "short_name": "Farhi RS",
+  "theme_color": "#2196f3",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "https://theignitedflame.github.io/farhi_rs",
+  "description": "The complete program for registration built for Farhi",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./farhi_rs/assets/imgs/site_icon.png",
+      "sizes": "200x200"
+        }
+    ]
+}

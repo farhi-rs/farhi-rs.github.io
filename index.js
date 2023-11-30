@@ -50,9 +50,10 @@ window.onscroll = function() {
   
   datatablehead.style.boxShadow = '0px ' + shadowsize + 'px ' + shadowsize*2 + 'px rgba(0, 0, 0, 0.4)';
   
-  let translationsize = window.scrollY <= 50 ? (-50 + toplayerofdatatablehead.offsetHeight * (window.scrollY / 50)) : (-50 + toplayerofdatatablehead.offsetHeight);
+  let translationsize = window.scrollY <= 50 ? (-50 + datatablehead.offsetHeight * (window.scrollY / 50)) : (-50 + datatablehead.offsetHeight);
   
-  toplayerofdatatablehead.style.transform = 'translateY(' + translationsize + 'px)';
+  
+  buttonslayerofdatatablehead.style.transform = 'translateY(' + translationsize + 'px)';
   
   
   
@@ -175,28 +176,34 @@ toolbarsearchbutton.onclick = function() {
 }
 
 
-var lasttoolbarsearchinputvalue = "";
-function whenSearchTextChange() {
-  if (toolbarsearchinput.innerHTML != lasttoolbarsearchinputvalue) {
-      lasttoolbarsearchinputvalue = toolbarsearchinput.innerHTML;
-      if (toolbarsearchinput.innerHTML == "") {
-          toolbarsearchhint.style.animationName = "fadeInAnimation";
-          toolbarsearchhint.style.animationDuration = "0.25s";
-          toolbarsearchhint.style.animationFillMode = "forwards";
+var lastinputvalues = {};
+function whenSearchTextChange(input, inputhint) {
+  if (input.innerHTML != lastinputvalues[input.id]) {
+      lastinputvalues[input.id] = input.innerHTML;
+      if (input.innerHTML == "") {
+          inputhint.style.animationName = "fadeInAnimation";
+          inputhint.style.animationDuration = "0.25s";
+          inputhint.style.animationFillMode = "forwards";
       } else {
-          toolbarsearchhint.style.animationName = "fadeOutAnimation";
-          toolbarsearchhint.style.animationDuration = "0.25s";
-          toolbarsearchhint.style.animationFillMode = "forwards";
+          inputhint.style.animationName = "fadeOutAnimation";
+          inputhint.style.animationDuration = "0.25s";
+          inputhint.style.animationFillMode = "forwards";
       }
   }
 }
 
 
-toolbarsearchinput.onkeydown = whenSearchTextChange;
-toolbarsearchinput.onchange = whenSearchTextChange;
-toolbarsearchinput.oninput = whenSearchTextChange;
-toolbarsearchinput.oncut = whenSearchTextChange;
-toolbarsearchinput.onpaste = whenSearchTextChange;
+var allinputfields = document.getElementsByClassName("inputfield");
+
+for (let i = 0; i < allinputfields.length; i++) {
+  let inputfield = allinputfields[i];
+  
+  inputfield.onkeydown = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
+  inputfield.onchange = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
+  inputfield.oninput = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
+  inputfield.oncut = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
+  inputfield.onpaste = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
+}
 
 
 window.onload = function() {

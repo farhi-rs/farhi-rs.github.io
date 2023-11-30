@@ -7,6 +7,8 @@
 
   <title>Farhi Registration System</title>
   
+  <link rel="manifest" href="manifest.json">
+  
 </head>
 
 <body>
@@ -20,9 +22,9 @@
     <div id="toolbartitle">Farhi registration system | نظام فرحي للتسجيلات</div>
     
     <div id="toolbarspacer">
-      <div id="toolbarsearchfield">
-        <div id="toolbarsearchhint" class="styledtext">إبحث عن أي زبون بإستخدام المعرف الفريد</div>
-        <div id="toolbarsearchinput" contenteditable="true" class="styledtext" type="text"/>
+      <div id="toolbarsearchfield" class="inputfield">
+        <div id="toolbarsearchhint" class="styledtext inputhint">إبحث عن أي زبون بإستخدام المعرف الفريد</div>
+        <div id="toolbarsearchinput" contenteditable="true" class="styledtext input" type="text"/>
       </div>
       
       <div id="toolbarsearchbutton" class="fabicon">
@@ -41,7 +43,18 @@
       <thead id="datatablehead">
        <div id="datatableheadlayerscontainer">
          
-        <div id="toplayerofdatatablehead">
+        <div id="newitemslayerofdatatablehead">
+          <tr id="newitemsbar">
+            <th>
+              <div id="newnameitemfield" class="inputfield newitemfield">
+                <div id="newnameitemhint" class="styledtext inputhint newitemhint">أكتب إسم الزبون الجديد هنا</div>
+                <div id="newnameiteminput" contenteditable="true" class="styledtext input newiteminput" type="text" />
+              </div>
+            </th>
+          </tr>
+        </div>
+        
+        <div id="buttonslayerofdatatablehead">
         
           <div id="leftbutton" class="fabicon actionbutton">
             <span id="leftbuttonicon" class="material-symbols-outlined actionbuttonicon">
@@ -69,7 +82,7 @@
         
         </div>
         
-        <div id="bottomlayerofdatatablehead">
+        <div id="titleslayerofdatatablehead">
          <tr id="titlesbar">
           <th id="tabletitlenameitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlenameitem')" onmouseenter="whenTitleItemHovered('tabletitlenameitem')" onmouseleave="whenTitleItemDismissed('tabletitlenameitem')">إسم الزبون</th>
           <th id="tabletitleninitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitleninitem')" onmouseenter="whenTitleItemHovered('tabletitleninitem')" onmouseleave="whenTitleItemDismissed('tabletitleninitem')">الرقم البيومتري لبطاقة التعريف الوطنية | بطاقة مماثلة</th>
@@ -107,9 +120,9 @@
   
   <!-- Custom Styles -->
   <link rel="stylesheet" href="./styling/material-symbols.css" />
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="style.css">
   
   <!-- Project -->
-  <script src="./index.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>

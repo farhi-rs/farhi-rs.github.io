@@ -132,30 +132,44 @@ body {
   padding: 10px;
 }
 
-#toolbarsearchfield {
-  opacity: 0;
-  pointer-events: none;
+.inputfield {
   display: grid;
   direction: rtl;
-  border: 3px dashed white;
   border-radius: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
-  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
 }
 
-#toolbarsearchhint {
+#toolbarsearchfield {
+  opacity: 0;
+  pointer-events: none;
+  border: 3px dashed white;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.newitemfield {
+  border: 3px dashed black;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.inputhint {
   grid-area: 1/1;
   white-space: nowrap;
-  color: rgba(255, 255, 255, 0.7);
   margin-top: auto;
   margin-bottom: auto;
   z-index: 0;
 }
 
-#toolbarsearchinput {
-  color: white;
+#toolbarsearchhint {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.newitemhint {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.input {
   grid-area: 1/1;
   white-space: nowrap;
   direction: rtl;
@@ -166,7 +180,15 @@ body {
   z-index: 1;
 }
 
-#toolbarsearchinput:focus {
+#toolbarsearchinput {
+  color: white;
+}
+
+.newiteminput {
+  color: black;
+}
+
+.input:focus {
   outline: 0;
   outline-color: transparent;
   outline-style: none;
@@ -205,7 +227,7 @@ body {
   flex-direction: column;
 }
 
-#toplayerofdatatablehead {
+#buttonslayerofdatatablehead {
   position: fixed;
   width: 97.5%;
   display: flex;
@@ -214,8 +236,12 @@ body {
   transform: translateY(-100%);
 }
 
-#bottomlayerofdatatablehead {
-  
+#titleslayerofdatatablehead {
+  order: 4;
+}
+
+#newitemslayerofdatatablehead {
+  order: 5;
 }
 
 .actionbutton {
