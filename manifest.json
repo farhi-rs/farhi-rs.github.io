@@ -5,7 +5,7 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/",
-  "start_url": "https://theignitedflame.github.io/farhi_rs",
+  "start_url": "./farhi_rs",
   "description": "The complete program for registration built for Farhi",
   "orientation": "any",
   "icons": [
