@@ -11,10 +11,8 @@ self.addEventListener("install", e => {
 self.addEventListener("fetch", e => {
   console.log(e.request.url)
   e.respondWith(
-    caches.open("farhi_rs").then(cache => {
       cache.match(e.request).then(response=>{
-        return response || fetch(e.request);
-      })
+        return response || fetch(e.request)
     })
   );
 });
