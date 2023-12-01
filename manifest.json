@@ -4,14 +4,14 @@
   "theme_color": "#2196f3",
   "background_color": "#ffffff",
   "display": "standalone",
-  "scope": "/",
-  "start_url": "./farhi_rs",
+  "start_url": "/",
   "description": "The complete program for registration built for Farhi",
-  "orientation": "any",
+  "orientation": "landscape",
   "icons": [
     {
-      "src": "./farhi_rs/assets/imgs/site_icon.png",
-      "sizes": "200x200"
+      "src": "assets/imgs/site_icon.png",
+      "sizes": "200x200",
+      "type": "image/png"
         }
     ]
 }
