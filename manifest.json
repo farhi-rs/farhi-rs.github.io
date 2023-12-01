@@ -4,7 +4,7 @@
   "theme_color": "#2196f3",
   "background_color": "#ffffff",
   "display": "standalone",
-  "start_url": "/farhi_rs",
+  "start_url": "/",
   "description": "The complete program for registration built for Farhi",
   "orientation": "landscape",
   "icons": [

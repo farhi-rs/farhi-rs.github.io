@@ -12,6 +12,17 @@
   <!-- Custom Styles -->
   <link rel="stylesheet" href="./styling/material-symbols.css">
   <link rel="stylesheet" href="style.css">
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./service_worker.js").then(registration=>{
+        console.log("SW Registered!");
+      }).catch(error=>{
+        console.log("SW Registration Failed");
+      });
+    } else {
+      console.log("Not supported");
+    }
+  </script>
   
 </head>
 

@@ -385,14 +385,3 @@ realfab.onclick = function() {
     addRow(itemdata.name, itemdata.nin, itemdata.cardnumber, itemdata.cardissuingdate, itemdata.cardexpiredate, itemdata.cardissuingplace, itemdata.phonenumber, itemdata.birthdate, itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, itemdata.renewingstartdate, itemdata.renewingenddate, itemdata.state, rowCount+1);
   };
 }
-
-
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service_worker.js").then(registration=>{
-      console.log("SW Registered!");
-    }).catch(error=>{
-      console.log("SW Registration Failed");
-    });
-} else {
-  console.log("Not supported");
-}

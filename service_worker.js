@@ -2,7 +2,7 @@
 self.addEventListener("install", e => {
   e.waitUntil(
     caches.open("farhi_rs").then(cache=>{
-      return cache.addAll(['anim/book.json', 'assets/imgs/site_icon.png', 'fonts/alexandria-latin.woff2', 'fonts/alexandria.woff2', 'fonts/poppins.woff2', 'fonts/symbols/material-symbols.woff2', 'lib/lottie-player.js', 'styling/material-symbols.css', 'styling/pagefont.css', 'favicon.ico', 'index.html', 'index.js', 'manifest.json', 'service_worker.js', 'style.css']);
+      return cache.addAll(['./anim/book.json', './assets/imgs/site_icon.png', './fonts/alexandria-latin.woff2', './fonts/alexandria.woff2', './fonts/poppins.woff2', './fonts/symbols/material-symbols.woff2', './lib/lottie-player.js', './styling/material-symbols.css', './styling/pagefont.css', './favicon.ico', './index.html', './index.js', './manifest.json', './service_worker.js', './style.css']);
     })
   );
 });
