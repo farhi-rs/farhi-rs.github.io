@@ -1,36 +1,36 @@
 var rowCount = 0;
-function addRow(name, nin, cardnumber,  cardissuingdate, cardexpiredate, cardissuingplace, phonenumber, birthdate, birthplace, birthcertificatenumber, residence, renewingstartdate, renewingenddate, status, uid, _fromTop, _newelyAdded) {
+function addRow(name, nin, cardnumber,  cardissuingdate, cardexpiredate, cardissuingplace, phonenumber, birthdate, birthplace, birthcertificatenumber, residence, renewingstartdate, renewingenddate, status, uid, _fromTop, _newlyAdded) {
   datatablebody.innerHTML = (_fromTop ? '' : datatablebody.innerHTML) + ' <tbody>\n     <tr>\n       '
   +
-  '<th id ="tablenameitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablenameitemat_' + rowCount + '\')">' + name + '</th>'
+  '<th id ="tablenameitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablenameitemat_' + rowCount + '\')">' + name + '</th>'
   +
-  '<th id ="tableninitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableninitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableninitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableninitemat_' + rowCount + '\')">' + nin + '</th>'
+  '<th id ="tableninitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableninitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableninitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableninitemat_' + rowCount + '\')">' + nin + '</th>'
   +
-  '<th id ="tablecardnumberitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardnumberitemat_' + rowCount + '\')">' + cardnumber + '</th>'
+  '<th id ="tablecardnumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardnumberitemat_' + rowCount + '\')">' + cardnumber + '</th>'
   +
-  '<th id ="tablecardissuingdateitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')">' + cardissuingdate + '</th>'
+  '<th id ="tablecardissuingdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')">' + cardissuingdate + '</th>'
   +
-  '<th id ="tablecardexpiredateitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')">' + cardexpiredate + '</th>'
+  '<th id ="tablecardexpiredateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')">' + cardexpiredate + '</th>'
   +
-  '<th id ="tablecardissuingplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')">' + cardissuingplace + '</th>'
+  '<th id ="tablecardissuingplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')">' + cardissuingplace + '</th>'
   +
-  '<th id ="tablephonenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablephonenumberitemat_' + rowCount + '\')">0' + phonenumber + '</th>'
+  '<th id ="tablephonenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablephonenumberitemat_' + rowCount + '\')">0' + phonenumber + '</th>'
   +
-  '<th id ="tablebirthdateitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthdateitemat_' + rowCount + '\')">' + birthdate + '</th>'
+  '<th id ="tablebirthdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthdateitemat_' + rowCount + '\')">' + birthdate + '</th>'
   +
-  '<th id ="tablebirthplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthplaceitemat_' + rowCount + '\')">' + birthplace + '</th>'
+  '<th id ="tablebirthplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthplaceitemat_' + rowCount + '\')">' + birthplace + '</th>'
   +
-  '<th id ="tablebirthcertificatenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')">' + birthcertificatenumber + '</th>'
+  '<th id ="tablebirthcertificatenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')">' + birthcertificatenumber + '</th>'
   +
-  '<th id ="tableresidenceitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableresidenceitemat_' + rowCount + '\')">' + residence + '</th>'
+  '<th id ="tableresidenceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableresidenceitemat_' + rowCount + '\')">' + residence + '</th>'
   +
-  '<th id ="tablerenewingstartdateitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')">' + renewingstartdate + '</th>'
+  '<th id ="tablerenewingstartdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')">' + renewingstartdate + '</th>'
   +
-  '<th id ="tablerenewingenddateitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')">' + renewingenddate + '</th>'
+  '<th id ="tablerenewingenddateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')">' + renewingenddate + '</th>'
   +
-  '<th id ="tablestatusitemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablestatusitemat_' + rowCount + '\')">' + status + '</th>'
+  '<th id ="tablestatusitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablestatusitemat_' + rowCount + '\')">' + status + '</th>'
   +
-  '<th id ="tableuiditemat_' + rowCount + '" class="tabledataitem ' + (_newelyAdded ? 'newelyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableuiditemat_' + rowCount + '\')">' + uid + '</th>'
+  '<th id ="tableuiditemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableuiditemat_' + rowCount + '\')">' + uid + '</th>'
   +
   '\n     </tr>\n    </tbody>'
   +
@@ -161,7 +161,7 @@ toolbarsearchbutton.onclick = function() {
     toolbarsearchfield.style.animationFillMode = "forwards";
     
     if (searchenabled) {
-      let lastsearchfactor = searchfactor == "" ? defaultsearchfactor : searchfactor;
+      let lastsearchfactor = searchfactor == "" ? bydefaultsearchfactor : searchfactor;
       searchfactor = "";
       whenTitleItemClicked(lastsearchfactor);
       
@@ -192,7 +192,7 @@ function whenSearchTextChange(input, inputhint) {
   }
 }
 
-
+/*
 var allinputfields = document.getElementsByClassName("inputfield");
 
 for (let i = 0; i < allinputfields.length; i++) {
@@ -204,6 +204,7 @@ for (let i = 0; i < allinputfields.length; i++) {
   inputfield.oncut = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
   inputfield.onpaste = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
 }
+*/
 
 
 window.onload = function() {
@@ -237,7 +238,7 @@ function whenDataItemDismissed(itemid) {
 
 // Title items listeners...
 var searchfactor = "";
-const defaultsearchfactor = "tabletitleuiditem";
+const bydefaultsearchfactor = "tabletitleuiditem";
 
 function whenTitleItemClicked(titleitemid) {
   
