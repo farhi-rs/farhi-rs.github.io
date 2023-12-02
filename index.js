@@ -192,7 +192,7 @@ function whenSearchTextChange(input, inputhint) {
   }
 }
 
-/*
+
 var allinputfields = document.getElementsByClassName("inputfield");
 
 for (let i = 0; i < allinputfields.length; i++) {
@@ -204,11 +204,11 @@ for (let i = 0; i < allinputfields.length; i++) {
   inputfield.oncut = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
   inputfield.onpaste = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
 }
-*/
+
 
 
 window.onload = function() {
-  window.scrollTo(datatable.offsetWidth, 0);
+  window.scrollTo(document.documentElement.offsetWidth, 0);
 }
 
 
