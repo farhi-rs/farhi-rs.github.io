@@ -1,4 +1,3 @@
-
 // Cached core static resources 
 self.addEventListener("install", e => {
   e.waitUntil(

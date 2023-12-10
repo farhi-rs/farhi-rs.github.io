@@ -1,43 +1,128 @@
-var rowCount = 0;
-function addRow(name, nin, cardnumber,  cardissuingdate, cardexpiredate, cardissuingplace, phonenumber, birthdate, birthplace, birthcertificatenumber, residence, renewingstartdate, renewingenddate, status, uid, _fromTop, _newlyAdded) {
-  datatablebody.innerHTML = (_fromTop ? '' : datatablebody.innerHTML) + ' <tbody>\n     <tr>\n       '
+const pageItemsLimit = 20;
+
+var pageIndex = -1; // to be calculated later automatically
+
+const hamzaitemdata = {
+  name: 'حمزة بونقاب',
+  status: "لا يحتاج منحة البطالة",
+  renewingstartdate: "2021-02-26",
+  renewingenddate: "حتى يموت",
+  phonenumber: "لا تتصلو به",
+  worknumber: "FLAME CORP",
+  nin: "KING",
+  cardnumber: "001",
+  cardissuingdate: "2022-11-16",
+  cardexpiredate: "حتى يموت",
+  cardissuingplace: "EL ATTAF",
+  birthdate: "2003-06-15",
+  birthplace: "EL ATTAF",
+  birthcertificatenumber: "001",
+  residence: "EL ATTAF"
+};
+
+var hamzadataitemhtml;
+
+const newitemshtml = newitemsbar.innerHTML;
+
+newitemsbar.innerHTML = "";
+
+var rowCount = -1;
+
+var rowRelatedDataIds = new Map();
+var rowRelatedPageDataIndecies = new Map();
+
+var totalitemscount = 0;
+
+var lastdatatablebodyhtml = "";
+
+function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumber, worknumber, nin, cardnumber,  cardissuingdate, cardexpiredate, cardissuingplace, birthdate, birthplace, birthcertificatenumber, residence, _fromTop, _newlyAdded, _hamzacase) {
+  ;
+  let uid = toUid(id);
+  
+  _fromTop = true;
+  
+  rowRelatedPageDataIndecies.set(id, rowCount+1);
+  
+  rowRelatedDataIds.set(rowCount+1, id);
+  
+  
+  let dataitemhtml =
+  '\n     <tr>\n       '
   +
-  '<th id ="tablenameitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablenameitemat_' + rowCount + '\')">' + name + '</th>'
+  '<th id ="tableuiditemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableuiditemat_' + rowCount + '\')">' + uid + '</th>'
   +
-  '<th id ="tableninitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableninitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableninitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableninitemat_' + rowCount + '\')">' + nin + '</th>'
+  '<th id ="tablenameitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablenameitemat_' + rowCount + '\')">' + name + '</th>'
   +
-  '<th id ="tablecardnumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardnumberitemat_' + rowCount + '\')">' + cardnumber + '</th>'
+  '<th id ="tablestatusitemat_' + rowCount + '" class="tabledataitem statusdataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablestatusitemat_' + rowCount + '\')">' + status + '</th>'
   +
-  '<th id ="tablecardissuingdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')">' + cardissuingdate + '</th>'
+  '<th id ="tablerenewingstartdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')">' + renewingstartdate + '</th>'
   +
-  '<th id ="tablecardexpiredateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')">' + cardexpiredate + '</th>'
+  '<th id ="tablerenewingenddateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')">' + renewingenddate + '</th>'
   +
-  '<th id ="tablecardissuingplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')">' + cardissuingplace + '</th>'
+  '<th id ="tablephonenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablephonenumberitemat_' + rowCount + '\')">' + phonenumber + '</th>'
   +
-  '<th id ="tablephonenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablephonenumberitemat_' + rowCount + '\')">0' + phonenumber + '</th>'
+  '<th id ="tableworknumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableworknumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableworknumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableworknumberitemat_' + rowCount + '\')">' + worknumber + '</th>'
   +
-  '<th id ="tablebirthdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthdateitemat_' + rowCount + '\')">' + birthdate + '</th>'
+  '<th id ="tableninitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableninitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableninitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableninitemat_' + rowCount + '\')">' + nin + '</th>'
   +
-  '<th id ="tablebirthplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthplaceitemat_' + rowCount + '\')">' + birthplace + '</th>'
+  '<th id ="tablecardnumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardnumberitemat_' + rowCount + '\')">' + cardnumber + '</th>'
   +
-  '<th id ="tablebirthcertificatenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')">' + birthcertificatenumber + '</th>'
+  '<th id ="tablecardissuingdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')">' + cardissuingdate + '</th>'
   +
-  '<th id ="tableresidenceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableresidenceitemat_' + rowCount + '\')">' + residence + '</th>'
+  '<th id ="tablecardexpiredateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')">' + cardexpiredate + '</th>'
   +
-  '<th id ="tablerenewingstartdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')">' + renewingstartdate + '</th>'
+  '<th id ="tablecardissuingplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')">' + cardissuingplace + '</th>'
   +
-  '<th id ="tablerenewingenddateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')">' + renewingenddate + '</th>'
+  '<th id ="tablebirthdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthdateitemat_' + rowCount + '\')">' + birthdate + '</th>'
   +
-  '<th id ="tablestatusitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablestatusitemat_' + rowCount + '\')">' + status + '</th>'
+  '<th id ="tablebirthplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthplaceitemat_' + rowCount + '\')">' + birthplace + '</th>'
   +
-  '<th id ="tableuiditemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableuiditemat_' + rowCount + '\')">' + uid + '</th>'
+  '<th id ="tablebirthcertificatenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')">' + birthcertificatenumber + '</th>'
   +
-  '\n     </tr>\n    </tbody>'
+  '<th id ="tableresidenceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableresidenceitemat_' + rowCount + '\')">' + residence + '</th>'
   +
-  (_fromTop ? datatablebody.innerHTML : '');
+  '\n     </tr>';
+  
+  
+  if (_hamzacase) {
+    hamzadataitemhtml = dataitemhtml;
+    
+    datatablebody.innerHTML =
+    ' \n<tbody>     <tr>\n       '
+    +
+    hamzadataitemhtml
+    +
+    '\n     </tr>\n    </tbody>';
+  } else {
+    lastdatatablebodyhtml = (_fromTop ? '' : lastdatatablebodyhtml)
+    + 
+    dataitemhtml
+    +
+    (_fromTop ? lastdatatablebodyhtml : '');
+  
+  
+    datatablebody.innerHTML =
+    ' <tbody>\n     <tr>\n       '
+    +
+    (hamzadataitemhtml)
+    +
+    '\n     </tr>\n'
+    +
+    '\n     <tr>\n       '
+    +
+    lastdatatablebodyhtml
+    +
+    '\n     </tr>\n    </tbody>'
+    ;
+  
+  }
+    
+    
+  window.scrollTo(document.documentElement.scrollWidth, window.scrollY);
   
   rowCount++;
 }
+
 
 var lastScrollY = 0;
 var fabFadedOut = false;
@@ -46,16 +131,16 @@ var downButtonDisabled = false;
 window.onscroll = function() {
   let scrollFactor = window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight);
   
-  let shadowsize = window.scrollY <= 50 ? window.scrollY / 4 : 12.5;
+  //let shadowsize = window.scrollY <= 50 ? window.scrollY / 4 : 12.5;
   
-  datatablehead.style.boxShadow = '0px ' + shadowsize + 'px ' + shadowsize*2 + 'px rgba(0, 0, 0, 0.4)';
+  //newitemsbar.style.boxShadow = '0px ' + shadowsize + 'px ' + shadowsize*2 + 'px rgba(0, 0, 0, 0.4)';
   
-  let translationsize = window.scrollY <= 50 ? (-50 + datatablehead.offsetHeight * (window.scrollY / 50)) : (-50 + datatablehead.offsetHeight);
+  //titlesbar.style.boxShadow = '0px ' + shadowsize + 'px ' + shadowsize*2 + 'px rgba(0, 0, 0, 0.4)';
+  
+  let translationsize = window.scrollY <= 50 ? (-110 + datatablehead.offsetHeight * (window.scrollY / 50)) : (-110 + datatablehead.offsetHeight);
   
   
   buttonslayerofdatatablehead.style.transform = 'translateY(' + translationsize + 'px)';
-  
-  
   
   
   if (scrollFactor >= (window.innerWidth <= window.innerHeight ? 0.1 : 0.03) && upButtonDisabled) {
@@ -103,18 +188,18 @@ window.onscroll = function() {
   
   if (window.scrollY - lastScrollY >= scrollDelta) {
     if (!fabFadedOut) {
-        realfab.style.animationName = "fadeOutAnimation";
-        realfab.style.animationDuration = "0.25s";
-        realfab.style.animationFillMode = "forwards";
+        fabscontainer.style.animationName = "fadeOutAnimation";
+        fabscontainer.style.animationDuration = "0.25s";
+        fabscontainer.style.animationFillMode = "forwards";
     }
     lastScrollY = window.scrollY;
     
     fabFadedOut = true;
   } else if (window.scrollY - lastScrollY <= -scrollDelta) {
     if (fabFadedOut) {
-        realfab.style.animationName = "fadeInAnimation";
-        realfab.style.animationDuration = "0.25s";
-        realfab.style.animationFillMode = "forwards";
+        fabscontainer.style.animationName = "fadeInAnimation";
+        fabscontainer.style.animationDuration = "0.25s";
+        fabscontainer.style.animationFillMode = "forwards";
     }
     lastScrollY = window.scrollY;
     
@@ -123,8 +208,6 @@ window.onscroll = function() {
     // Do nothing...
   }
 }
-
-
 
 
 upbutton.onclick = function() {
@@ -136,8 +219,6 @@ upbutton.onclick = function() {
 downbutton.onclick = function() {
   window.scrollTo(window.scrollX, document.documentElement.scrollHeight);
 }
-
-
 
 
 var searchenabled = false;
@@ -176,10 +257,15 @@ toolbarsearchbutton.onclick = function() {
 }
 
 
-var lastinputvalues = {};
-function whenSearchTextChange(input, inputhint) {
-  if (input.innerHTML != lastinputvalues[input.id]) {
-      lastinputvalues[input.id] = input.innerHTML;
+var lastinputvalues = new Map();
+var donehidden = true;
+function whenTextChange(inputid, inputhintid) {
+  
+  let input = document.getElementById(inputid);
+  let inputhint = document.getElementById(inputhintid);
+  
+  if (inputhintid !== "newrenewingstartdateitemhint" && inputhintid !== "newrenewingstartdateitemhint" && inputhintid !== "newcardissuingdateitemhint" && inputhintid !== "newcardexpiredateitemhint" && inputhintid !== "newbirthdateitemhint") if (input.innerHTML != lastinputvalues.get(input)) {
+      lastinputvalues.set(input, input.innerHTML);
       if (input.innerHTML == "") {
           inputhint.style.animationName = "fadeInAnimation";
           inputhint.style.animationDuration = "0.25s";
@@ -190,34 +276,258 @@ function whenSearchTextChange(input, inputhint) {
           inputhint.style.animationFillMode = "forwards";
       }
   }
-}
-
-
-var allinputfields = document.getElementsByClassName("inputfield");
-
-for (let i = 0; i < allinputfields.length; i++) {
-  let inputfield = allinputfields[i];
+    
+    
+    
+  if (inputid == "newrenewingstartdateiteminput") {
+      if (newrenewingstartdateiteminput.value.replaceAll(" ", "") !== "") {
+          newrenewingenddateitem.innerHTML = getArabicDate(addSixMonths(newrenewingstartdateiteminput.value));
+          
+          newstatusitem.innerHTML = getStatus({renewingstartdate: newrenewingstartdateiteminput.value});
+      } else {
+          newrenewingenddateitem.innerHTML = "إملئ تاريخ البداية أولا";
+          
+          newstatusitem.innerHTML = "إملئ تاريخ البداية أولا";
+      }
+  }
+    
   
-  inputfield.onkeydown = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
-  inputfield.onchange = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
-  inputfield.oninput = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
-  inputfield.oncut = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
-  inputfield.onpaste = whenSearchTextChange(inputfield.children[1], inputfield.children[0]);
+    
+  if ((newnameiteminput !== undefined ? (newnameiteminput !== null ? newnameiteminput.innerHTML : "") : "").replaceAll(" ", "") !== "" && (newrenewingstartdateiteminput !== undefined ? (newrenewingstartdateiteminput !== null ? newrenewingstartdateiteminput.value : "") : "").replaceAll(" ", "") !== "") {
+      donefab.style.animationName = "fadeInAnimation";
+      donefab.style.animationDuration = "0.25s";
+      donefab.style.animationFillMode = "forwards";
+      
+      donehidden = false;
+  } else {
+      if (!donehidden) {
+        donefab.style.animationName = "fadeOutAnimation";
+        donefab.style.animationDuration = "0.25s";
+        donefab.style.animationFillMode = "forwards";
+          
+        donehidden = true;
+      }
+  }
 }
 
 
-
+var initialScroll = true;
 window.onload = function() {
-  window.scrollTo(document.documentElement.offsetWidth, 0);
+  if (initialScroll) {
+      initialScroll = false;
+      window.scrollTo(document.documentElement.scrollWidth, 0);
+  }
 }
-
 
 
 // Data items listeners...
+var dataitemsclicks = new Map();
+var dataitemsclicktimers = new Map();
+var messageboxtimer;
+var lasteditedrowhtml = "";
+var lasteditedrowindex;
+var lasteditedrowid;
+var lasteditedpagedataindex;
+var modifyingEnabled = false;
+var lastdataitemOffsetLeft = 0;
 function whenDataItemClicked(itemid) {
   let dataitem = document.getElementById(itemid);
   
+  let rowId = parseInt(itemid.split("_")[1]);
   
+  let pageDataIndex = rowId;
+  
+  let itemtype = itemid.split("_")[0].replaceAll("table", "").replaceAll("itemat", "");
+    
+  // Copy the text inside the text field
+   
+  let copiedcontent = null;
+  if (rowId !== -1) if (itemtype == "uid") {
+    copiedcontent = toUid(pageData[pageDataIndex]["id"]);
+  } else if (itemtype == "status") {
+    copiedcontent = null;
+  } else if (itemtype.includes("date")) {
+    if (itemtype == "renewingenddate") {
+      copiedcontent = reverseDateStr(addSixMonths(pageData[pageDataIndex]["renewingstartdate"])).replaceAll("-", "/");
+    } else {
+      copiedcontent = reverseDateStr(pageData[pageDataIndex][itemtype]).replaceAll("-", "/");
+    }
+  } else {
+    copiedcontent = pageData[pageDataIndex][itemtype];
+  }
+  
+  if (copiedcontent == null) {
+    messageboxicon.innerHTML = "warning";
+    
+    messageboxtext.innerHTML = "لا يمكنك نسخ محتوى هذا المربع";
+  } else {
+    messageboxicon.innerHTML = "content_copy";
+    
+    messageboxtext.innerHTML = "تم نسخ المحتوى في الحافظة";
+    
+    navigator.clipboard.writeText(copiedcontent);
+  }
+    
+  messagebox.style.animationName = "fadeInAnimation";
+  messagebox.style.animationDuration = "0.25s";
+  messagebox.style.animationFillMode = "forwards";
+    
+  clearTimeout(messageboxtimer);
+    
+  messageboxtimer = setTimeout(function() {
+      messagebox.style.animationName = "fadeOutAnimation";
+      messagebox.style.animationDuration = "0.25s";
+      messagebox.style.animationFillMode = "forwards";
+  }, 250 + 2500);
+    
+    
+  
+  dataitemsclicks.set(itemid, (dataitemsclicks.get(itemid) == undefined ? 0 : dataitemsclicks.get(itemid)) + 1);
+    
+  clearTimeout(dataitemsclicktimers.get(itemid));
+    
+  if ((dataitemsclicks.get(itemid) == undefined ? 0 : dataitemsclicks.get(itemid)) < 2) dataitemsclicktimers.set(itemid, setTimeout(function() {
+      
+      dataitemsclicks.set(itemid, 0);
+      
+  }, 500));
+    
+    
+  if (dataitemsclicks.get(itemid) >= 2) {
+      dataitemsclicks.set(itemid, 0);
+      // when data item get clicked 2 times (doubleclicked)
+      // We replace the corresponding data row with an editable one
+      
+      
+      let hamzarow = rowId == -1;
+      
+      
+      let rowIndex = rowCount - 1 - rowId + 3;
+      
+      
+      lasteditedrowid = rowId;
+      
+      
+      if (hamzarow) {
+          // Hamza special items
+          // We skip them
+          
+          messageboxicon.innerHTML = "close";
+    
+          messageboxtext.innerHTML = "إسمي و معلوماتي لن تزول أو يتم تعديلها في هذا البرنامج 😈";
+    
+          messagebox.style.animationName = "fadeInAnimation";
+          messagebox.style.animationDuration = "0.25s";
+          messagebox.style.animationFillMode = "forwards";
+    
+          clearTimeout(messageboxtimer);
+    
+          messageboxtimer = setTimeout(function() {
+            messagebox.style.animationName = "fadeOutAnimation";
+            messagebox.style.animationDuration = "0.25s";
+            messagebox.style.animationFillMode = "forwards";
+          }, 250 + 2500);
+          
+          return;
+      }
+      
+      if (modifyingEnabled || addingEnabled) {
+          messageboxicon.innerHTML = "warning";
+    
+          messageboxtext.innerHTML = "لا يمكنك تعديل صفين أو التعديل و الإضافة في نفس الوقت";
+    
+          messagebox.style.animationName = "fadeInAnimation";
+          messagebox.style.animationDuration = "0.25s";
+          messagebox.style.animationFillMode = "forwards";
+    
+          clearTimeout(messageboxtimer);
+    
+          messageboxtimer = setTimeout(function() {
+            messagebox.style.animationName = "fadeOutAnimation";
+            messagebox.style.animationDuration = "0.25s";
+            messagebox.style.animationFillMode = "forwards";
+          }, 250 + 2500);
+          
+          return;
+      }
+      
+      lasteditedrowindex = rowIndex;
+      
+      lasteditedpagedataindex = pageDataIndex;
+     
+      modifyingEnabled = true;
+      
+      lastdataitemOffsetLeft = dataitem.offsetLeft;
+      
+      
+      realfabtext.innerHTML = 'الغاء';
+      realfabicon.innerHTML = 'close';
+      
+      
+      lasteditedrowhtml = datatablebody.rows[rowIndex].innerHTML;
+      
+      datatablebody.rows[rowIndex].innerHTML = newitemshtml;
+      
+      
+      newuiditem.innerHTML = toUid(pageData[pageDataIndex].id);
+      
+      
+      
+      newnameiteminput.innerHTML = pageData[pageDataIndex].name;
+      whenTextChange("newnameiteminput", "newnameitemhint");
+      
+      newstatusitem.innerHTML = getStatus(pageData[pageDataIndex]);
+      
+      newrenewingstartdateiteminput.value = pageData[pageDataIndex].renewingstartdate;
+      whenTextChange("newrenewingstartdateiteminput", "newrenewingstartdateitemhint");
+    
+      newrenewingenddateitem.innerHTML = getArabicDate(addSixMonths(pageData[pageDataIndex].renewingstartdate));
+      
+      newphonenumberiteminput.innerHTML = pageData[pageDataIndex].phonenumber;
+      whenTextChange("newphonenumberiteminput", "newphonenumberitemhint");
+      
+      newworknumberiteminput.innerHTML = pageData[pageDataIndex].worknumber;
+      whenTextChange("newworknumberiteminput", "newworknumberitemhint");
+      
+      newniniteminput.innerHTML = pageData[pageDataIndex].nin;
+      whenTextChange("newniniteminput", "newninitemhint");
+      
+      newcardnumberiteminput.innerHTML = pageData[pageDataIndex].cardnumber;
+      whenTextChange("newcardnumberiteminput", "newcardnumberitemhint");
+      
+      newcardissuingdateiteminput.value = pageData[pageDataIndex].cardissuingdate;
+      whenTextChange("newcardissuingdateiteminput", "newcardissuingdateitemhint");
+      
+      newcardexpiredateiteminput.value = pageData[pageDataIndex].cardexpiredate;
+      whenTextChange("newcardexpiredateiteminput", "newcardexpiredateitemhint");
+      
+      newcardissuingplaceiteminput.innerHTML = pageData[pageDataIndex].cardissuingplace;
+      whenTextChange("newcardissuingplaceiteminput", "newcardissuingplaceitemhint");
+      
+      newbirthdateiteminput.value = pageData[pageDataIndex].birthdate;
+      whenTextChange("newbirthdateiteminput", "newbirthdateitemhint");
+      
+      newbirthplaceiteminput.innerHTML = pageData[pageDataIndex].birthplace;
+      whenTextChange("newbirthplaceiteminput", "newbirthplaceitemhint");
+      
+      newbirthcertificatenumberiteminput.innerHTML = pageData[pageDataIndex].birthcertificatenumber;
+      whenTextChange("newbirthcertificatenumberiteminput", "newbirthcertificatenumberitemhint");
+      
+      newresidenceiteminput.innerHTML = pageData[pageDataIndex].residence;
+      whenTextChange("newresidenceiteminput", "newresidenceitemhint");
+      
+      try {
+        if (itemtype == "status" || itemtype == "renewingenddate") {
+          newrenewingstartdateiteminput.focus();
+        } else if (itemtype == "uid") {
+          newnameiteminput.focus();
+        } else {
+          document.getElementById("new" + itemtype + "iteminput").focus();
+        }
+      } catch (ex) {
+        // Do nothing ...
+      }
+  }
 }
 
 function whenDataItemHovered(itemid) {
@@ -274,48 +584,36 @@ function whenTitleItemDismissed(titleitemid) {
   
 }
 
-
-realfab.onclick = function() {
-  let trans = farhi_rsdb.transaction("batala", "readwrite");
+function emptyPage() {
+  rowCount = -1;
+  pageData = [];
+  lastdatatablebodyhtml = "";
+  rowRelatedDataIds = new Map();
+  rowRelatedPageDataIndecies = new Map();
   
-  let batala = trans.objectStore("batala");
+  if (addingEnabled || modifyingEnabled) realfab.onclick();
   
-  let itemdata = {
-    name: "حمزة بونقاب",
-    nin: "1000000000",
-    cardnumber: "6000",
-    cardissuingdate: "15/01/2023",
-    cardexpiredate: "15/01/2024",
-    cardissuingplace: "العطاف",
-    phonenumber: "792342393",
-    birthdate: "15/06/2003",
-    birthplace: "العطاف",
-    birthcertificatenumber: "00926",
-    residence: "العطاف",
-    renewingstartdate: "15/11/2023",
-    renewingenddate: "15/05/2024",
-    state: "unregistered"
-  };
+  datatablebody.innerHTML = "";
   
-  let addRequest = batala.add(itemdata);
-    
-  addRequest.onsuccess = function(event) {
-    addRow(itemdata.name, itemdata.nin, itemdata.cardnumber, itemdata.cardissuingdate, itemdata.cardexpiredate, itemdata.cardissuingplace, itemdata.phonenumber, itemdata.birthdate, itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, itemdata.renewingstartdate, itemdata.renewingenddate, itemdata.state, rowCount+1);
-  };
+  addRow(-1, hamzaitemdata.name, hamzaitemdata.status, hamzaitemdata.renewingstartdate, hamzaitemdata.renewingenddate, hamzaitemdata.phonenumber, hamzaitemdata.worknumber, hamzaitemdata.nin, hamzaitemdata.cardnumber, hamzaitemdata.cardissuingdate, hamzaitemdata.cardexpiredate, hamzaitemdata.cardissuingplace, hamzaitemdata.birthdate, hamzaitemdata.birthplace, hamzaitemdata.birthcertificatenumber, hamzaitemdata.residence, false, false, true);
 }
 
+emptyPage();
 
-
-
-prepareDB();
-
+prepareDB("جاري تحميل البيانات ...");
 
 var pageData = [];
 
 var farhi_rsdb;
 
 
-function prepareDB() {
+function prepareDB(loadingmsg) {
+  
+  loadingscreen.style.animationName = "fadeInAnimation";
+  loadingscreen.style.animationDuration = "0.25s";
+  loadingscreen.style.animationFillMode = "forwards";
+  
+  loadingtext.innerHTML = loadingmsg !== undefined ? (loadingmsg !== null ? (loadingmsg) : "جاري العمل ...") : "جاري العمل ...";
 
   var farhi_rsdb_request = indexedDB.open("farhi_rsdb", 1);
 
@@ -331,58 +629,504 @@ function prepareDB() {
     let trans = farhi_rsdb.transaction("batala", "readwrite");
 
     let batala = trans.objectStore("batala");
+    
+    let batalacount = null;
+        
+    if (totalitemscount == 0) batalacount = batala.count();
+        
+    let onsuccess = function() {
+    if (batalacount !== null) totalitemscount = batalacount.result;
+    
+    if (pageIndex === -1) pageIndex = parseInt(Math.max(1, parseInt(Math.ceil(totalitemscount / pageItemsLimit)))) - 1;
 
-    batala.openCursor().onsuccess = function(event) {
+    batala.openCursor(IDBKeyRange.bound((pageIndex*pageItemsLimit) + 1, ((pageIndex+1)*pageItemsLimit))).onsuccess = function(event) {
       let cursor = event.target.result;
 
       if (cursor) {
         let itemdata = cursor.value;
 
         pageData.push(itemdata);
-        addRow(itemdata.name, itemdata.nin, itemdata.cardnumber, itemdata.cardissuingdate, itemdata.cardexpiredate, itemdata.cardissuingplace, itemdata.phonenumber, itemdata.birthdate, itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, itemdata.renewingstartdate, itemdata.renewingenddate, itemdata.state, itemdata.id, true);
+        
+        addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
         cursor.continue();
       } else {
-
+        
+        loadingscreen.style.animationName = "fadeOutAnimation";
+        loadingscreen.style.animationDuration = "0.25s";
+        loadingscreen.style.animationFillMode = "forwards";
+          
+        whenDataIsReady();
+        
       }
     };
-
-    operateOnDb();
-  };
-
-}
-
-
-
-function operateOnDb() {
-
-}
-
-
-realfab.onclick = function() {
-  let trans = farhi_rsdb.transaction("batala", "readwrite");
-  
-  let batala = trans.objectStore("batala");
-  
-  let itemdata = {
-    name: "حمزة بونقاب",
-    nin: "1000000000",
-    cardnumber: "6000",
-    cardissuingdate: "15/01/2023",
-    cardexpiredate: "15/01/2024",
-    cardissuingplace: "العطاف",
-    phonenumber: "792342393",
-    birthdate: "15/06/2003",
-    birthplace: "العطاف",
-    birthcertificatenumber: "00926",
-    residence: "العطاف",
-    renewingstartdate: "15/11/2023",
-    renewingenddate: "15/05/2024",
-    state: "unregistered"
-  };
-  
-  let addRequest = batala.add(itemdata);
     
-  addRequest.onsuccess = function(event) {
-    addRow(itemdata.name, itemdata.nin, itemdata.cardnumber, itemdata.cardissuingdate, itemdata.cardexpiredate, itemdata.cardissuingplace, itemdata.phonenumber, itemdata.birthdate, itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, itemdata.renewingstartdate, itemdata.renewingenddate, itemdata.state, rowCount+1);
+    };
+
+    if (batalacount !== null) {
+      batalacount.onsuccess = onsuccess;
+    } else {
+      onsuccess();
+    }
+    
   };
+
+}
+
+
+
+function whenDataIsReady() {
+  if (((pageIndex+1)* pageItemsLimit) >= totalitemscount) {
+    // disable right button
+    rightbutton.style.pointerEvents = "none";
+    
+    rightbutton.style.animationName = "disablingActionButtonAnimation";
+    rightbutton.style.animationDuration = "0.25s";
+    rightbutton.style.animationFillMode = "forwards";
+  } else {
+    // enable right button
+    rightbutton.style.pointerEvents = "auto";
+    
+    rightbutton.style.animationName = "enablingActionButtonAnimation";
+    rightbutton.style.animationDuration = "0.25s";
+    rightbutton.style.animationFillMode = "forwards";
+  }
+  
+  if (pageIndex == 0) {
+    // disable left button
+    leftbutton.style.pointerEvents = "none";
+    
+    leftbutton.style.animationName = "disablingActionButtonAnimation";
+    leftbutton.style.animationDuration = "0.25s";
+    leftbutton.style.animationFillMode = "forwards";
+  } else {
+    // enable left button
+    leftbutton.style.pointerEvents = "auto";
+    
+    leftbutton.style.animationName = "enablingActionButtonAnimation";
+    leftbutton.style.animationDuration = "0.25s";
+    leftbutton.style.animationFillMode = "forwards";
+  }
+  
+  pageindexhint.innerHTML = "الصفحة " + (pageIndex + 1) + " من " + parseInt(Math.max(1, parseInt(Math.ceil(totalitemscount / pageItemsLimit))));
+  
+}
+
+
+var addingEnabled = false;
+realfab.onclick = function() {
+  // create a new connection  or new transaction
+  const trans = farhi_rsdb.transaction('batala', 'readwrite');  
+  // Save Names object using variable  
+  const batala = trans.objectStore('batala');
+  
+  var batalacount = null;
+  
+  if (totalitemscount == 0) {
+    batalacount = batala.count();
+  
+    loadingscreen.style.animationName = "fadeInAnimation";
+    loadingscreen.style.animationDuration = "0.25s";
+    loadingscreen.style.animationFillMode = "forwards";
+  
+    loadingtext.innerHTML = "جاري التحضير للإضافة ...";
+  }
+  
+  let onsuccess = function() {
+    
+  if (batalacount !== null) {
+    totalitemscount = batalacount.result;
+    
+    loadingscreen.style.animationName = "fadeOutAnimation";
+    loadingscreen.style.animationDuration = "0.25s";
+    loadingscreen.style.animationFillMode = "forwards";
+  }
+    
+  if (!addingEnabled && !modifyingEnabled) {
+      
+      newitemsbar.innerHTML = newitemshtml;
+      realfabtext.innerHTML = 'الغاء';
+      realfabicon.innerHTML = 'close';
+      
+      
+      newuiditem.innerHTML = toUid(totalitemscount+1);
+      
+      newnameiteminput.focus();
+      
+      addingEnabled = true;
+      
+      
+      let currentDateStr = new Date().toISOString().split("T")[0];
+      
+      newrenewingstartdateiteminput.value = currentDateStr; 
+      whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint');
+      
+      newcardissuingplaceiteminput.innerHTML = "العطاف - عين الدفلى";
+      whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint');
+      
+      newresidenceiteminput.innerHTML = "العطاف - عين الدفلى";
+      whenTextChange('newresidenceiteminput', 'newresidenceitemhint');
+  } else if (addingEnabled || modifyingEnabled) {
+      
+      newitemsbar.innerHTML = '';
+      realfabtext.innerHTML = 'إضافة زبون جديد';
+      realfabicon.innerHTML = 'person_add';
+      
+      
+      if (modifyingEnabled) datatablebody.rows[lasteditedrowindex].innerHTML = lasteditedrowhtml;
+      
+      
+      modifyingEnabled = false;
+      addingEnabled = false;
+      
+      
+      
+      if (!donehidden) {
+        donefab.style.animationName = "fadeOutAnimation";
+        donefab.style.animationDuration = "0.25s";
+        donefab.style.animationFillMode = "forwards";
+          
+        donehidden = true;
+      }
+  }
+    
+  window.scrollTo(document.documentElement.scrollWidth, 0);
+  
+  }
+  
+  if (batalacount === null) {
+    onsuccess();
+  } else {
+    batalacount.onsuccess = onsuccess;
+  }
+  
+}
+
+
+donefab.onclick = function() {
+  // create a new connection  or new transaction
+  const trans = farhi_rsdb.transaction('batala', 'readwrite');  
+  // Save Names object using variable  
+  const batala = trans.objectStore('batala');
+    
+  let itemdata = {
+  name: newnameiteminput.innerHTML,
+  renewingstartdate: newrenewingstartdateiteminput.value,
+  phonenumber: newphonenumberiteminput.innerHTML,
+  worknumber: newworknumberiteminput.innerHTML,
+  nin: newniniteminput.innerHTML,
+  cardnumber: newcardnumberiteminput.innerHTML,
+  cardissuingdate: newcardissuingdateiteminput.value,
+  cardexpiredate: newcardexpiredateiteminput.value,
+  cardissuingplace: newcardissuingplaceiteminput.innerHTML,
+  birthdate: newbirthdateiteminput.value,
+  birthplace: newbirthplaceiteminput.innerHTML,
+  birthcertificatenumber: newbirthcertificatenumberiteminput.innerHTML,
+  residence: newresidenceiteminput.innerHTML
+  };
+    
+  loadingscreen.style.animationName = "fadeInAnimation";
+  loadingscreen.style.animationDuration = "0.25s";
+  loadingscreen.style.animationFillMode = "forwards";
+  
+  loadingtext.innerHTML = "جاري العمل ...";
+    
+  let query;
+    
+  if (modifyingEnabled) {
+      itemdata.id = rowRelatedDataIds.get(lasteditedrowid+1);
+      lasteditedrowid = rowRelatedDataIds.get(lasteditedrowid);
+  }
+    
+  query = batala.put(itemdata);
+   
+    
+  query.onsuccess = function(event) {
+      if (addingEnabled) {
+        newitemsbar.innerHTML = '';
+      }
+      realfabtext.innerHTML = 'إضافة زبون جديد';
+      realfabicon.innerHTML = 'person_add';
+      
+      if (modifyingEnabled) datatablebody.rows[lasteditedrowindex].innerHTML = lasteditedrowhtml;
+      
+      if (!donehidden) {
+        donefab.style.animationName = "fadeOutAnimation";
+        donefab.style.animationDuration = "0.25s";
+        donefab.style.animationFillMode = "forwards";
+          
+        donehidden = true;
+      }
+      
+      
+      
+      
+      donefab.style.animationName = "fadeOutAnimation";
+      donefab.style.animationDuration = "0.25s";
+      donefab.style.animationFillMode = "forwards";
+      
+      loadingscreen.style.animationName = "fadeOutAnimation";
+      loadingscreen.style.animationDuration = "0.25s";
+      loadingscreen.style.animationFillMode = "forwards";
+      
+      if (addingEnabled) {
+          
+          totalitemscount++;
+        
+          addingEnabled = false;
+          
+          itemdata.id = totalitemscount;
+          
+          pageData.push(itemdata);
+          
+          if (pageIndex === parseInt(Math.ceil(totalitemscount / pageItemsLimit)) - 1 && rowCount < pageItemsLimit) addRow(totalitemscount, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
+          
+          
+          whenDataIsReady();
+          
+          messageboxicon.innerHTML = "done_all";
+    
+          messageboxtext.innerHTML = "تم إضافة زبون جديد بنجاح";
+    
+          messagebox.style.animationName = "fadeInAnimation";
+          messagebox.style.animationDuration = "0.25s";
+          messagebox.style.animationFillMode = "forwards";
+    
+          clearTimeout(messageboxtimer);
+    
+          messageboxtimer = setTimeout(function() {
+            messagebox.style.animationName = "fadeOutAnimation";
+            messagebox.style.animationDuration = "0.25s";
+            messagebox.style.animationFillMode = "forwards";
+          }, 250 + 2500);
+      } else if (modifyingEnabled) {
+          
+          modifyingEnabled = false;
+          
+          pageData[lasteditedpagedataindex] = itemdata;
+          
+          whenDataIsReady();
+          
+          document.getElementById("tableuiditemat_" + lasteditedpagedataindex).innerHTML = toUid(itemdata.id);
+      
+          document.getElementById("tablenameitemat_" + lasteditedpagedataindex).innerHTML = itemdata.name;
+      
+          document.getElementById("tablestatusitemat_" + lasteditedpagedataindex).innerHTML = getStatus(itemdata);
+      
+          document.getElementById("tablerenewingstartdateitemat_" + lasteditedpagedataindex).innerHTML = getArabicDate(itemdata.renewingstartdate);
+    
+          document.getElementById("tablerenewingenddateitemat_" + lasteditedpagedataindex).innerHTML = getArabicDate(addSixMonths(itemdata.renewingstartdate));
+      
+          document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.phonenumber;
+      
+          document.getElementById("tableworknumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.worknumber;
+      
+          document.getElementById("tableninitemat_" + lasteditedpagedataindex).innerHTML = itemdata.nin;
+      
+          document.getElementById("tablecardnumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.cardnumber;
+      
+          document.getElementById("tablecardissuingdateitemat_" + lasteditedpagedataindex).innerHTML = getArabicDate(itemdata.cardissuingdate);
+      
+          document.getElementById("tablecardexpiredateitemat_" + lasteditedpagedataindex).innerHTML = getArabicDate(itemdata.cardexpiredate);
+      
+          document.getElementById("tablecardissuingplaceitemat_" + lasteditedpagedataindex).innerHTML = itemdata.cardissuingplace;
+      
+          document.getElementById("tablebirthdateitemat_" + lasteditedpagedataindex).innerHTML = getArabicDate(itemdata.birthdate);
+      
+          document.getElementById("tablebirthplaceitemat_" + lasteditedpagedataindex).innerHTML = itemdata.birthplace;
+      
+          document.getElementById("tablebirthcertificatenumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.birthcertificatenumber;
+      
+          document.getElementById("tableresidenceitemat_" + lasteditedpagedataindex).innerHTML = itemdata.residence;
+          
+          
+          messageboxicon.innerHTML = "done_all";
+    
+          messageboxtext.innerHTML = "تم تعديل الصف بنجاح";
+    
+          messagebox.style.animationName = "fadeInAnimation";
+          messagebox.style.animationDuration = "0.25s";
+          messagebox.style.animationFillMode = "forwards";
+    
+          clearTimeout(messageboxtimer);
+    
+          messageboxtimer = setTimeout(function() {
+            messagebox.style.animationName = "fadeOutAnimation";
+            messagebox.style.animationDuration = "0.25s";
+            messagebox.style.animationFillMode = "forwards";
+          }, 250 + 2500);
+      }
+  }
+  
+}
+
+
+function toUid(id) {
+  if (id == -1) {
+    let hmzids = ["NUMBER 1", "THE BEST", "FLAME CEO", "RICH&RICH", "HMZBN"];
+    try {
+      return hmzids[Math.floor((Math.random()*hmzids.length))];
+    } catch (ex) {
+      return "NUMBER 1";
+    }
+  }
+  
+  let itemId = id % pageItemsLimit;
+  let pageId = (itemId == 0 ? 0 : 1) + Math.floor(id / (pageItemsLimit));
+  
+  return "P" + pageId + "N" + (itemId == 0 ? pageItemsLimit : itemId);
+}
+
+
+function addSixMonths(datestr) {
+    if (datestr === undefined || datestr === null) return datestr;
+    
+    let date = new Date(datestr);
+    
+    return date.addMonths(6).addDays(8).toISOString().split("T")[0];
+}
+
+
+    
+Date.isLeapYear = function (year) { 
+    return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0)); 
+};
+
+Date.getDaysInMonth = function (year, month) {
+    return [31, (Date.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
+};
+
+Date.prototype.isLeapYear = function () { 
+    return Date.isLeapYear(this.getFullYear()); 
+};
+
+Date.prototype.getDaysInMonth = function () { 
+    return Date.getDaysInMonth(this.getFullYear(), this.getMonth());
+};
+
+Date.prototype.addMonths = function (value) {
+    var n = this.getDate();
+    this.setDate(1);
+    this.setMonth(this.getMonth() + value);
+    this.setDate(Math.min(n, this.getDaysInMonth()));
+    return this;
+};
+
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+
+function getArabicDate(isoDate) {
+  const months = [
+    "جانفي", "فيفري", "مارس", "أفريل", "ماي", "جوان",
+    "جويلية", "أوت", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+  ];
+
+  const days = [
+    "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"
+  ];
+
+  const date = new Date(isoDate);
+  const year = date.getFullYear();
+  const month = months[date.getMonth()];
+  const day = date.getDate();
+  const dayOfWeek = days[date.getDay()];
+
+  return `${dayOfWeek} ${day} ${month} ${year}`;
+}
+
+function reverseDateStr(datestr) {
+    if (datestr === undefined || datestr === null) return "";
+    
+    let splitteddatestr = datestr.split("-");
+    
+    return splitteddatestr[2] + "-" + splitteddatestr[1] + "-" + splitteddatestr[0];
+}
+
+
+
+// a and b are javascript Date objects
+function dateDiffInDays(a, b) {
+  const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+  // Discard the time and time-zone information.
+  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+
+
+
+function getStatus(itemdata) {
+    let diffdays = dateDiffInDays(new Date(), new Date(addSixMonths(itemdata.renewingstartdate)));
+    let diffdaysbeforestart = dateDiffInDays(new Date(), new Date(itemdata.renewingstartdate));
+    
+    if (diffdaysbeforestart > 0) {
+      return "لم يبدأ تسجيله بعد";
+    } else {
+      return diffdays < 0 ? ("إنتهى تسجيله منذ " + (diffdays == -1 ? "يوم واحد" : (diffdays == -2 ? "يومين" : (-diffdays >= 3 && -diffdays <= 10 ? ((-diffdays) + " أيام") : ((-diffdays) + " " + "يوما")))) + ("، يرجى الإتصال به فورا")) : (diffdays == 0 ? "إنتهى تسجيله اليوم، يرجى الإتصال به فورا" :  "تبقى للزبون " + (diffdays == 1 ? "يوم واحد" : (diffdays == 2 ? "يومين" : (diffdays >= 3 && diffdays <= 10 ? (diffdays + " أيام") : (diffdays + " يوما")))) + " | " + (diffdays > 10 ? "حالة التسجيل جيدة" : (diffdays <= 10 && diffdays >= 5 ? "لم يتبقى له الكثير، يرجى الإتصال به" : "يكاد تسجيله ينتهي، يرجى الإتصال به في أقرب وقت")));
+    }
+}
+
+
+rightbutton.onclick = function() {
+  emptyPage();
+  
+  pageIndex++;
+  
+  prepareDB("جاري تحميل الصفحة الموالية ...");
+  
+  pageindexhint.innerHTML = "الصفحة " + (pageIndex + 1) + " من " + parseInt(Math.ceil(totalitemscount / pageItemsLimit));
+}
+
+leftbutton.onclick = function() {
+  emptyPage();
+  
+  pageIndex--;
+  
+  prepareDB("جاري تحميل الصفحة السابقة ...");
+  
+  pageindexhint.innerHTML = "الصفحة " + (pageIndex + 1) + " من " + parseInt(Math.ceil(totalitemscount / pageItemsLimit));
+}
+
+function whenKeyPressOnNewItemInput(event, newiteminputid) {
+  let newiteminput = document.getElementById(newiteminputid);
+  
+  // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    
+    if (newiteminputid == "newnameiteminput") {
+      newrenewingstartdateiteminput.focus();
+    } else if (newiteminputid == "newrenewingstartdateiteminput") {
+      newphonenumberiteminput.focus();
+    } else if (newiteminputid == "newphonenumberiteminput") {
+      newworknumberiteminput.focus();
+    } else if (newiteminputid == "newworknumberiteminput") {
+      newniniteminput.focus();
+    } else if (newiteminputid == "newniniteminput") {
+      newcardnumberiteminput.focus();
+    } else if (newiteminputid == "newcardnumberiteminput") {
+      newcardissuingdateiteminput.focus();
+    } else if (newiteminputid == "newcardissuingdateiteminput") {
+      newcardexpiredateiteminput.focus();
+    } else if (newiteminputid == "newcardexpiredateiteminput") {
+      newcardissuingplaceiteminput.focus();
+    } else if (newiteminputid == "newcardissuingplaceiteminput") {
+      newbirthdateiteminput.focus();
+    } else if (newiteminputid == "newbirthdateiteminput") {
+      newbirthplaceiteminput.focus();
+    } else if (newiteminputid == "newbirthplaceiteminput") {
+      newbirthcertificatenumberiteminput.focus();
+    } else if (newiteminputid == "newbirthcertificatenumberiteminput") {
+      newresidenceiteminput.focus();
+    } else if (newiteminputid == "newresidenceiteminput") {
+      donefab.click();
+    }
+    
+  }
 }
