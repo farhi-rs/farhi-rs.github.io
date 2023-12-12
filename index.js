@@ -296,7 +296,6 @@ function search(batala, onsuccessevent) {
             }
           }
           onsuccessevent(fakeevent);
-          totalitemscount++;
           pageIndex = 0;
           whenDataIsReady();
         }
@@ -731,7 +730,7 @@ function prepareDB(loadingmsg, belowToolbar) {
           pageData.push(itemdata);
           
           if (searchenabled) {
-            if (totalitemscount <= pageItemsLimit) {
+            if (totalitemscount <= pageItemsLimit || true) {
               addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
             }
           } else {
@@ -1271,7 +1270,9 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
         messagebox.style.animationDuration = "0.25s";
         messagebox.style.animationFillMode = "forwards";
         
-        setTimeout(function() {
+        clearTimeout(messageboxtimer);
+        
+        messageboxtimer = setTimeout(function() {
           messagebox.style.animationName = "fadeOutAnimation";
           messagebox.style.animationDuration = "0.25s";
           messagebox.style.animationFillMode = "forwards";
