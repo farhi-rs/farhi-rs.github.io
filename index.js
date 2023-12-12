@@ -287,7 +287,7 @@ function search(batala, onsuccessevent) {
     
     itemsdata.forEach(function(itemdata) {
       (searchinput.includes(" ") ? searchinput.split(/\s+/) : [searchinput]).forEach(function(word) {
-        if (itemdata[searchfactor].includes(word)) {
+        if (itemdata[searchfactor].includes(word) && !pageData.includes(itemdata)) {
           let fakeevent = {
             target: {
               result: {
@@ -884,7 +884,9 @@ realfab.onclick = function() {
         
         emptyPage();
         
-        pageIndex = 0;
+        document.getElementById("tabletitle" + searchfactor + "item").style = undefined;
+        
+        pageIndex = -1;
         
         totalitemscount = 0;
 
@@ -1252,7 +1254,29 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
     } else if (newiteminputid == "newbirthcertificatenumberiteminput") {
       newresidenceiteminput.focus();
     } else if (newiteminputid == "newresidenceiteminput") {
-      donefab.click();
+      if ((document.getElementById('newnameiteminput') !== undefined ? (document.getElementById('newnameiteminput') !== null ? document.getElementById('newnameiteminput').innerHTML : "") : "").replaceAll(" ", "") !== "" && (document.getElementById('newrenewingstartdateiteminput') !== undefined ? (document.getElementById('newrenewingstartdateiteminput') !== null ? document.getElementById('newrenewingstartdateiteminput').value : "") : "").replaceAll(" ", "") !== "") {
+        donefab.click();
+      } else {
+        try {
+          newnameiteminput.focus();
+        } catch (ex) {
+          // Ignore...
+        }
+        
+        messageboxicon.innerHTML = "warning";
+    
+        messageboxtext.innerHTML = "إملئ على الأقل الإسم و تاريخ بداية التجديد ليتم إضافة الزبون";
+    
+        messagebox.style.animationName = "fadeInAnimation";
+        messagebox.style.animationDuration = "0.25s";
+        messagebox.style.animationFillMode = "forwards";
+        
+        setTimeout(function() {
+          messagebox.style.animationName = "fadeOutAnimation";
+          messagebox.style.animationDuration = "0.25s";
+          messagebox.style.animationFillMode = "forwards";
+        }, 250 + 2000);
+      }
     }
     
   } else if (event.key === "Escape") {
