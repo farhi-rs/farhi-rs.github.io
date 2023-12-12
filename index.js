@@ -227,6 +227,9 @@ toolbarsearchbutton.onclick = function() {
   //searchenabled = !searchenabled;
   searchenabled = true;
   
+  realfabtext.innerHTML = 'الغاء';
+  realfabicon.innerHTML = 'close';
+  
   toolbarsearchicon.style.animationName = "fadeOutAnimation";
   toolbarsearchicon.style.animationDuration = "0.2s";
   toolbarsearchicon.style.animationFillMode = "forwards";
@@ -261,10 +264,10 @@ toolbarsearchbutton.onclick = function() {
 
 
 function requestSearch(canSearch) {
-  if (canSearch) {
+  if (canSearch && toolbarsearchinput.innerHTML.replaceAll(" ", "") != "") {
     emptyPage();
   
-    prepareDB("جاري البحث ...");
+    prepareDB("جاري البحث ...", true);
   }
 }
 
@@ -274,12 +277,10 @@ function search(batala, onsuccessevent) {
   let factorindex = batala.index(searchfactor);
   
   let searchinput = tokenize(toolbarsearchinput.innerHTML);
-  /*
-  factorindex.openCursor(IDBKeyRange.only(searchinput)).onsuccess = onsuccess;
-  (searchinput.includes(" ") ? searchinput.split(/\s+/) : [searchinput]).forEach(function(word) {
-      factorindex.openCursor(IDBKeyRange.only(word)).onsuccess = onsuccess;
-  });
-  */
+  
+  datatableheadlayerscontainer.style.animationName = "fadeOutAnimation";
+  datatableheadlayerscontainer.style.animationDuration = "0.25s";
+  datatableheadlayerscontainer.style.animationFillMode = "forwards";
   
   factorindex.getAll().onsuccess = function(event) {
     let itemsdata = event.target.result;
@@ -295,6 +296,9 @@ function search(batala, onsuccessevent) {
             }
           }
           onsuccessevent(fakeevent);
+          totalitemscount++;
+          pageIndex = 0;
+          whenDataIsReady();
         }
       });
     });
@@ -660,7 +664,7 @@ var farhi_rsdb;
 
 function prepareDB(loadingmsg, belowToolbar) {
   
-  loadingscreen.style.transform = "translateY(" + (belowToolbar ? toolbar.offsetHeight : 0) + "px)";
+  loadingscreen.style.top = (belowToolbar ? toolbar.offsetHeight : 0) + "px";
   
   loadingscreen.style.animationName = "fadeInAnimation";
   loadingscreen.style.animationDuration = "0.25s";
@@ -726,7 +730,7 @@ function prepareDB(loadingmsg, belowToolbar) {
         if (itemdata != null) {
           pageData.push(itemdata);
         
-          addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
+          if (totalitemscount <= pageItemsLimit) addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
         }
         
         if (cursor.continue) cursor.continue();
@@ -830,7 +834,7 @@ realfab.onclick = function() {
     loadingscreen.style.animationFillMode = "forwards";
   }
     
-  if (!addingEnabled && !modifyingEnabled) {
+  if (!addingEnabled && !modifyingEnabled && !searchenabled) {
       
       newitemsbar.innerHTML = newitemshtml;
       realfabtext.innerHTML = 'الغاء';
@@ -854,7 +858,7 @@ realfab.onclick = function() {
       
       newresidenceiteminput.innerHTML = "العطاف - عين الدفلى";
       whenTextChange('newresidenceiteminput', 'newresidenceitemhint');
-  } else if (addingEnabled || modifyingEnabled) {
+  } else if (addingEnabled || modifyingEnabled || searchenabled) {
       
       newitemsbar.innerHTML = '';
       realfabtext.innerHTML = 'إضافة زبون جديد';
@@ -867,6 +871,20 @@ realfab.onclick = function() {
       modifyingEnabled = false;
       addingEnabled = false;
       
+      if (searchenabled) {
+        toolbarsearchfield.style.animationName = "fadeOutAnimation";
+        toolbarsearchfield.style.animationDuration = "0.2s";
+        toolbarsearchfield.style.animationFillMode = "forwards";
+        
+        emptyPage();
+        
+        pageIndex = 0;
+        
+        totalitemscount = 0;
+
+        prepareDB("جاري تحميل البيانات ...");
+      }
+      searchenabled = false;
       
       
       if (!donehidden) {
@@ -1171,7 +1189,11 @@ rightbutton.onclick = function() {
   
   pageIndex++;
   
-  prepareDB("جاري تحميل الصفحة الموالية ...");
+  if (searchenabled) {
+    loadSearchPage();
+  } else {
+    prepareDB("جاري تحميل الصفحة الموالية ...");
+  }
   
   pageindexhint.innerHTML = "الصفحة " + (pageIndex + 1) + " من " + parseInt(Math.ceil(totalitemscount / pageItemsLimit));
 }
@@ -1181,7 +1203,11 @@ leftbutton.onclick = function() {
   
   pageIndex--;
   
-  prepareDB("جاري تحميل الصفحة السابقة ...");
+  if (searchenabled) {
+    loadSearchPage();
+  } else {
+    prepareDB("جاري تحميل الصفحة السابقة ...");
+  }
   
   pageindexhint.innerHTML = "الصفحة " + (pageIndex + 1) + " من " + parseInt(Math.ceil(totalitemscount / pageItemsLimit));
 }
@@ -1223,6 +1249,40 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
       donefab.click();
     }
     
+  } else if (event.key === "Escape") {
+    // If the user presses the "Escape" key on the keyboard
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    
+    if (newiteminputid == "newnameiteminput") {
+      realfab.click();
+    } else if (newiteminputid == "newrenewingstartdateiteminput") {
+      newnameiteminput.focus();
+    } else if (newiteminputid == "newphonenumberiteminput") {
+      newrenewingstartdateiteminput.focus();
+    } else if (newiteminputid == "newworknumberiteminput") {
+      newphonenumberiteminput.focus();
+    } else if (newiteminputid == "newniniteminput") {
+      newworknumberiteminput.focus();
+    } else if (newiteminputid == "newcardnumberiteminput") {
+      newniniteminput.focus();
+    } else if (newiteminputid == "newcardissuingdateiteminput") {
+      newcardnumberiteminput.focus();
+    } else if (newiteminputid == "newcardexpiredateiteminput") {
+      newcardissuingdateiteminput.focus();
+    } else if (newiteminputid == "newcardissuingplaceiteminput") {
+      newcardexpiredateiteminput.focus();
+    } else if (newiteminputid == "newbirthdateiteminput") {
+      newcardissuingplaceiteminput.focus();
+    } else if (newiteminputid == "newbirthplaceiteminput") {
+      newbirthdateiteminput.focus();
+    } else if (newiteminputid == "newbirthcertificatenumberiteminput") {
+      newbirthplaceiteminput.focus();
+    } else if (newiteminputid == "newresidenceiteminput") {
+      newbirthcertificatenumberiteminput.focus();
+    }
+    
   }
 }
 
@@ -1244,4 +1304,17 @@ function tokenize(strunfor, returnSet) {
   let finalstr = [...theset].join(" ");
   
   return returnSet ? theset : finalstr;
+}
+
+
+
+
+function loadSearchPage() {
+  for (let i = pageIndex * pageItemsLimit; i < (pageIndex+1) * pageItemsLimit; i++) {
+    if (i >= pageData.length) return;
+    
+    let itemdata = pageData[i];
+    
+    addRow(i+1, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
+  }
 }
