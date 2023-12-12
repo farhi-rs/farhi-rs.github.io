@@ -223,14 +223,16 @@ downbutton.onclick = function() {
 
 var searchenabled = false;
 toolbarsearchbutton.onclick = function() {
-  searchenabled = !searchenabled;
+  requestSearch(searchenabled);
+  //searchenabled = !searchenabled;
+  searchenabled = true;
   
   toolbarsearchicon.style.animationName = "fadeOutAnimation";
   toolbarsearchicon.style.animationDuration = "0.2s";
   toolbarsearchicon.style.animationFillMode = "forwards";
   
   setTimeout(function() {
-    toolbarsearchicon.innerHTML = searchenabled ? "clear" : "search";
+    //toolbarsearchicon.innerHTML = searchenabled ? "clear" : "search";
     
     toolbarsearchicon.style.animationName = "fadeInAnimation";
     toolbarsearchicon.style.animationDuration = "0.2s";
@@ -244,17 +246,68 @@ toolbarsearchbutton.onclick = function() {
     if (searchenabled) {
       let lastsearchfactor = searchfactor == "" ? bydefaultsearchfactor : searchfactor;
       searchfactor = "";
-      whenTitleItemClicked(lastsearchfactor);
+      whenTitleItemClicked("tabletitle" + lastsearchfactor + "item");
       
-      window.scrollTo(document.getElementById(lastsearchfactor).offsetLeft, window.scrollY);
+      window.scrollTo(document.getElementById("tabletitle" + lastsearchfactor + "item").offsetLeft, window.scrollY);
     } else {
-      document.getElementById(searchfactor).style = undefined;
+      document.getElementById("tabletitle" + searchfactor + "item").style = undefined;
       
       window.scrollTo(datatable.offsetWidth, window.scrollY);
     }
   }, 200);
   
 }
+
+
+
+function requestSearch(canSearch) {
+  if (canSearch) {
+    emptyPage();
+  
+    prepareDB("جاري البحث ...");
+  }
+}
+
+
+
+function search(batala, onsuccessevent) {
+  let factorindex = batala.index(searchfactor);
+  
+  let searchinput = tokenize(toolbarsearchinput.innerHTML);
+  /*
+  factorindex.openCursor(IDBKeyRange.only(searchinput)).onsuccess = onsuccess;
+  (searchinput.includes(" ") ? searchinput.split(/\s+/) : [searchinput]).forEach(function(word) {
+      factorindex.openCursor(IDBKeyRange.only(word)).onsuccess = onsuccess;
+  });
+  */
+  
+  factorindex.getAll().onsuccess = function(event) {
+    let itemsdata = event.target.result;
+    
+    itemsdata.forEach(function(itemdata) {
+      (searchinput.includes(" ") ? searchinput.split(/\s+/) : [searchinput]).forEach(function(word) {
+        if (itemdata[searchfactor].includes(word)) {
+          let fakeevent = {
+            target: {
+              result: {
+                value: itemdata
+              }
+            }
+          }
+          onsuccessevent(fakeevent);
+        }
+      });
+    });
+    
+    loadingscreen.style.animationName = "fadeOutAnimation";
+    loadingscreen.style.animationDuration = "0.25s";
+    loadingscreen.style.animationFillMode = "forwards";
+    
+  }
+  
+}
+
+
 
 
 var lastinputvalues = new Map();
@@ -293,7 +346,7 @@ function whenTextChange(inputid, inputhintid) {
     
   
     
-  if ((newnameiteminput !== undefined ? (newnameiteminput !== null ? newnameiteminput.innerHTML : "") : "").replaceAll(" ", "") !== "" && (newrenewingstartdateiteminput !== undefined ? (newrenewingstartdateiteminput !== null ? newrenewingstartdateiteminput.value : "") : "").replaceAll(" ", "") !== "") {
+  if ((document.getElementById('newnameiteminput') !== undefined ? (document.getElementById('newnameiteminput') !== null ? document.getElementById('newnameiteminput').innerHTML : "") : "").replaceAll(" ", "") !== "" && (document.getElementById('newrenewingstartdateiteminput') !== undefined ? (document.getElementById('newrenewingstartdateiteminput') !== null ? document.getElementById('newrenewingstartdateiteminput').value : "") : "").replaceAll(" ", "") !== "") {
       donefab.style.animationName = "fadeInAnimation";
       donefab.style.animationDuration = "0.25s";
       donefab.style.animationFillMode = "forwards";
@@ -410,7 +463,6 @@ function whenDataItemClicked(itemid) {
       
       if (hamzarow) {
           // Hamza special items
-          // We skip them
           
           messageboxicon.innerHTML = "close";
     
@@ -460,7 +512,7 @@ function whenDataItemClicked(itemid) {
       lastdataitemOffsetLeft = dataitem.offsetLeft;
       
       
-      realfabtext.innerHTML = 'الغاء';
+      realfabtext.innerHTML = 'إلغاء';
       realfabicon.innerHTML = 'close';
       
       
@@ -548,17 +600,16 @@ function whenDataItemDismissed(itemid) {
 
 // Title items listeners...
 var searchfactor = "";
-const bydefaultsearchfactor = "tabletitleuiditem";
+const bydefaultsearchfactor = "uid";
 
 function whenTitleItemClicked(titleitemid) {
-  
-  if (!searchenabled || titleitemid === searchfactor) return;
+  if (!searchenabled || titleitemid === ("tabletitle" + searchfactor + "item")) return;
   
   let titleitem = document.getElementById(titleitemid);
-  let lasttitleitem = document.getElementById(searchfactor);
+  let lasttitleitem = document.getElementById("tabletitle" + searchfactor + "item");
   
   let lastsearchfactor = searchfactor;
-  searchfactor = titleitemid;
+  searchfactor = titleitemid.replaceAll("tabletitle", "").replaceAll("item", "");
   
   titleitem.style.color = 'white';
   titleitem.style.background = '#2196f3';
@@ -607,7 +658,9 @@ var pageData = [];
 var farhi_rsdb;
 
 
-function prepareDB(loadingmsg) {
+function prepareDB(loadingmsg, belowToolbar) {
+  
+  loadingscreen.style.transform = "translateY(" + (belowToolbar ? toolbar.offsetHeight : 0) + "px)";
   
   loadingscreen.style.animationName = "fadeInAnimation";
   loadingscreen.style.animationDuration = "0.25s";
@@ -619,8 +672,33 @@ function prepareDB(loadingmsg) {
 
   farhi_rsdb_request.onupgradeneeded = function(event) {
     let farhi_rsdb = event.target.result;
+    
+    let store = null;
 
-    if (!farhi_rsdb.objectStoreNames.contains("batala")) farhi_rsdb.createObjectStore("batala", { keyPath: 'id', autoIncrement: true });
+    if (!farhi_rsdb.objectStoreNames.contains("batala")) {
+      store = farhi_rsdb.createObjectStore("batala", { keyPath: 'id', autoIncrement: true });
+    } else {
+      let trans = farhi_rsdb.transaction("batala", "readwrite");
+
+      store = trans.objectStore("batala");
+    }
+    
+    if (store !== null) {
+      store.createIndex('uid', 'id', {multiEntry: true});
+      store.createIndex('name', 'nametokenized', {multiEntry: true});
+      store.createIndex('renewingstartdate', 'renewingstartdate', {multiEntry: true});
+      store.createIndex('phonenumber', 'phonenumber', {multiEntry: true});
+      store.createIndex('worknumber', 'worknumber', {multiEntry: true});
+      store.createIndex('nin', 'nin', {multiEntry: true});
+      store.createIndex('cardnumber', 'cardnumber', {multiEntry: true});
+      store.createIndex('cardissuingdate', 'cardissuingdate', {multiEntry: true});
+      store.createIndex('cardexpiredate', 'cardexpiredate', {multiEntry: true});
+      store.createIndex('cardissuingplace', 'cardissuingplacetokenized', {multiEntry: true});
+      store.createIndex('birthdate', 'birthdate', {multiEntry: true});
+      store.createIndex('birthplace', 'birthplacetokenized', {multiEntry: true});
+      store.createIndex('birthcertificatenumber', 'birthcertificatenumber', {multiEntry: true});
+      store.createIndex('residence', 'residencetokenized', {multiEntry: true});
+    }
   };
 
   farhi_rsdb_request.onsuccess = function(event) {
@@ -639,16 +717,19 @@ function prepareDB(loadingmsg) {
     
     if (pageIndex === -1) pageIndex = parseInt(Math.max(1, parseInt(Math.ceil(totalitemscount / pageItemsLimit)))) - 1;
 
-    batala.openCursor(IDBKeyRange.bound((pageIndex*pageItemsLimit) + 1, ((pageIndex+1)*pageItemsLimit))).onsuccess = function(event) {
+    let onsuccess = function(event) {
       let cursor = event.target.result;
 
       if (cursor) {
         let itemdata = cursor.value;
-
-        pageData.push(itemdata);
         
-        addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
-        cursor.continue();
+        if (itemdata != null) {
+          pageData.push(itemdata);
+        
+          addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
+        }
+        
+        if (cursor.continue) cursor.continue();
       } else {
         
         loadingscreen.style.animationName = "fadeOutAnimation";
@@ -659,6 +740,14 @@ function prepareDB(loadingmsg) {
         
       }
     };
+    
+    
+    if (searchenabled) {
+      search(batala, onsuccess);
+    } else {
+      batala.openCursor(IDBKeyRange.bound((pageIndex*pageItemsLimit) + 1, ((pageIndex+1)*pageItemsLimit))).onsuccess = onsuccess;
+    }
+    
     
     };
 
@@ -810,6 +899,7 @@ donefab.onclick = function() {
     
   let itemdata = {
   name: newnameiteminput.innerHTML,
+  nametokenized: tokenize(newnameiteminput.innerHTML, true),
   renewingstartdate: newrenewingstartdateiteminput.value,
   phonenumber: newphonenumberiteminput.innerHTML,
   worknumber: newworknumberiteminput.innerHTML,
@@ -818,10 +908,13 @@ donefab.onclick = function() {
   cardissuingdate: newcardissuingdateiteminput.value,
   cardexpiredate: newcardexpiredateiteminput.value,
   cardissuingplace: newcardissuingplaceiteminput.innerHTML,
+  cardissuingplacetokenized: tokenize(newcardissuingplaceiteminput.innerHTML, true),
   birthdate: newbirthdateiteminput.value,
   birthplace: newbirthplaceiteminput.innerHTML,
+  birthplacetokenized: tokenize(newbirthplaceiteminput.innerHTML, true),
   birthcertificatenumber: newbirthcertificatenumberiteminput.innerHTML,
-  residence: newresidenceiteminput.innerHTML
+  residence: newresidenceiteminput.innerHTML,
+  residencetokenized: tokenize(newresidenceiteminput.innerHTML, true)
   };
     
   loadingscreen.style.animationName = "fadeInAnimation";
@@ -1019,6 +1112,8 @@ Date.prototype.addDays = function(days) {
 
 
 function getArabicDate(isoDate) {
+  if (isoDate === undefined || isoDate === null) return "";
+  
   const months = [
     "جانفي", "فيفري", "مارس", "أفريل", "ماي", "جوان",
     "جويلية", "أوت", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
@@ -1129,4 +1224,24 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
     }
     
   }
+}
+
+
+function tokenize(strunfor, returnSet) {
+  returnSet = false;
+  
+  let str = strunfor.replaceAll(/&nbsp;/g, ' ');
+  
+  let thearray = str.split(/\s+/); // space
+  
+  let theset = new Set();
+  
+  thearray.forEach(function(word) {
+    if (word === "") return;
+    theset.add(word);
+  });
+  
+  let finalstr = [...theset].join(" ");
+  
+  return returnSet ? theset : finalstr;
 }
