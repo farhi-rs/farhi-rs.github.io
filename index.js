@@ -286,8 +286,7 @@ function search(batala, onsuccessevent) {
     let itemsdata = event.target.result;
     
     itemsdata.forEach(function(itemdata) {
-      (searchinput.includes(" ") ? searchinput.split(/\s+/) : [searchinput]).forEach(function(word) {
-        if (itemdata[searchfactor].includes(word) && !pageData.includes(itemdata)) {
+      if (itemdata[searchfactor].includes(searchinput) && !pageData.includes(itemdata)) {
           let fakeevent = {
             target: {
               result: {
@@ -299,7 +298,6 @@ function search(batala, onsuccessevent) {
           pageIndex = 0;
           whenDataIsReady();
         }
-      });
     });
     
     loadingscreen.style.animationName = "fadeOutAnimation";
@@ -730,7 +728,7 @@ function prepareDB(loadingmsg, belowToolbar) {
           pageData.push(itemdata);
           
           if (searchenabled) {
-            if (totalitemscount <= pageItemsLimit || true) {
+            if (rowCount <= pageItemsLimit) {
               addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
             }
           } else {
