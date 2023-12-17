@@ -414,7 +414,7 @@ function sort(itemsdata, sortfactor) {
     } else if (firstitem[sortfactor] === undefined || seconditem[sortfactor] === undefined || firstitem[sortfactor] === null || seconditem[sortfactor] === null || firstitem[sortfactor] === "" || seconditem[sortfactor] === "") {
       return (firstitem[sortfactor] === undefined || firstitem[sortfactor] === null || firstitem[sortfactor] === "") ? -1 : ((seconditem[sortfactor] === undefined || seconditem[sortfactor] === null || seconditem[sortfactor] === "") ? 1 : 0);
     } else {
-      return -firstitem[sortfactor].localeCompare(seconditem[sortfactor], ["ar", "fr"]);
+      return firstitem[sortfactor].localeCompare(seconditem[sortfactor], ["ar", "fr"]);
     }
     
     return 0;
