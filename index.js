@@ -1610,8 +1610,9 @@ async function loadSearchPage(delta) {
       if (pi == pageIndex) continue;
       
       if (searchPages[pi] == undefined || searchPages[pi] == null) {
-        jumpfirstiteration = true;
-        break;
+        //jumpfirstiteration = true;
+        //break;
+        continue;
       } else if (searchPages[pi].includes(itemdata.id)) {
         jumpfirstiteration = true;
         break;
