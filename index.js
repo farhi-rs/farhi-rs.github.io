@@ -414,7 +414,7 @@ function sort(itemsdata, sortfactor) {
     } else if (firstitem[sortfactor] === undefined || seconditem[sortfactor] === undefined || firstitem[sortfactor] === null || seconditem[sortfactor] === null || firstitem[sortfactor] === "" || seconditem[sortfactor] === "") {
       return (firstitem[sortfactor] === undefined || firstitem[sortfactor] === null || firstitem[sortfactor] === "") ? -1 : ((seconditem[sortfactor] === undefined || seconditem[sortfactor] === null || seconditem[sortfactor] === "") ? 1 : 0);
     } else {
-      return firstitem[sortfactor].localeCompare(seconditem[sortfactor], ["ar", "fr"]);
+      return -(firstitem[sortfactor].localeCompare(seconditem[sortfactor], ["ar", "fr"]));
     }
     
     return 0;
@@ -887,9 +887,9 @@ function prepareDB(loadingmsg, belowToolbar) {
           
           if (searchenabled) {
             if (rowCount < pageItemsLimit) {
-              if (searchPages[pageIndex] === undefined || searchPages[pageIndex] === null) searchPages[pageIndex] = [];
+              if (searchPages[0] === undefined || searchPages[0] === null) searchPages[0] = [];
               
-              searchPages[pageIndex].push(itemdata.id);
+              searchPages[0].push(itemdata.id);
               
               addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
             }
@@ -1609,7 +1609,7 @@ async function loadSearchPage(delta) {
     for (let pi = 0; pi < searchPages.length; pi++) {
       if (pi == pageIndex) continue;
       
-      if (searchPages[pi] == undefined || searchPages[pi] == null) {
+      if (searchPages[pi] === undefined || searchPages[pi] === null) {
         //jumpfirstiteration = true;
         //break;
         continue;
