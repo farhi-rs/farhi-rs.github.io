@@ -1,11 +1,11 @@
 {
   "name": "Farhi Registration System",
   "short_name": "Farhi RS",
-  "theme_color": "#2196f3",
+  "theme_color": "#548DB8",
   "background_color": "#ffffff",
   "display": "standalone",
   "start_url": "/",
-  "description": "The complete program for registration built for Farhi",
+  "description": "The complete program for registration, built for Farhi by Flame Team Limited (Flame Corp)",
   "orientation": "any",
   "icons": [
     {

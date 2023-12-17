@@ -35,8 +35,12 @@
      </div>
      <div id="toolbarsearchinput" contenteditable="true" class="styledtext input" type="text" onkeydown="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" , onchange="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oninput="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oncut="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" onpaste="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')"></div>
     </div>
-    <div id="toolbarsearchbutton" class="fabicon">
-     <span id="toolbarsearchicon" class="material-symbols-outlined"> search </span>
+    <div id="toolbarsearchbutton" class="fabicon toolbarbutton">
+     <span id="toolbarsearchicon" class="material-symbols-outlined toolbaricon"> search </span>
+    </div>
+    
+    <div id="toolbarsortbutton" class="fabicon toolbarbutton">
+     <span id="toolbarsorticon" class="material-symbols-outlined toolbaricon"> sort_by_alpha </span>
     </div>
    </div>
   </div><!-- head -->
@@ -184,7 +188,7 @@
       <th id="tabletitlerenewingstartdateitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlerenewingstartdateitem')" onmouseenter="whenTitleItemHovered('tabletitlerenewingstartdateitem')" onmouseleave="whenTitleItemDismissed('tabletitlerenewingstartdateitem')">تاريخ بداية التجديد</th>
       <th id="tabletitlerenewingenddateitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlerenewingenddateitem')" onmouseenter="whenTitleItemHovered('tabletitlerenewingenddateitem')" onmouseleave="whenTitleItemDismissed('tabletitlerenewingenddateitem')">تاريخ نهاية التجديد</th>
       <th id="tabletitlephonenumberitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlephonenumberitem')" onmouseenter="whenTitleItemHovered('tabletitlephonenumberitem')" onmouseleave="whenTitleItemDismissed('tabletitlephonenumberitem')">رقم الهاتف</th>
-      <th id="tableworknumberphonenumberitem" class="tabletitleitem" onclick="whenTitleItemClicked('tableworknumberphonenumberitem')" onmouseenter="whenTitleItemHovered('tableworknumberphonenumberitem')" onmouseleave="whenTitleItemDismissed('tableworknumberphonenumberitem')">رقم طلب العمل</th>
+      <th id="tabletitleworknumberitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitleworknumberitem')" onmouseenter="whenTitleItemHovered('tabletitleworknumberitem')" onmouseleave="whenTitleItemDismissed('tabletitleworknumberitem')">رقم طلب العمل</th>
       <th id="tabletitleninitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitleninitem')" onmouseenter="whenTitleItemHovered('tabletitleninitem')" onmouseleave="whenTitleItemDismissed('tabletitleninitem')">الرقم البيومتري لبطاقة التعريف الوطنية | بطاقة مماثلة</th>
       <th id="tabletitlecardnumberitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlecardnumberitem')" onmouseenter="whenTitleItemHovered('tabletitlecardnumberitem')" onmouseleave="whenTitleItemDismissed('tabletitlecardnumberitem')">رقم البطاقة</th>
       <th id="tabletitlecardissuingdateitem" class="tabletitleitem" onclick="whenTitleItemClicked('tabletitlecardissuingdateitem')" onmouseenter="whenTitleItemHovered('tabletitlecardissuingdateitem')" onmouseleave="whenTitleItemDismissed('tabletitlecardissuingdateitem')">تاريخ إصدار البطاقة</th>

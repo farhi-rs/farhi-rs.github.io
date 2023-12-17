@@ -36,7 +36,7 @@ var totalitemscount = 0;
 var lastdatatablebodyhtml = "";
 
 function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumber, worknumber, nin, cardnumber,  cardissuingdate, cardexpiredate, cardissuingplace, birthdate, birthplace, birthcertificatenumber, residence, _fromTop, _newlyAdded, _hamzacase) {
-  ;
+  
   let uid = toUid(id);
   
   _fromTop = true;
@@ -53,7 +53,7 @@ function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumbe
   +
   '<th id ="tablenameitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablenameitemat_' + rowCount + '\')">' + name + '</th>'
   +
-  '<th id ="tablestatusitemat_' + rowCount + '" class="tabledataitem statusdataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablestatusitemat_' + rowCount + '\')">' + status + '</th>'
+  '<th id ="tablestatusitemat_' + rowCount + '" class="tabledataitem statusdataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + (_hamzacase ? "" : '" style="background-color: ' + getStatusColor(renewingstartdate)) + '" onclick="whenDataItemClicked(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablestatusitemat_' + rowCount + '\')">' + status + '</th>'
   +
   '<th id ="tablerenewingstartdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablerenewingstartdateitemat_' + rowCount + '\')">' + renewingstartdate + '</th>'
   +
@@ -221,22 +221,55 @@ downbutton.onclick = function() {
 }
 
 
+var sortingenabled = false;
+toolbarsortbutton.onclick = function() {
+  if (sortingenabled) return;
+  sortingenabled = true;
+  searchfactor = "unselected";
+  toolbarsearchbutton.onclick();
+  
+  toolbarsearchicon.style.animationName = "disablingActionButtonAnimation";
+  toolbarsearchicon.style.animationDuration = "0.2s";
+  toolbarsearchicon.style.animationFillMode = "forwards";
+  toolbarsearchbutton.style.pointerEvents = "none";
+  
+  
+  toolbarsorticon.style.animationName = "fadeOutAnimation";
+  toolbarsorticon.style.animationDuration = "0.2s";
+  toolbarsorticon.style.animationFillMode = "forwards";
+  
+  setTimeout(function() {
+    toolbarsorticon.style.animationName = "fadeInAnimation";
+    toolbarsorticon.style.animationDuration = "0.2s";
+    toolbarsorticon.style.animationFillMode = "forwards";
+  }, 200);
+}
+
+
 var searchenabled = false;
 toolbarsearchbutton.onclick = function() {
   requestSearch(searchenabled);
   //searchenabled = !searchenabled;
   searchenabled = true;
+  if (!sortingenabled && searchfactor === "unselected") searchfactor = bydefaultsearchfactor;
   
   realfabtext.innerHTML = 'الغاء';
   realfabicon.innerHTML = 'close';
   
-  toolbarsearchicon.style.animationName = "fadeOutAnimation";
-  toolbarsearchicon.style.animationDuration = "0.2s";
-  toolbarsearchicon.style.animationFillMode = "forwards";
+  if (!sortingenabled) {
+    toolbarsearchicon.style.animationName = "fadeOutAnimation";
+    toolbarsearchicon.style.animationDuration = "0.2s";
+    toolbarsearchicon.style.animationFillMode = "forwards";
+    
+    toolbarsorticon.style.animationName = "disablingActionButtonAnimation";
+    toolbarsorticon.style.animationDuration = "0.2s";
+    toolbarsorticon.style.animationFillMode = "forwards";
+    toolbarsortbutton.style.pointerEvents = "none";
+  }
   
   setTimeout(function() {
     //toolbarsearchicon.innerHTML = searchenabled ? "clear" : "search";
-    
+    if (!sortingenabled) {
     toolbarsearchicon.style.animationName = "fadeInAnimation";
     toolbarsearchicon.style.animationDuration = "0.2s";
     toolbarsearchicon.style.animationFillMode = "forwards";
@@ -245,8 +278,9 @@ toolbarsearchbutton.onclick = function() {
     toolbarsearchfield.style.animationName = searchenabled ? "fadeInAnimation" : "fadeOutAnimation";
     toolbarsearchfield.style.animationDuration = "0.2s";
     toolbarsearchfield.style.animationFillMode = "forwards";
+    }
     
-    if (searchenabled) {
+    if (searchfactor !== "unselected") if (searchenabled) {
       let lastsearchfactor = searchfactor == "" ? bydefaultsearchfactor : searchfactor;
       searchfactor = "";
       whenTitleItemClicked("tabletitle" + lastsearchfactor + "item");
@@ -264,17 +298,20 @@ toolbarsearchbutton.onclick = function() {
 
 
 function requestSearch(canSearch) {
-  if (canSearch && toolbarsearchinput.innerHTML.replaceAll(" ", "") != "") {
+  if ((canSearch && toolbarsearchinput.innerHTML.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") != "") || (sortingenabled && canSearch)) {
     emptyPage();
-  
-    prepareDB("جاري البحث ...", true);
+    pageData = [];
+    if (sortingenabled) searchPages = [[]];
+    totalitemscount = -1;
+    pageIndex = 0;
+    prepareDB(sortingenabled ? "جاري التصنيف ..." : "جاري البحث ...", true);
   }
 }
 
 
 
 function search(batala, onsuccessevent) {
-  let factorindex = batala.index(searchfactor);
+  //let factorindex = batala.index(searchfactor);
   
   let searchinput = tokenize(toolbarsearchinput.innerHTML);
   
@@ -282,23 +319,40 @@ function search(batala, onsuccessevent) {
   datatableheadlayerscontainer.style.animationDuration = "0.25s";
   datatableheadlayerscontainer.style.animationFillMode = "forwards";
   
-  factorindex.getAll().onsuccess = function(event) {
+  batala.getAll().onsuccess = function(event) {
     let itemsdata = event.target.result;
     
-    itemsdata.forEach(function(itemdata) {
-      if (itemdata[searchfactor].includes(searchinput) && !pageData.includes(itemdata)) {
-          let fakeevent = {
-            target: {
-              result: {
-                value: itemdata
+    let eachitemhandling = function(itemdata) {
+        if ((sortingenabled ? true : searchFound(itemdata, searchfactor, searchinput)) && !pageData.includes(itemdata)) {
+            let fakeevent = {
+              target: {
+                result: {
+                  value: itemdata
+                }
               }
             }
+            onsuccessevent(fakeevent);
+            if (totalitemscount == -1) {
+              totalitemscount = 1;
+            } else {
+              totalitemscount++;
+            }
+            //pageIndex = parseInt(Math.max(1, parseInt(Math.ceil(totalitemscount / pageItemsLimit)))) - 1;
+            whenDataIsReady();
           }
-          onsuccessevent(fakeevent);
-          pageIndex = 0;
-          whenDataIsReady();
-        }
-    });
+    };
+    
+    if (sortingenabled) {
+      sort(itemsdata, searchfactor);
+    }
+    
+    itemsdata.forEach(eachitemhandling);
+    
+    
+    for (let i = pageIndex; i < parseInt(Math.ceil(totalitemscount / pageItemsLimit)) - 1; i++) {
+      rightbutton.onclick();
+    }
+    
     
     loadingscreen.style.animationName = "fadeOutAnimation";
     loadingscreen.style.animationDuration = "0.25s";
@@ -309,6 +363,82 @@ function search(batala, onsuccessevent) {
 }
 
 
+function sort(itemsdata, sortfactor) {
+  itemsdata.sort(function(firstitem, seconditem) {
+    
+    if (sortfactor === "uid") {
+      return - (firstitem["id"] - seconditem["id"]);
+    } else if (sortfactor === "status") {
+      let dateoffirst = firstitem["renewingstartdate"];
+      let dateofsecond = seconditem["renewingstartdate"];
+      
+      let datestampoffirst = toTimestamp(dateoffirst);
+      let datestampofsecond = toTimestamp(dateofsecond);
+      
+      let diff = datestampofsecond - datestampoffirst;
+      
+      if (diff < -1) {
+        diff = -1;
+      } else if (diff > 1) {
+        diff = 1;
+      }
+      
+      return diff;
+    } else if (sortfactor.includes("date")) {
+      let isEndDate = sortfactor === "renewingenddate";
+      
+      let isStartDate = sortfactor === "renewingstartdate";
+      
+      let dateoffirst = firstitem[isEndDate ? "renewingstartdate" : sortfactor];
+      let dateofsecond = seconditem[isEndDate ? "renewingstartdate" : sortfactor];
+      
+      
+      let datestampoffirst = toTimestamp(dateoffirst);
+      let datestampofsecond = toTimestamp(dateofsecond);
+      
+      let diff = ((isStartDate) ? -1 : 1) * (datestampofsecond - datestampoffirst);
+      
+      if (diff < -1) {
+        diff = -1;
+      } else if (diff > 1) {
+        diff = 1;
+      }
+      
+      if (dateoffirst === undefined || dateoffirst === null || dateoffirst === "") {
+        diff = -1;
+      } else if (dateofsecond === undefined || dateofsecond === null || dateofsecond === "") {
+        diff = 1;
+      }
+      
+      return diff;
+    } else if (firstitem[sortfactor] === undefined || seconditem[sortfactor] === undefined || firstitem[sortfactor] === null || seconditem[sortfactor] === null || firstitem[sortfactor] === "" || seconditem[sortfactor] === "") {
+      return (firstitem[sortfactor] === undefined || firstitem[sortfactor] === null || firstitem[sortfactor] === "") ? -1 : ((seconditem[sortfactor] === undefined || seconditem[sortfactor] === null || seconditem[sortfactor] === "") ? 1 : 0);
+    } else {
+      return -firstitem[sortfactor].localeCompare(seconditem[sortfactor], ["ar", "fr"]);
+    }
+    
+    return 0;
+  });
+}
+
+
+function searchFound(itemdata, searchfactor, searchinput) {
+  if (searchfactor == "uid") {
+    return toUid(itemdata.id).includes(searchinput.toUpperCase());
+  } else if (searchfactor == "status") {
+    return getStatus(itemdata).includes(searchinput);
+  } else if (searchfactor.includes("date")) {
+    let datesearchinput = searchinput.replaceAll("/", "-");
+    
+    if (datesearchinput.split("-")[0].length == 2) datesearchinput = reverseDateStr(datesearchinput);
+    
+    let datedata = itemdata[searchfactor == "renewingenddate" ? "renewingstartdate" : searchfactor];
+    
+    return (searchfactor == "renewingenddate" ? addSixMonths(datedata) : datedata).includes(datesearchinput);
+  } else {
+    return itemdata[searchfactor].includes(searchinput);
+  }
+}
 
 
 var lastinputvalues = new Map();
@@ -338,10 +468,12 @@ function whenTextChange(inputid, inputhintid) {
           newrenewingenddateitem.innerHTML = getArabicDate(addSixMonths(newrenewingstartdateiteminput.value));
           
           newstatusitem.innerHTML = getStatus({renewingstartdate: newrenewingstartdateiteminput.value});
+          newstatusitem.style.backgroundColor = getStatusColor(getArabicDate(newrenewingstartdateiteminput.value));
       } else {
           newrenewingenddateitem.innerHTML = "إملئ تاريخ البداية أولا";
           
           newstatusitem.innerHTML = "إملئ تاريخ البداية أولا";
+          newstatusitem.style.backgroundColor = "white";
       }
   }
     
@@ -389,7 +521,7 @@ function whenDataItemClicked(itemid) {
   
   let rowId = parseInt(itemid.split("_")[1]);
   
-  let pageDataIndex = rowId;
+  let pageDataIndex = rowId + (searchenabled ? (pageItemsLimit*pageIndex) : 0);
   
   let itemtype = itemid.split("_")[0].replaceAll("table", "").replaceAll("itemat", "");
     
@@ -569,6 +701,8 @@ function whenDataItemClicked(itemid) {
       newresidenceiteminput.innerHTML = pageData[pageDataIndex].residence;
       whenTextChange("newresidenceiteminput", "newresidenceitemhint");
       
+      lasteditedpagedataindex = rowId;
+      
       try {
         if (itemtype == "status" || itemtype == "renewingenddate") {
           newrenewingstartdateiteminput.focus();
@@ -622,6 +756,22 @@ function whenTitleItemClicked(titleitemid) {
   toolbarsearchhint.innerHTML = 'إبحث عن أي زبون بإستخدام ' + titleitem.innerHTML;
   
   window.scrollTo(document.getElementById(titleitemid).offsetLeft, 0);
+  
+  
+  
+  if (sortingenabled) {
+    toolbarsorticon.style.animationName = "fadeOutAnimation";
+    toolbarsorticon.style.animationDuration = "0.2s";
+    toolbarsorticon.style.animationFillMode = "forwards";
+  
+    setTimeout(function() {
+      toolbarsorticon.style.animationName = "fadeInAnimation";
+      toolbarsorticon.style.animationDuration = "0.2s";
+      toolbarsorticon.style.animationFillMode = "forwards";
+    }, 200);
+  
+    requestSearch(true);
+  }
 }
 
 function whenTitleItemHovered(titleitemid) {
@@ -638,7 +788,10 @@ function whenTitleItemDismissed(titleitemid) {
 
 function emptyPage() {
   rowCount = -1;
-  pageData = [];
+  if (!searchenabled) {
+    pageData = [];
+    searchPages = [[]];
+  }
   lastdatatablebodyhtml = "";
   rowRelatedDataIds = new Map();
   rowRelatedPageDataIndecies = new Map();
@@ -658,10 +811,12 @@ var pageData = [];
 
 var farhi_rsdb;
 
+var searchPages = [[]];
+
 
 function prepareDB(loadingmsg, belowToolbar) {
   
-  loadingscreen.style.top = (belowToolbar ? toolbar.offsetHeight : 0) + "px";
+  loadingscreen.style.top = (belowToolbar ? toolbar.offsetHeight : 0) + "px;";
   
   loadingscreen.style.animationName = "fadeInAnimation";
   loadingscreen.style.animationDuration = "0.25s";
@@ -687,7 +842,9 @@ function prepareDB(loadingmsg, belowToolbar) {
     if (store !== null) {
       store.createIndex('uid', 'id', {multiEntry: true});
       store.createIndex('name', 'nametokenized', {multiEntry: true});
+      store.createIndex('status', 'status', {multiEntry: true});
       store.createIndex('renewingstartdate', 'renewingstartdate', {multiEntry: true});
+      store.createIndex('renewingenddate', 'renewingenddate', {multiEntry: true});
       store.createIndex('phonenumber', 'phonenumber', {multiEntry: true});
       store.createIndex('worknumber', 'worknumber', {multiEntry: true});
       store.createIndex('nin', 'nin', {multiEntry: true});
@@ -727,8 +884,13 @@ function prepareDB(loadingmsg, belowToolbar) {
         if (itemdata != null) {
           pageData.push(itemdata);
           
+          
           if (searchenabled) {
-            if (rowCount <= pageItemsLimit) {
+            if (rowCount < pageItemsLimit) {
+              if (searchPages[pageIndex] === undefined || searchPages[pageIndex] === null) searchPages[pageIndex] = [];
+              
+              searchPages[pageIndex].push(itemdata.id);
+              
               addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
             }
           } else {
@@ -863,34 +1025,58 @@ realfab.onclick = function() {
       whenTextChange('newresidenceiteminput', 'newresidenceitemhint');
   } else if (addingEnabled || modifyingEnabled || searchenabled) {
       
-      newitemsbar.innerHTML = '';
-      realfabtext.innerHTML = 'إضافة زبون جديد';
-      realfabicon.innerHTML = 'person_add';
+      if (!searchenabled) {
+        newitemsbar.innerHTML = '';
+        realfabtext.innerHTML = 'إضافة زبون جديد';
+        realfabicon.innerHTML = 'person_add';
+      }
       
       
       if (modifyingEnabled) datatablebody.rows[lasteditedrowindex].innerHTML = lasteditedrowhtml;
       
       
-      modifyingEnabled = false;
-      addingEnabled = false;
       
-      if (searchenabled) {
+      if (searchenabled && !modifyingEnabled) {
         toolbarsearchfield.style.animationName = "fadeOutAnimation";
         toolbarsearchfield.style.animationDuration = "0.2s";
         toolbarsearchfield.style.animationFillMode = "forwards";
         
+        
+        realfabtext.innerHTML = 'إضافة زبون جديد';
+        realfabicon.innerHTML = 'person_add';
+        
+        if (sortingenabled) {
+          toolbarsearchicon.style.animationName = "enablingActionButtonAnimation";
+          toolbarsearchicon.style.animationDuration = "0.2s";
+          toolbarsearchicon.style.animationFillMode = "forwards";
+          toolbarsearchbutton.style.pointerEvents = "auto";
+          
+          sortingenabled = false;
+        } else {
+          toolbarsorticon.style.animationName = "enablingActionButtonAnimation";
+          toolbarsorticon.style.animationDuration = "0.2s";
+          toolbarsorticon.style.animationFillMode = "forwards";
+          toolbarsortbutton.style.pointerEvents = "auto";
+        }
+        
         emptyPage();
         
-        document.getElementById("tabletitle" + searchfactor + "item").style = undefined;
+        pageData = [];
+        searchPages = [[]];
+        
+        if (searchfactor !== "unselected") document.getElementById("tabletitle" + searchfactor + "item").style = undefined;
         
         pageIndex = -1;
         
         totalitemscount = 0;
 
         prepareDB("جاري تحميل البيانات ...");
+        
+        searchenabled = false;
       }
-      searchenabled = false;
       
+      modifyingEnabled = false;
+      addingEnabled = false;
       
       if (!donehidden) {
         donefab.style.animationName = "fadeOutAnimation";
@@ -955,13 +1141,17 @@ donefab.onclick = function() {
     
   query = batala.put(itemdata);
    
-    
+  
   query.onsuccess = function(event) {
+      
       if (addingEnabled) {
         newitemsbar.innerHTML = '';
       }
-      realfabtext.innerHTML = 'إضافة زبون جديد';
-      realfabicon.innerHTML = 'person_add';
+      
+      if (!sortingenabled) {
+        realfabtext.innerHTML = 'إضافة زبون جديد';
+        realfabicon.innerHTML = 'person_add';
+      }
       
       if (modifyingEnabled) datatablebody.rows[lasteditedrowindex].innerHTML = lasteditedrowhtml;
       
@@ -1027,6 +1217,8 @@ donefab.onclick = function() {
           document.getElementById("tablenameitemat_" + lasteditedpagedataindex).innerHTML = itemdata.name;
       
           document.getElementById("tablestatusitemat_" + lasteditedpagedataindex).innerHTML = getStatus(itemdata);
+          
+          document.getElementById("tablestatusitemat_" + lasteditedpagedataindex).style.backgroundColor = getStatusColor(getArabicDate(itemdata.renewingstartdate));
       
           document.getElementById("tablerenewingstartdateitemat_" + lasteditedpagedataindex).innerHTML = getArabicDate(itemdata.renewingstartdate);
     
@@ -1135,7 +1327,7 @@ Date.prototype.addDays = function(days) {
 
 
 function getArabicDate(isoDate) {
-  if (isoDate === undefined || isoDate === null) return "";
+  if (isoDate === undefined || isoDate === null || isoDate === "") return "";
   
   const months = [
     "جانفي", "فيفري", "مارس", "أفريل", "ماي", "جوان",
@@ -1155,8 +1347,48 @@ function getArabicDate(isoDate) {
   return `${dayOfWeek} ${day} ${month} ${year}`;
 }
 
+function getISODate(arabicDate) {
+  const months = {
+    "جانفي": 0, "فيفري": 1, "مارس": 2, "أفريل": 3, "ماي": 4, "جوان": 5,
+    "جويلية": 6, "أوت": 7, "سبتمبر": 8, "أكتوبر": 9, "نوفمبر": 10, "ديسمبر": 11
+  };
+
+  const days = {
+    "الأحد": 0, "الاثنين": 1, "الثلاثاء": 2, "الأربعاء": 3, "الخميس": 4, "الجمعة": 5, "السبت": 6
+  };
+
+  // Split the Arabic date string
+  const parts = arabicDate.split(' ');
+
+  // Retrieve day, month, and year from the Arabic date string
+  const dayOfWeek = parts[0];
+  const day = parseInt(parts[1]);
+  const month = parts[2];
+  const year = parseInt(parts[3]);
+
+  // Retrieve the month index from the months object
+  const monthIndex = months[month];
+
+  // Retrieve the day index from the days object
+  const dayIndex = days[dayOfWeek];
+
+  // Create a new Date object using the extracted values
+  const date = new Date(year, monthIndex, day);
+
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    return null; // Return null for an invalid date
+  }
+
+  // Get the ISO date string from the Date object
+  const isoDate = date.toISOString().split('T')[0]; // Extracting only the date part
+
+  return isoDate;
+}
+
+
 function reverseDateStr(datestr) {
-    if (datestr === undefined || datestr === null) return "";
+    if (datestr === undefined || datestr === null || datestr === "") return "";
     
     let splitteddatestr = datestr.split("-");
     
@@ -1189,13 +1421,32 @@ function getStatus(itemdata) {
 }
 
 
+function getStatusColor(renewingstartdatearabic) {
+  let renewingstartdate = getISODate(renewingstartdatearabic);
+  
+  let diffdays = dateDiffInDays(new Date(), new Date(addSixMonths(renewingstartdate)));
+  let diffdaysbeforestart = dateDiffInDays(new Date(), new Date(renewingstartdate));
+    
+  if (diffdaysbeforestart > 0) {
+    return "#C1C1C1";
+  } else if (diffdays < 0) {
+    return "#FF9A9A";
+  } else if (diffdays < 10) {
+    return "#FFE755";
+  } else {
+    return "#56FF55";
+  }
+
+}
+
+
 rightbutton.onclick = function() {
   emptyPage();
   
   pageIndex++;
   
   if (searchenabled) {
-    loadSearchPage();
+    loadSearchPage(+1);
   } else {
     prepareDB("جاري تحميل الصفحة الموالية ...");
   }
@@ -1209,7 +1460,7 @@ leftbutton.onclick = function() {
   pageIndex--;
   
   if (searchenabled) {
-    loadSearchPage();
+    loadSearchPage(-1);
   } else {
     prepareDB("جاري تحميل الصفحة السابقة ...");
   }
@@ -1337,13 +1588,66 @@ function tokenize(strunfor, returnSet) {
 
 
 
-
-function loadSearchPage() {
-  for (let i = pageIndex * pageItemsLimit; i < (pageIndex+1) * pageItemsLimit; i++) {
-    if (i >= pageData.length) return;
-    
+var searchpageloadingtimer;
+async function loadSearchPage(delta) {
+  let currentPageItems = [];
+  
+  loadingscreen.style.animationName = "fadeInAnimation";
+  loadingscreen.style.animationDuration = "0.25s";
+  loadingscreen.style.animationFillMode = "forwards";
+  loadingtext.innerHTML = delta == +1 ? "جاري تحميل الصفحة الموالية ..." : "جاري تحميل الصفحة السابقة ...";
+  
+  
+  clearTimeout(searchpageloadingtimer);
+  
+  searchpageloadingtimer = setTimeout(function() {
+  
+  for (let i = 0; i < pageData.length; i++) {
     let itemdata = pageData[i];
     
-    addRow(i+1, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
+    let jumpfirstiteration = false;
+    for (let pi = 0; pi < searchPages.length; pi++) {
+      if (pi == pageIndex) continue;
+      
+      if (searchPages[pi] == undefined || searchPages[pi] == null) {
+        jumpfirstiteration = true;
+        break;
+      } else if (searchPages[pi].includes(itemdata.id)) {
+        jumpfirstiteration = true;
+        break;
+      }
+    }
+    
+    if (jumpfirstiteration) continue;
+    
+    currentPageItems.push(itemdata.id);
+    
+    addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
+    
+    if (currentPageItems.length == pageItemsLimit) break;
   }
+  
+  searchPages[pageIndex] = currentPageItems;
+  
+  loadingscreen.style.animationName = "fadeOutAnimation";
+  loadingscreen.style.animationDuration = "0.25s";
+  loadingscreen.style.animationFillMode = "forwards";
+  
+  whenDataIsReady();
+  
+  }, 250);
+}
+
+
+function toTimestamp(isoDate) {
+  // Split the ISO date string into year, month, and day
+  const [year, month, day] = isoDate.split('-').map(Number);
+
+  // Create a new Date object using the provided year, month, and day
+  const date = new Date(year, month - 1, day); // Month is zero-based in JavaScript Dates
+
+  // Get the timestamp in milliseconds
+  const timestamp = date.getTime();
+
+  return timestamp;
 }
