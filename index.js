@@ -2029,6 +2029,8 @@ toolbargotobutton.onclick = function() {
   } else {
     lastGotoMessage = "";
     
+    if (searchenabled) {
+      
     let factor = typedPageIndex > pageIndex ? +1 : -1;
     
     if (factor === +1) {
@@ -2041,7 +2043,9 @@ toolbargotobutton.onclick = function() {
       }
     }
     
-    /*
+    } else {
+      
+    
     emptyPage(true);
     
     let factor = typedPageIndex > pageIndex ? +1 : -1;
@@ -2055,7 +2059,7 @@ toolbargotobutton.onclick = function() {
     }
   
     pageindexhint.innerHTML = "الصفحة " + (pageIndex + 1) + " من " + parseInt(Math.ceil(totalitemscount / pageItemsLimit));
-    */
+    }
   }
   
   
