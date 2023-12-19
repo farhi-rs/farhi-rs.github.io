@@ -2030,7 +2030,7 @@ toolbargotobutton.onclick = function() {
     lastGotoMessage = "";
     
     
-    emptyPage(dontEmpty);
+    emptyPage(true);
     
     let factor = typedPageIndex > pageIndex ? +1 : -1;
   
