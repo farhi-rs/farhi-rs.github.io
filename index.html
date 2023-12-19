@@ -17,15 +17,14 @@
       }).catch(error=>{
         console.log("Registering caching service worker failed");
       });
-      
-      navigator.serviceWorker.register("./notification_worker.js").then(registration=>{
-        console.log("Notification Service worker registered");
-      }).catch(error=>{
-        console.log("Registering notification service worker failed");
-      });
     } else {
       console.log("Service workers not supported");
     }
+  </script>
+  <script type="module">
+    import handleNotifications from "./notification.js";
+    
+    handleNotifications();
   </script>
  </head>
  <body>
@@ -50,6 +49,10 @@
     
     <div id="toolbarsortbutton" class="fabicon toolbarbutton">
      <span id="toolbarsorticon" class="material-symbols-outlined toolbaricon"> sort_by_alpha </span>
+    </div>
+    
+    <div id="toolbargotobutton" class="fabicon toolbarbutton">
+     <span id="toolbargotoicon" class="material-symbols-outlined toolbaricon"> last_page </span>
     </div>
     
     <div id="toolbarextoxlsxbutton" class="fabicon toolbarbutton">

@@ -348,10 +348,25 @@ function search(batala, onsuccessevent) {
     
     itemsdata.forEach(eachitemhandling);
     
-    
+    /*
     for (let i = pageIndex; i < parseInt(Math.ceil(totalitemscount / pageItemsLimit)) - 1; i++) {
       rightbutton.onclick();
     }
+    */
+    
+    emptyPage();
+  
+    pageIndex = parseInt(Math.ceil(totalitemscount / pageItemsLimit)) - 1;
+  
+    if (searchenabled) {
+      loadSearchPage(+1);
+    } else {
+      prepareDB("جاري تحميل البيانات ...");
+    }
+  
+    pageindexhint.innerHTML = "الصفحة " + (pageIndex + 1) + " من " + parseInt(Math.ceil(totalitemscount / pageItemsLimit));
+    
+    
     
     
     loadingscreen.style.animationName = "fadeOutAnimation";
@@ -1831,6 +1846,7 @@ function saveWholeDatabaseAsXlsx() {
         
         if (itemdata.residence.includes('#')) redFlagedAddresses.push(availableColumns[0] + rowAddress);
         if (itemdata.birthcertificatenumber.includes('#')) redFlagedAddresses.push(availableColumns[1] + rowAddress);
+        if (itemdata.birthplace.includes('#')) redFlagedAddresses.push(availableColumns[2] + rowAddress);
         if (itemdata.cardissuingplace.includes('#')) redFlagedAddresses.push(availableColumns[4] + rowAddress);
         if (itemdata.cardnumber.includes('#')) redFlagedAddresses.push(availableColumns[7] + rowAddress);
         if (itemdata.nin.includes('#')) redFlagedAddresses.push(availableColumns[8] + rowAddress);
@@ -1978,4 +1994,51 @@ function whenDataUidItemGetRightClicked(rowId) {
   let pageDataIndex = rowId + (searchenabled ? (pageItemsLimit*pageIndex) : 0);
   
   if (pageData[pageDataIndex] !== undefined || pageData[pageDataIndex] !== null) if (pageData[pageDataIndex].note !== undefined || pageData[pageDataIndex].note !== null || pageData[pageDataIndex].note !== "") alert("ملاحظتك السابقة عن الزبون : \n" + pageData[pageDataIndex].note);
+}
+
+
+// Add an event listener to receive messages from the Service Worker
+navigator.serviceWorker.addEventListener('message', event => {
+  const receivedData = event.data; // Data received from the Service Worker
+  if (receivedData && receivedData.message) {
+    const uid = receivedData.message;
+    // Process the received message from the Service Worker
+    toolbarsearchinput.innerHTML = uid;
+    whenTextChange('toolbarsearchinput', 'toolbarsearchhint');
+    if (!searchenabled) {
+      toolbarsearchbutton.onclick();
+      whenTitleItemClicked('tabletitleuiditem');
+    }
+    toolbarsearchbutton.onclick();
+  }
+});
+
+var lastGotoMessage = "";
+toolbargotobutton.onclick = function() {
+  let max = Math.max(1, parseInt(Math.ceil(totalitemscount / pageItemsLimit)));
+  
+  let typedPageIndexStr = window.prompt(lastGotoMessage + "أكتب رقم الصفحة المحصور بين 1 و " + max);
+  
+  let typedPageIndex = parseInt(typedPageIndexStr);
+    
+  if (isNaN(typedPageIndex) || (typedPageIndex < 1 || typedPageIndex > max)) {
+    if (typedPageIndexStr.replaceAll(' ', '') !== '') {
+      lastGotoMessage = isNaN(typedPageIndex) ? "رقم الصفحة المعطى سابقا غير مكتوب بشكل صحيح\n" : "رقم الصفحة المعطى سابقا خارج النطاق\n";
+      window.alert(lastGotoMessage);
+    }
+  } else {
+    lastGotoMessage = "";
+    
+    emptyPage();
+  
+    pageIndex = typedPageIndex - 1;
+  
+    if (searchenabled) {
+      loadSearchPage(+1);
+    } else {
+      prepareDB("جاري تحميل الصفحة المطلوبة ...");
+    }
+  
+    pageindexhint.innerHTML = "الصفحة " + (pageIndex + 1) + " من " + parseInt(Math.ceil(totalitemscount / pageItemsLimit));
+  }
 }
