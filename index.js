@@ -1172,6 +1172,9 @@ donefab.onclick = function() {
       if (!searchenabled) {
         realfabtext.innerHTML = 'إضافة زبون جديد';
         realfabicon.innerHTML = 'person_add';
+      } else {
+        realfabtext.innerHTML = 'إلغاء';
+        realfabicon.innerHTML = 'close';
       }
       
       if (modifyingEnabled) datatablebody.rows[lasteditedrowindex].innerHTML = lasteditedrowhtml;
