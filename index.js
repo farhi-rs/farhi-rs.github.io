@@ -1172,9 +1172,6 @@ donefab.onclick = function() {
       if (!searchenabled) {
         realfabtext.innerHTML = 'إضافة زبون جديد';
         realfabicon.innerHTML = 'person_add';
-      } else {
-        realfabtext.innerHTML = 'إلغاء';
-        realfabicon.innerHTML = 'close';
       }
       
       if (modifyingEnabled) datatablebody.rows[lasteditedrowindex].innerHTML = lasteditedrowhtml;
@@ -1303,6 +1300,11 @@ donefab.onclick = function() {
           if (itemdata.residence.includes('#')) document.getElementById("tableresidenceitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
           else document.getElementById("tableresidenceitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
           
+          
+          if (searchenabled) {
+            realfabtext.innerHTML = 'إلغاء';
+            realfabicon.innerHTML = 'close';
+          }
           
           messageboxicon.innerHTML = "done_all";
     
