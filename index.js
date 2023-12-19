@@ -1169,7 +1169,7 @@ donefab.onclick = function() {
         newitemsbar.innerHTML = '';
       }
       
-      if (!sortingenabled) {
+      if (!searchenabled) {
         realfabtext.innerHTML = 'إضافة زبون جديد';
         realfabicon.innerHTML = 'person_add';
       }
