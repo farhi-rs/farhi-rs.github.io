@@ -348,12 +348,12 @@ function search(batala, onsuccessevent) {
     
     itemsdata.forEach(eachitemhandling);
     
-    /*
+    
     for (let i = pageIndex; i < parseInt(Math.ceil(totalitemscount / pageItemsLimit)) - 1; i++) {
       rightbutton.onclick();
     }
-    */
     
+    /*
     emptyPage();
   
     pageIndex = parseInt(Math.ceil(totalitemscount / pageItemsLimit)) - 1;
@@ -365,7 +365,7 @@ function search(batala, onsuccessevent) {
     }
   
     pageindexhint.innerHTML = "الصفحة " + (pageIndex + 1) + " من " + parseInt(Math.ceil(totalitemscount / pageItemsLimit));
-    
+    */
     
     
     
