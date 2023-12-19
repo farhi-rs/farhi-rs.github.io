@@ -801,9 +801,9 @@ function whenTitleItemDismissed(titleitemid) {
   
 }
 
-function emptyPage() {
+function emptyPage(dontEmpty) {
   rowCount = -1;
-  if (!searchenabled) {
+  if (!searchenabled && !dontEmpty) {
     pageData = [];
     searchPages = [[]];
   }
@@ -2029,16 +2029,20 @@ toolbargotobutton.onclick = function() {
   } else {
     lastGotoMessage = "";
     
-    emptyPage();
+    
+    emptyPage(dontEmpty);
+    
+    let factor = typedPageIndex > pageIndex ? +1 : -1;
   
     pageIndex = typedPageIndex - 1;
   
     if (searchenabled) {
-      loadSearchPage(+1);
+      loadSearchPage(factor);
     } else {
       prepareDB("جاري تحميل الصفحة المطلوبة ...");
     }
   
     pageindexhint.innerHTML = "الصفحة " + (pageIndex + 1) + " من " + parseInt(Math.ceil(totalitemscount / pageItemsLimit));
   }
+  
 }
