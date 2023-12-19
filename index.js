@@ -348,6 +348,11 @@ function search(batala, onsuccessevent) {
     
     itemsdata.forEach(eachitemhandling);
     
+    if (totalitemscount === -1) {
+      totalitemscount = 0;
+      pageIndex = 0;
+      whenDataIsReady();
+    }
     
     for (let i = pageIndex; i < parseInt(Math.ceil(totalitemscount / pageItemsLimit)) - 1; i++) {
       rightbutton.onclick();
@@ -1349,7 +1354,7 @@ function addSixMonths(datestr) {
     
     let date = new Date(datestr);
     
-    return date.addMonths(6).addtoISOString().split("T")[0];
+    return date.addMonths(6).toISOString().split("T")[0];
 }
 
 
@@ -1662,7 +1667,7 @@ function loadSearchPage(delta) {
   searchpageloadingtimer = setTimeout(function() {
   
   for (let i = pageIndex * pageItemsLimit; i < (pageIndex+1) * pageItemsLimit; i++) {
-    if (i >= pageData.length) break;
+    if (i < 0 || i >= pageData.length) break;
     let itemdata = pageData[i];
     /*
     let jumpfirstiteration = false;
@@ -1789,7 +1794,7 @@ function saveWholeDatabaseAsXlsx() {
     
     messageboxicon.innerHTML = "close";
     
-    messageboxtext.innerHTML = "زر التصنيف مفعل، إختر معيار التصيف أولا حتى تتمكن من صناعة ملف Excel";
+    messageboxtext.innerHTML = "زر التصنيف مفعل، إختر معيار التصنيف أولا حتى تتمكن من صناعة ملف Excel";
     
     messagebox.style.animationName = "fadeInAnimation";
       
@@ -2027,7 +2032,7 @@ toolbargotobutton.onclick = function() {
   let typedPageIndex = parseInt(typedPageIndexStr);
     
   if (isNaN(typedPageIndex) || (typedPageIndex < 1 || typedPageIndex > max)) {
-    if (typedPageIndexStr.replaceAll(' ', '') !== '') {
+    if (typedPageIndexStr !== null) if (typedPageIndexStr.replaceAll(' ', '') !== '') {
       lastGotoMessage = isNaN(typedPageIndex) ? "رقم الصفحة المعطى سابقا غير مكتوب بشكل صحيح\n" : "رقم الصفحة المعطى سابقا خارج النطاق\n";
       window.alert(lastGotoMessage);
     }
