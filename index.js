@@ -1230,7 +1230,7 @@ donefab.onclick = function() {
             messagebox.style.animationFillMode = "forwards";
           }, 250 + 2500);
       } else if (modifyingEnabled) {
-          pageData[lasteditedpagedataindex + (modifyingEnabled ? (pageIndex * pageItemsLimit) : 0)] = itemdata;
+          pageData[lasteditedpagedataindex + (searchenabled ? (pageIndex * pageItemsLimit) : 0)] = itemdata;
           
           modifyingEnabled = false;
           
