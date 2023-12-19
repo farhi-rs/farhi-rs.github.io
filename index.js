@@ -7,7 +7,7 @@ const hamzaitemdata = {
   status: "RICH",
   renewingstartdate: "2021-02-26",
   renewingenddate: "UNTIL HE DIES",
-  phonenumber: "NO CALLS",
+  phonenumber: "0792342393",
   worknumber: "FLM",
   nin: "KING",
   cardnumber: "001",
@@ -1349,7 +1349,7 @@ function addSixMonths(datestr) {
     
     let date = new Date(datestr);
     
-    return date.addMonths(6).addDays(8).toISOString().split("T")[0];
+    return date.addMonths(6).addtoISOString().split("T")[0];
 }
 
 
