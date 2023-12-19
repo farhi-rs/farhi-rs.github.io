@@ -3,16 +3,16 @@ const pageItemsLimit = 20;
 var pageIndex = -1; // to be calculated later automatically
 
 const hamzaitemdata = {
-  name: 'حمزة بونقاب',
-  status: "لا يحتاج منحة البطالة",
+  name: 'HMZ',
+  status: "RICH",
   renewingstartdate: "2021-02-26",
-  renewingenddate: "حتى يموت",
-  phonenumber: "لا تتصلو به",
-  worknumber: "FLAME CORP",
+  renewingenddate: "UNTIL HE DIES",
+  phonenumber: "NO CALLS",
+  worknumber: "FLM",
   nin: "KING",
   cardnumber: "001",
   cardissuingdate: "2022-11-16",
-  cardexpiredate: "حتى يموت",
+  cardexpiredate: "UNTIL HES DIES",
   cardissuingplace: "EL ATTAF",
   birthdate: "2003-06-15",
   birthplace: "EL ATTAF",
@@ -49,9 +49,9 @@ function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumbe
   let dataitemhtml =
   '\n     <tr>\n       '
   +
-  '<th id ="tableuiditemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableuiditemat_' + rowCount + '\')">' + uid + '</th>'
+  '<th id ="tableuiditemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableuiditemat_' + rowCount + '\')" oncontextmenu="whenDataUidItemGetRightClicked(' + rowCount + ')">' + uid + '</th>'
   +
-  '<th id ="tablenameitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablenameitemat_' + rowCount + '\')">' + name + '</th>'
+  '<th id ="tablenameitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + (name.includes('#') ? 'redflageditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablenameitemat_' + rowCount + '\')">' + name.replace('#', '') + '</th>'
   +
   '<th id ="tablestatusitemat_' + rowCount + '" class="tabledataitem statusdataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + (_hamzacase ? "" : '" style="background-color: ' + getStatusColor(renewingstartdate)) + '" onclick="whenDataItemClicked(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablestatusitemat_' + rowCount + '\')">' + status + '</th>'
   +
@@ -59,27 +59,27 @@ function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumbe
   +
   '<th id ="tablerenewingenddateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')">' + renewingenddate + '</th>'
   +
-  '<th id ="tablephonenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablephonenumberitemat_' + rowCount + '\')">' + phonenumber + '</th>'
+  '<th id ="tablephonenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (phonenumber.includes('#') ? 'redflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablephonenumberitemat_' + rowCount + '\')">' + phonenumber.replace('#', '') + '</th>'
   +
-  '<th id ="tableworknumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableworknumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableworknumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableworknumberitemat_' + rowCount + '\')">' + worknumber + '</th>'
+  '<th id ="tableworknumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (worknumber.includes('#') ? 'redflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableworknumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableworknumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableworknumberitemat_' + rowCount + '\')">' + worknumber.replace('#', '') + '</th>'
   +
-  '<th id ="tableninitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableninitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableninitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableninitemat_' + rowCount + '\')">' + nin + '</th>'
+  '<th id ="tableninitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (nin.includes('#') ? 'redflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableninitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableninitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableninitemat_' + rowCount + '\')">' + nin.replace('#', '') + '</th>'
   +
-  '<th id ="tablecardnumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardnumberitemat_' + rowCount + '\')">' + cardnumber + '</th>'
+  '<th id ="tablecardnumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (cardnumber.includes('#') ? 'redflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardnumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardnumberitemat_' + rowCount + '\')">' + cardnumber.replace('#', '') + '</th>'
   +
   '<th id ="tablecardissuingdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardissuingdateitemat_' + rowCount + '\')">' + cardissuingdate + '</th>'
   +
   '<th id ="tablecardexpiredateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardexpiredateitemat_' + rowCount + '\')">' + cardexpiredate + '</th>'
   +
-  '<th id ="tablecardissuingplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')">' + cardissuingplace + '</th>'
+  '<th id ="tablecardissuingplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (cardissuingplace.includes('#') ? 'redflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablecardissuingplaceitemat_' + rowCount + '\')">' + cardissuingplace.replace('#', '') + '</th>'
   +
   '<th id ="tablebirthdateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthdateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthdateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthdateitemat_' + rowCount + '\')">' + birthdate + '</th>'
   +
-  '<th id ="tablebirthplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthplaceitemat_' + rowCount + '\')">' + birthplace + '</th>'
+  '<th id ="tablebirthplaceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (birthplace.includes('#') ? 'redflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthplaceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthplaceitemat_' + rowCount + '\')">' + birthplace.replace('#', '') + '</th>'
   +
-  '<th id ="tablebirthcertificatenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')">' + birthcertificatenumber + '</th>'
+  '<th id ="tablebirthcertificatenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (birthcertificatenumber.includes('#') ? 'redflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablebirthcertificatenumberitemat_' + rowCount + '\')">' + birthcertificatenumber.replace('#', '') + '</th>'
   +
-  '<th id ="tableresidenceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableresidenceitemat_' + rowCount + '\')">' + residence + '</th>'
+  '<th id ="tableresidenceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (residence.includes('#') ? 'redflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableresidenceitemat_' + rowCount + '\')">' + residence.replace('#', '') + '</th>'
   +
   '\n     </tr>';
   
@@ -414,7 +414,7 @@ function sort(itemsdata, sortfactor) {
     } else if (firstitem[sortfactor] === undefined || seconditem[sortfactor] === undefined || firstitem[sortfactor] === null || seconditem[sortfactor] === null || firstitem[sortfactor] === "" || seconditem[sortfactor] === "") {
       return (firstitem[sortfactor] === undefined || firstitem[sortfactor] === null || firstitem[sortfactor] === "") ? -1 : ((seconditem[sortfactor] === undefined || seconditem[sortfactor] === null || seconditem[sortfactor] === "") ? 1 : 0);
     } else {
-      return -(firstitem[sortfactor].localeCompare(seconditem[sortfactor], ["ar", "fr"]));
+      return -1 * (firstitem[sortfactor].localeCompare(seconditem[sortfactor], ["ar", "fr"]));
     }
     
     return 0;
@@ -501,7 +501,7 @@ var initialScroll = true;
 window.onload = function() {
   if (initialScroll) {
       initialScroll = false;
-      window.scrollTo(document.documentElement.scrollWidth, 0);
+      window.scrollTo(1000000, 0);
   }
 }
 
@@ -654,9 +654,9 @@ function whenDataItemClicked(itemid) {
       datatablebody.rows[rowIndex].innerHTML = newitemshtml;
       
       
+      typedNote = pageData[pageDataIndex].note;
+      
       newuiditem.innerHTML = toUid(pageData[pageDataIndex].id);
-      
-      
       
       newnameiteminput.innerHTML = pageData[pageDataIndex].name;
       whenTextChange("newnameiteminput", "newnameitemhint");
@@ -813,6 +813,8 @@ var farhi_rsdb;
 
 var searchPages = [[]];
 
+var typedNote = "";
+
 
 function prepareDB(loadingmsg, belowToolbar) {
   
@@ -887,9 +889,9 @@ function prepareDB(loadingmsg, belowToolbar) {
           
           if (searchenabled) {
             if (rowCount < pageItemsLimit) {
-              if (searchPages[0] === undefined || searchPages[0] === null) searchPages[0] = [];
+              if (searchPages[pageIndex] === undefined || searchPages[pageIndex] === null) searchPages[pageIndex] = [];
               
-              searchPages[0].push(itemdata.id);
+              searchPages[pageIndex].push(itemdata.id);
               
               addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
             }
@@ -1018,6 +1020,9 @@ realfab.onclick = function() {
       newrenewingstartdateiteminput.value = currentDateStr; 
       whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint');
       
+      newbirthplaceiteminput.innerHTML = "العطاف - عين الدفلى";
+      whenTextChange('newbirthplaceiteminput', 'newbirthplaceitemhint');
+      
       newcardissuingplaceiteminput.innerHTML = "العطاف - عين الدفلى";
       whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint');
       
@@ -1123,7 +1128,8 @@ donefab.onclick = function() {
   birthplacetokenized: tokenize(newbirthplaceiteminput.innerHTML, true),
   birthcertificatenumber: newbirthcertificatenumberiteminput.innerHTML,
   residence: newresidenceiteminput.innerHTML,
-  residencetokenized: tokenize(newresidenceiteminput.innerHTML, true)
+  residencetokenized: tokenize(newresidenceiteminput.innerHTML, true),
+  note: typedNote
   };
     
   loadingscreen.style.animationName = "fadeInAnimation";
@@ -1184,8 +1190,12 @@ donefab.onclick = function() {
           
           pageData.push(itemdata);
           
-          if (pageIndex === parseInt(Math.ceil(totalitemscount / pageItemsLimit)) - 1 && rowCount < pageItemsLimit) addRow(totalitemscount, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
+          //if (pageIndex === parseInt(Math.ceil(totalitemscount / pageItemsLimit)) - 1 && rowCount < pageItemsLimit) addRow(totalitemscount, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
           
+          emptyPage();
+
+          prepareDB("جاري تحميل البيانات ...");
+
           
           whenDataIsReady();
           
@@ -1205,16 +1215,21 @@ donefab.onclick = function() {
             messagebox.style.animationFillMode = "forwards";
           }, 250 + 2500);
       } else if (modifyingEnabled) {
+          pageData[lasteditedpagedataindex + (modifyingEnabled ? (pageIndex * pageItemsLimit) : 0)] = itemdata;
           
           modifyingEnabled = false;
           
-          pageData[lasteditedpagedataindex] = itemdata;
-          
           whenDataIsReady();
           
-          document.getElementById("tableuiditemat_" + lasteditedpagedataindex).innerHTML = toUid(itemdata.id);
+          document.getElementById("tableuiditemat_" + lasteditedpagedataindex).innerHTML = toUid(itemdata.id).replace('#', '');
+          
+          if (toUid(itemdata.id).includes('#')) document.getElementById("tableuiditemat_" + lasteditedpagedataindex).classList.add("redflageditem");
+          else document.getElementById("tableuiditemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
       
-          document.getElementById("tablenameitemat_" + lasteditedpagedataindex).innerHTML = itemdata.name;
+          document.getElementById("tablenameitemat_" + lasteditedpagedataindex).innerHTML = itemdata.name.replace('#', '');
+          
+          if (itemdata.name.includes('#')) document.getElementById("tablenameitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
+          else document.getElementById("tablenameitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
       
           document.getElementById("tablestatusitemat_" + lasteditedpagedataindex).innerHTML = getStatus(itemdata);
           
@@ -1224,27 +1239,51 @@ donefab.onclick = function() {
     
           document.getElementById("tablerenewingenddateitemat_" + lasteditedpagedataindex).innerHTML = getArabicDate(addSixMonths(itemdata.renewingstartdate));
       
-          document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.phonenumber;
+          document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.phonenumber.replace('#', '');
+          
+          if (itemdata.phonenumber.includes('#')) document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
+          else document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
       
-          document.getElementById("tableworknumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.worknumber;
+          document.getElementById("tableworknumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.worknumber.replace('#', '');
+          
+          if (itemdata.worknumber.includes('#')) document.getElementById("tableworknumberitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
+          else document.getElementById("tableworknumberitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
       
-          document.getElementById("tableninitemat_" + lasteditedpagedataindex).innerHTML = itemdata.nin;
+          document.getElementById("tableninitemat_" + lasteditedpagedataindex).innerHTML = itemdata.nin.replace('#', '');
+          
+          if (itemdata.nin.includes('#')) document.getElementById("tableninitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
+          else document.getElementById("tableninitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
       
-          document.getElementById("tablecardnumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.cardnumber;
+          document.getElementById("tablecardnumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.cardnumber.replace('#', '');
+          
+          if (itemdata.cardnumber.includes('#')) document.getElementById("tablecardnumberitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
+          else document.getElementById("tablecardnumberitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
       
           document.getElementById("tablecardissuingdateitemat_" + lasteditedpagedataindex).innerHTML = getArabicDate(itemdata.cardissuingdate);
       
           document.getElementById("tablecardexpiredateitemat_" + lasteditedpagedataindex).innerHTML = getArabicDate(itemdata.cardexpiredate);
       
-          document.getElementById("tablecardissuingplaceitemat_" + lasteditedpagedataindex).innerHTML = itemdata.cardissuingplace;
+          document.getElementById("tablecardissuingplaceitemat_" + lasteditedpagedataindex).innerHTML = itemdata.cardissuingplace.replace('#', '');
+          
+          if (itemdata.cardissuingplace.includes('#')) document.getElementById("tablecardissuingplaceitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
+          else document.getElementById("tablecardissuingplaceitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
       
           document.getElementById("tablebirthdateitemat_" + lasteditedpagedataindex).innerHTML = getArabicDate(itemdata.birthdate);
       
-          document.getElementById("tablebirthplaceitemat_" + lasteditedpagedataindex).innerHTML = itemdata.birthplace;
+          document.getElementById("tablebirthplaceitemat_" + lasteditedpagedataindex).innerHTML = itemdata.birthplace.replace('#', '');
+          
+          if (itemdata.birthplace.includes('#')) document.getElementById("tablebirthplaceitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
+          else document.getElementById("tablebirthplaceitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
       
-          document.getElementById("tablebirthcertificatenumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.birthcertificatenumber;
+          document.getElementById("tablebirthcertificatenumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.birthcertificatenumber.replace('#', '');
+          
+          if (itemdata.birthcertificatenumber.includes('#')) document.getElementById("tablebirthcertificatenumberitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
+          else document.getElementById("tablebirthcertificatenumberitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
       
-          document.getElementById("tableresidenceitemat_" + lasteditedpagedataindex).innerHTML = itemdata.residence;
+          document.getElementById("tableresidenceitemat_" + lasteditedpagedataindex).innerHTML = itemdata.residence.replace('#', '');
+          
+          if (itemdata.residence.includes('#')) document.getElementById("tableresidenceitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
+          else document.getElementById("tableresidenceitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
           
           
           messageboxicon.innerHTML = "done_all";
@@ -1430,9 +1469,9 @@ function getStatusColor(renewingstartdatearabic) {
   if (diffdaysbeforestart > 0) {
     return "#C1C1C1";
   } else if (diffdays < 0) {
-    return "#FF9A9A";
+    return "#FF5050";
   } else if (diffdays < 10) {
-    return "#FFE755";
+    return "#FF6600";
   } else {
     return "#56FF55";
   }
@@ -1589,7 +1628,7 @@ function tokenize(strunfor, returnSet) {
 
 
 var searchpageloadingtimer;
-async function loadSearchPage(delta) {
+function loadSearchPage(delta) {
   let currentPageItems = [];
   
   loadingscreen.style.animationName = "fadeInAnimation";
@@ -1602,9 +1641,10 @@ async function loadSearchPage(delta) {
   
   searchpageloadingtimer = setTimeout(function() {
   
-  for (let i = 0; i < pageData.length; i++) {
+  for (let i = pageIndex * pageItemsLimit; i < (pageIndex+1) * pageItemsLimit; i++) {
+    if (i >= pageData.length) break;
     let itemdata = pageData[i];
-    
+    /*
     let jumpfirstiteration = false;
     for (let pi = 0; pi < searchPages.length; pi++) {
       if (pi == pageIndex) continue;
@@ -1620,7 +1660,7 @@ async function loadSearchPage(delta) {
     }
     
     if (jumpfirstiteration) continue;
-    
+    */
     currentPageItems.push(itemdata.id);
     
     addRow(itemdata.id, itemdata.name, getStatus(itemdata), getArabicDate(itemdata.renewingstartdate), getArabicDate(addSixMonths(itemdata.renewingstartdate)), itemdata.phonenumber, itemdata.worknumber, itemdata.nin, itemdata.cardnumber, getArabicDate(itemdata.cardissuingdate), getArabicDate(itemdata.cardexpiredate), itemdata.cardissuingplace, getArabicDate(itemdata.birthdate), itemdata.birthplace, itemdata.birthcertificatenumber, itemdata.residence, true);
@@ -1629,6 +1669,8 @@ async function loadSearchPage(delta) {
   }
   
   searchPages[pageIndex] = currentPageItems;
+      
+      //console.log(pageIndex)
   
   loadingscreen.style.animationName = "fadeOutAnimation";
   loadingscreen.style.animationDuration = "0.25s";
@@ -1651,4 +1693,289 @@ function toTimestamp(isoDate) {
   const timestamp = date.getTime();
 
   return timestamp;
+}
+
+
+function whenSearchInputKeyDown(event) {
+    // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+      
+    toolbarsearchbutton.click();
+  }
+}
+
+
+
+toolbarextoxlsxbutton.onclick = function() {
+  if (window.confirm('هل تريد بالفعل حفظ نسخة من قاعدة البيانات الخاصة بالتطبيق كملف Excel ؟')) {
+    saveWholeDatabaseAsXlsx();
+  }
+}
+
+
+function saveWholeDatabaseAsXlsx() {
+  
+  let redFlagedAddresses = [];
+  
+  let availableColumns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"];
+  
+  let dateColumns = [availableColumns[3], availableColumns[5], availableColumns[6], availableColumns[12], availableColumns[13]];
+  
+  let onfinish = function() {
+    // Convert the data to a worksheet
+    let ws = XLSX.utils.aoa_to_sheet(xlsxData);
+    
+    // Styling...
+    styleXlsx(ws, xlsxData.length, redFlagedAddresses, dateColumns);
+
+    // Create a workbook
+    let wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); // Add the worksheet to the workbook
+
+    // Generate the Excel file
+    XLSX.writeFile(wb, 'farhi_rs_batala_wholedb.xlsx'); // Download the file as 'farhi_rs_batala_wholedb.xlsx'
+    
+    
+    
+    loadingscreen.style.animationName = "fadeOutAnimation";
+    loadingscreen.style.animationDuration = "0.25s";
+    loadingscreen.style.animationFillMode = "forwards";
+    
+    messageboxicon.innerHTML = "done_all";
+    
+    messageboxtext.innerHTML = "تمت صناعة النسخة بنجاح، يمكنك تحميلها الآن";
+    
+    messagebox.style.animationName = "fadeInAnimation";
+      
+    messagebox.style.animationDuration = "0.25s";
+    messagebox.style.animationFillMode = "forwards";
+    
+    clearTimeout(messageboxtimer);
+    
+    messageboxtimer = setTimeout(function() {
+      messagebox.style.animationName = "fadeOutAnimation";
+      messagebox.style.animationDuration = "0.25s";
+      messagebox.style.animationFillMode = "forwards";
+    }, 250 + 2500);
+  }
+  
+  let whenSortFactorNotSelected = function() {
+    loadingscreen.style.animationName = "fadeOutAnimation";
+    loadingscreen.style.animationDuration = "0.25s";
+    loadingscreen.style.animationFillMode = "forwards";
+    
+    messageboxicon.innerHTML = "close";
+    
+    messageboxtext.innerHTML = "زر التصنيف مفعل، إختر معيار التصيف أولا حتى تتمكن من صناعة ملف Excel";
+    
+    messagebox.style.animationName = "fadeInAnimation";
+      
+    messagebox.style.animationDuration = "0.25s";
+    messagebox.style.animationFillMode = "forwards";
+    
+    clearTimeout(messageboxtimer);
+    
+    messageboxtimer = setTimeout(function() {
+      messagebox.style.animationName = "fadeOutAnimation";
+      messagebox.style.animationDuration = "0.25s";
+      messagebox.style.animationFillMode = "forwards";
+    }, 250 + 3500);
+  }
+  
+  loadingscreen.style.top = "0px";
+  loadingscreen.style.animationName = "fadeInAnimation";
+  loadingscreen.style.animationDuration = "0.25s";
+  loadingscreen.style.animationFillMode = "forwards";
+  
+  loadingtext.innerHTML = "جاري تحضير الملف ...";
+  
+  let xlsxData = [[
+    "مكان الإقامة",
+    "رقم شهادة الميلاد",
+    "مكان الميلاد",
+    "تاريخ الميلاد",
+    "بلدية الإصدار",
+    "تاريخ نهاية صلحية البطاقة",
+    "تاريخ إصدار البطاقة",
+    "رقم البطاقة",
+    "الرقم البيومتري لبطاقة التعريف الوطنية | بطاقة مماثلة",
+    "رقم طلب العمل",
+    "رقم الهاتف",
+    "تاريخ نهاية التجديد",
+    "تاريخ بداية التجديد",
+    "إسم الزبون",
+    "المعرف الفريد"
+  ],
+  []
+  ];
+  
+  // create a new connection  or new transaction
+  const trans = farhi_rsdb.transaction('batala', 'readwrite');  
+  // Save Names object using variable  
+  const batala = trans.objectStore('batala');
+  
+  let count = 0;
+  
+  let rowCount = 1;
+  let onsuccess = function(event) {
+      let cursor = event.target.result;
+      let xlsxRowData = [];
+      
+      let rowAddress = (count - rowCount) + 3;
+      
+      if (cursor) {
+        let itemdata = cursor.value;
+        
+        if (itemdata.residence.includes('#')) redFlagedAddresses.push(availableColumns[0] + rowAddress);
+        if (itemdata.birthcertificatenumber.includes('#')) redFlagedAddresses.push(availableColumns[1] + rowAddress);
+        if (itemdata.cardissuingplace.includes('#')) redFlagedAddresses.push(availableColumns[4] + rowAddress);
+        if (itemdata.cardnumber.includes('#')) redFlagedAddresses.push(availableColumns[7] + rowAddress);
+        if (itemdata.nin.includes('#')) redFlagedAddresses.push(availableColumns[8] + rowAddress);
+        if (itemdata.worknumber.includes('#')) redFlagedAddresses.push(availableColumns[9] + rowAddress);
+        if (itemdata.phonenumber.includes('#')) redFlagedAddresses.push(availableColumns[10] + rowAddress);
+        if (itemdata.name.includes('#')) redFlagedAddresses.push(availableColumns[13] + rowAddress);
+        
+        xlsxRowData = [
+          unescapeHtml(itemdata.residence.replace('#', '')),
+          unescapeHtml(itemdata.birthcertificatenumber.replace('#', '')),
+          unescapeHtml(itemdata.birthplace.replace('#', '')),
+          unescapeHtml(itemdata.birthdate).replaceAll("-", "/"),
+          unescapeHtml(itemdata.cardissuingplace.replace('#', '')),
+          unescapeHtml(itemdata.cardexpiredate).replaceAll("-", "/"),
+          unescapeHtml(itemdata.cardissuingdate).replaceAll("-", "/"),
+          unescapeHtml(itemdata.cardnumber.replace('#', '')),
+          unescapeHtml(itemdata.nin.replace('#', '')),
+          unescapeHtml(itemdata.worknumber.replace('#', '')),
+          unescapeHtml(itemdata.phonenumber.replace('#', '')),
+          unescapeHtml(addSixMonths(itemdata.renewingstartdate)).replaceAll("-", "/"),
+          unescapeHtml(itemdata.renewingstartdate).replaceAll("-", "/"),
+          unescapeHtml(itemdata.name.replace('#', '')),
+          unescapeHtml(toUid(itemdata.id))
+        ];
+        
+        xlsxData.splice(2, 0, xlsxRowData); // Insert the new xlsxRowData at the 2nd index
+        
+        rowCount++;
+        if (cursor.continue) cursor.continue();
+      } else {
+        onfinish();
+      }
+  };
+  
+  if (sortingenabled) {
+    
+    if (searchfactor === "" || searchfactor === "unselected") {
+      whenSortFactorNotSelected();
+      return;
+    }
+    
+    count = pageData.length;
+    
+    pageData.forEach(function(itemdata) {
+      let fakeevent = {
+        target: {
+          result: {
+            value: itemdata
+          }
+        }
+      };
+            
+      onsuccess(fakeevent);
+    });
+    
+    let fakeendevent = {
+      target: {
+        result: false
+      }
+    };
+    onsuccess(fakeendevent);
+  } else {
+    let batalacount = batala.count();
+        
+    batalacount.onsuccess = function() {
+      count = batalacount.result;
+      batala.openCursor().onsuccess = onsuccess;
+    }
+  }
+  
+}
+
+
+function styleXlsx(worksheet, totalNumberOfRows, redFlagedAddresses, dateColumns) {
+  const totalColumns = 15; // Total columns in the row
+  for (let rowNumber = 1; rowNumber <= totalNumberOfRows; rowNumber++) {
+    // Set style for the entire row
+    const rowAddresses = Array.from({ length: totalColumns }, (_, i) => XLSX.utils.encode_cell({ r: rowNumber - 1, c: i }));
+    // Apply style to each cell in the row
+    rowAddresses.forEach(address => {
+      if (worksheet[address] === undefined || worksheet[address] === null) return;
+      
+      let rowStyle = {
+        font: {
+          bold: rowNumber === 1, // Make the font bold for the entire row
+          color: {
+            rgb: (rowNumber === 1 || redFlagedAddresses.includes(address)) ? "FFFFFF" : "000000"
+          }
+        },
+        alignment: {
+          // Define alignment properties
+          wrapText: true, // Enable text wrapping
+          vertical: "center",
+          horizontal: (rowNumber === 1 || address.includes('O')) ? "center" : "right"
+        },
+        fill: (rowNumber === 1 || redFlagedAddresses.includes(address)) ? {
+          fgColor: {
+            rgb: redFlagedAddresses.includes(address) ? "FF0000" : "2196F3"
+          }
+        } : null
+      };
+      
+      worksheet[address].s = rowStyle;
+      
+      const columnWidth = worksheet[address].v.length;
+      worksheet[address].w = columnWidth;
+    });
+  }
+}
+
+
+function unescapeHtml(htmlString) {
+  const div = document.createElement('div');
+  div.innerHTML = htmlString;
+  return div.textContent || div.innerText || '';
+}
+
+
+function whenNewUidItemGetClicked() {
+  dialogcontainer.style.animationName = "fadeInAnimation";
+  dialogcontainer.style.animationDuration = "0.25s";
+  dialogcontainer.style.animationFillMode = "forwards";
+  
+  dialogboxinput.value = typedNote;
+  
+  dialogboxinput.focus();
+  
+  let dismissDialog = function() {
+    dialogcontainer.style.animationName = "fadeOutAnimation";
+    dialogcontainer.style.animationDuration = "0.25s";
+    dialogcontainer.style.animationFillMode = "forwards";
+  }
+  
+  dialogokbutton.onclick = function() {
+    dismissDialog();
+    typedNote = dialogboxinput.value;
+  }
+  
+  dialogcancelbutton.onclick = dismissDialog;
+  
+  dialogcontainer.onclick = dismissDialog;
+}
+
+function whenDataUidItemGetRightClicked(rowId) {
+  let pageDataIndex = rowId + (searchenabled ? (pageItemsLimit*pageIndex) : 0);
+  
+  if (pageData[pageDataIndex] !== undefined || pageData[pageDataIndex] !== null) if (pageData[pageDataIndex].note !== undefined || pageData[pageDataIndex].note !== null || pageData[pageDataIndex].note !== "") alert("ملاحظتك السابقة عن الزبون : \n" + pageData[pageDataIndex].note);
 }

@@ -2,6 +2,8 @@
 <html lang="en">
  <head>
   <script type="text/javascript" charset="UTF-8" src="eruda.js"></script>
+  <script type="text/javascript" src="./lib/xlsx.bundle.js"></script>
+  
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <title>Farhi Registration System</title>
@@ -15,6 +17,12 @@
       }).catch(error=>{
         console.log("Registering caching service worker failed");
       });
+      
+      navigator.serviceWorker.register("./notification_worker.js").then(registration=>{
+        console.log("Notification Service worker registered");
+      }).catch(error=>{
+        console.log("Registering notification service worker failed");
+      });
     } else {
       console.log("Service workers not supported");
     }
@@ -22,6 +30,7 @@
  </head>
  <body>
   <script src="./lib/lottie-player.js"></script>
+  
   <!-- Toolbar -->
   <div id="toolbar">
    <lottie-player id="toolbaranim" src="./anim/book.json" background="transparent" speed="1" loop autoplay direction="1" mode="normal"></lottie-player>
@@ -33,7 +42,7 @@
      <div id="toolbarsearchhint" class="styledtext inputhint">
       إبحث عن أي زبون بإستخدام المعرف الفريد
      </div>
-     <div id="toolbarsearchinput" contenteditable="true" class="styledtext input" type="text" onkeydown="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" , onchange="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oninput="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oncut="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" onpaste="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')"></div>
+     <div id="toolbarsearchinput" contenteditable="true" class="styledtext input" type="text" onkeydown="whenTextChange('toolbarsearchinput', 'toolbarsearchhint'); whenSearchInputKeyDown(event)" , onchange="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oninput="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oncut="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" onpaste="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')"></div>
     </div>
     <div id="toolbarsearchbutton" class="fabicon toolbarbutton">
      <span id="toolbarsearchicon" class="material-symbols-outlined toolbaricon"> search </span>
@@ -41,6 +50,10 @@
     
     <div id="toolbarsortbutton" class="fabicon toolbarbutton">
      <span id="toolbarsorticon" class="material-symbols-outlined toolbaricon"> sort_by_alpha </span>
+    </div>
+    
+    <div id="toolbarextoxlsxbutton" class="fabicon toolbarbutton">
+     <span id="toolbarextoxlsxicon" class="material-symbols-outlined toolbaricon"> description </span>
     </div>
    </div>
   </div><!-- head -->
@@ -73,7 +86,7 @@
    <table id="datatable" dir="rtl">
     <thead id="datatablehead">
      <tr id="newitemsbar">
-      <th id="newuiditem" class="tabledataitem"></th>
+      <th id="newuiditem" class="tabledataitem" onclick="whenNewUidItemGetClicked()"></th>
       <th class="newitemfieldcontainer">
        <div id="newnameitemfield" class="inputfield newitemfield">
         <div id="newnameitemhint" class="styledtext inputhint newitemhint">
@@ -236,6 +249,21 @@
       <div id="messageboxtext" class="styledtext"></div>
     </div>
   </div>
+  
+  <div id="dialogcontainer">
+    <div id="dialogbox">
+      <div class="dialoghorlayout">
+      <span id="dialogboxicon" class="material-symbols-outlined fabicon"> info </span>
+      <div id="dialogboxtitle" class="styledtext">أكتب ملاحظتك عن الزبون هنا : </div>
+      </div>
+      <textarea id="dialogboxinput" class="styledtext" placeholder="أكتب الملاحظة هنا"></textarea>
+      <div class="dialoghorlayout">
+        <div id="dialogokbutton" class="styledtext dialogbutton">تم</div>
+        <div id="dialogcancelbutton" class="styledtext dialogbutton">إلغاء</div>
+      </div>
+    </div>
+  </div>
+  
   <script src="index.js"></script>
  </body>
 </html>
