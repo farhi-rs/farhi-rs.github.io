@@ -49,9 +49,9 @@ function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumbe
   let dataitemhtml =
   '\n     <tr>\n       '
   +
-  '<th id ="tableuiditemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableuiditemat_' + rowCount + '\')" oncontextmenu="whenDataUidItemGetRightClicked(' + rowCount + ')">' + uid + '</th>'
+  '<th id ="tableuiditemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableuiditemat_' + rowCount + '\')" oncontextmenu="whenDataUidItemGetRightClicked(event, ' + rowCount + ')">' + uid + '</th>'
   +
-  '<th id ="tablenameitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + (name.includes('#') ? 'redflageditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablenameitemat_' + rowCount + '\')">' + name.replace('#', '') + '</th>'
+  '<th id ="tablenameitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + (name.includes('#') ? 'redflageditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablenameitemat_' + rowCount + '\')" oncontextmenu="whenDataNameItemGetRightClicked(event, ' + rowCount + ')">' + name.replace('#', '') + '</th>'
   +
   '<th id ="tablestatusitemat_' + rowCount + '" class="tabledataitem statusdataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + (_hamzacase ? "" : '" style="background-color: ' + getStatusColor(renewingstartdate)) + '" onclick="whenDataItemClicked(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablestatusitemat_' + rowCount + '\')">' + status + '</th>'
   +
@@ -2000,7 +2000,10 @@ function whenNewUidItemGetClicked() {
   dialogcontainer.onclick = dismissDialog;
 }
 
-function whenDataUidItemGetRightClicked(rowId) {
+function whenDataUidItemGetRightClicked(event, rowId) {
+    
+  event.preventDefault();
+    
   let pageDataIndex = rowId + (searchenabled ? (pageItemsLimit*pageIndex) : 0);
   
   if (pageData[pageDataIndex] !== undefined || pageData[pageDataIndex] !== null) if (pageData[pageDataIndex].note !== undefined || pageData[pageDataIndex].note !== null || pageData[pageDataIndex].note !== "") alert("ملاحظتك السابقة عن الزبون : \n" + pageData[pageDataIndex].note);
@@ -2073,4 +2076,61 @@ toolbargotobutton.onclick = function() {
   }
   
   
+}
+
+
+let pdfFrame = null;
+function whenDataNameItemGetRightClicked(event, rowId) {
+  
+  event.preventDefault();
+  
+  let pageDataIndex = rowId + (searchenabled ? (pageItemsLimit*pageIndex) : 0);
+    
+  let itemdata = pageData[pageDataIndex];
+  
+  if (pdfFrame === null) {
+    // Create a new iframe element
+    pdfFrame = document.createElement('iframe');
+
+    // Set attributes for the iframe
+    pdfFrame.setAttribute('width', '1050px'); // Set the width as required
+    pdfFrame.setAttribute('height', '1485px'); // Set the height as required
+    pdfFrame.setAttribute('frameborder', '0'); // Optional: Set frame border
+    
+    pdfFrame.setAttribute('class', 'printable');
+
+    // Set the source of the iframe to load an HTML file
+    pdfFrame.src = './externalcontent/receipt.html';
+  
+    pdfFrame.style = "position: fixed; left: -100%; top: -100%;";
+      
+    document.body.appendChild(pdfFrame);
+  } else {
+    pdfFrame.onload();
+  }
+    
+  function fill() {
+    pdfFrame.contentWindow.document.getElementById("tableuiditem").innerHTML = toUid(itemdata.id);
+    pdfFrame.contentWindow.document.getElementById("tablenameitem").innerHTML = itemdata.name;
+    pdfFrame.contentWindow.document.getElementById("tablerenewingstartdateitem").innerHTML = getArabicDate(itemdata.renewingstartdate);
+    pdfFrame.contentWindow.document.getElementById("tableninitem").innerHTML = itemdata.nin;
+    pdfFrame.contentWindow.document.getElementById("tablephonenumberitem").innerHTML = itemdata.phonenumber;
+    pdfFrame.contentWindow.document.getElementById("tableworknumberitem").innerHTML = itemdata.worknumber;
+    pdfFrame.contentWindow.document.getElementById("tableresidenceitem").innerHTML = itemdata.residence;
+    
+    let today = new Date();
+    pdfFrame.contentWindow.document.getElementById("datemessage").innerHTML = "تم تسليم هذا الوصل بيوم " + getArabicDate(today) + " بتاريخ " + today.toLocaleTimeString();
+  }
+  
+  pdfFrame.onload = function() {
+    fill();
+    pdfFrame.contentWindow.print();
+    /*
+    setTimeout(function() {
+      document.body.removeChild(pdfFrame);
+    }, 1000);
+    */
+  }
+  
+  //html2pdf(pdfFrame);
 }

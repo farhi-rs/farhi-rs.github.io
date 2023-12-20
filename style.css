@@ -44,8 +44,6 @@
 }
 
 
-
-
 html {
   filter: invert(1) contrast(1) saturate(1) hue-rotate(180deg);
 }
