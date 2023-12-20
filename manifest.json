@@ -1,7 +1,7 @@
 {
   "name": "Farhi Registration System",
   "short_name": "Farhi RS",
-  "version" : "1.0.0",
+  "version" : "1.0",
   "theme_color": "#2196f3",
   "background_color": "#000000",
   "display": "standalone",
