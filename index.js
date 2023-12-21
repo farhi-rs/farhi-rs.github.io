@@ -2106,7 +2106,8 @@ function whenDataNameItemGetRightClicked(event, rowId) {
       
     document.body.appendChild(pdfFrame);
   } else {
-    pdfFrame.onload();
+    document.body.removeChild(pdfFrame);
+    document.body.appendChild(pdfFrame);
   }
     
   function fill() {
@@ -2124,10 +2125,7 @@ function whenDataNameItemGetRightClicked(event, rowId) {
   
   pdfFrame.onload = function() {
     fill();
-    fill();
-    setTimeout(function() {
-      pdfFrame.contentWindow.print();
-    }, 1000);
+    pdfFrame.contentWindow.print();
     /*
     setTimeout(function() {
       document.body.removeChild(pdfFrame);
