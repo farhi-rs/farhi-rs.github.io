@@ -2124,9 +2124,10 @@ function whenDataNameItemGetRightClicked(event, rowId) {
   
   pdfFrame.onload = function() {
     fill();
+    fill();
     setTimeout(function() {
       pdfFrame.contentWindow.print();
-    }, 300);
+    }, 1000);
     /*
     setTimeout(function() {
       document.body.removeChild(pdfFrame);
