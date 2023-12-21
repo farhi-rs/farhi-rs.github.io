@@ -2107,6 +2107,7 @@ function whenDataNameItemGetRightClicked(event, rowId) {
     document.body.appendChild(pdfFrame);
   } else {
     document.body.removeChild(pdfFrame);
+    fill();
     document.body.appendChild(pdfFrame);
   }
     
