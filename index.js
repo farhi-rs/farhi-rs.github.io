@@ -51,7 +51,7 @@ function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumbe
   +
   '<th id ="tableuiditemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableuiditemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableuiditemat_' + rowCount + '\')" oncontextmenu="whenDataUidItemGetRightClicked(event, ' + rowCount + ')">' + uid + '</th>'
   +
-  '<th id ="tablenameitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + (name.includes('#') ? 'redflageditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablenameitemat_' + rowCount + '\')" oncontextmenu="whenDataNameItemGetRightClicked(event, ' + rowCount + ')">' + name.replace('#', '') + '</th>'
+  '<th id ="tablenameitemat_' + rowCount + '" class="tabledataitem ' + (id === -1 ? '' : 'stickyitem') + ' ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + (name.includes('#') ? 'redflageditem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablenameitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablenameitemat_' + rowCount + '\')" oncontextmenu="whenDataNameItemGetRightClicked(event, ' + rowCount + ')">' + name.replace('#', '') + '</th>'
   +
   '<th id ="tablestatusitemat_' + rowCount + '" class="tabledataitem statusdataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + (_hamzacase ? "" : '" style="background-color: ' + getStatusColor(renewingstartdate)) + '" onclick="whenDataItemClicked(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablestatusitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablestatusitemat_' + rowCount + '\')">' + status + '</th>'
   +
@@ -1761,7 +1761,7 @@ function saveWholeDatabaseAsXlsx() {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); // Add the worksheet to the workbook
 
     // Generate the Excel file
-    XLSX.writeFile(wb, 'farhi_rs_batala_wholedb.xlsx'); // Download the file as 'farhi_rs_batala_wholedb.xlsx'
+    XLSX.writeFile(wb, 'farhi_rs_batala_wholedb_backup_at_[' + new Date().toISOString() + '].xlsx'); // Download the file as 'farhi_rs_batala_wholedb.xlsx'
     
     
     
@@ -2124,7 +2124,9 @@ function whenDataNameItemGetRightClicked(event, rowId) {
   
   pdfFrame.onload = function() {
     fill();
-    pdfFrame.contentWindow.print();
+    setTimeout(function() {
+      pdfFrame.contentWindow.print();
+    }, 300);
     /*
     setTimeout(function() {
       document.body.removeChild(pdfFrame);
@@ -2133,4 +2135,23 @@ function whenDataNameItemGetRightClicked(event, rowId) {
   }
   
   //html2pdf(pdfFrame);
+}
+
+
+
+let yesterdayObject = new Date();
+yesterdayObject.setDate(yesterdayObject.getDate() - 1);
+    
+localStorage.getItem(yesterdayObject.toISOString().split("T")[0] + "_xlsxbackup") === undefined || localStorage.getItem(yesterdayObject.toISOString().split("T")[0] + "_xlsxbackup") === null || localStorage.getItem(yesterdayObject.toISOString().split("T")[0] + "_xlsxbackup") === "" ? '' : localStorage.removeItem(yesterdayObject.toISOString().split("T")[0] + "_xlsxbackup");
+    
+let canxlsxbackup = localStorage.getItem(new Date().toISOString().split("T")[0] + "_xlsxbackup");
+
+if (canxlsxbackup === undefined || canxlsxbackup === null || canxlsxbackup === "") canxlsxbackup = "true";
+
+if (canxlsxbackup == "true") {
+  localStorage.setItem(new Date().toISOString().split("T")[0] + "_xlsxbackup", "false");
+  
+  setTimeout(function() {
+    saveWholeDatabaseAsXlsx();
+  }, 1000);
 }
