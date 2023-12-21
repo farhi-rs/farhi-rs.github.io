@@ -296,9 +296,12 @@ body {
 .stickyitem {
   position: sticky;
   right: 0;
-  z-index: 1;
   background-color: white;
   backdrop-filter: blur(50px);
+}
+
+#tabletitlenameitem {
+  z-index: 1;
 }
 
 #datatablebody {
