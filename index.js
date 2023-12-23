@@ -737,6 +737,10 @@ function whenDataItemClicked(itemid) {
       } catch (ex) {
         // Do nothing ...
       }
+      
+      fabscontainer.style.animationName = "fadeInAnimation";
+      fabscontainer.style.animationDuration = "0.25s";
+      fabscontainer.style.animationFillMode = "forwards";
   }
 }
 
@@ -2041,7 +2045,7 @@ function whenDataUidItemGetRightClicked(event, rowId) {
     
   let pageDataIndex = rowId + (searchenabled ? (pageItemsLimit*pageIndex) : 0);
   
-  if (pageData[pageDataIndex] !== undefined || pageData[pageDataIndex] !== null) if (pageData[pageDataIndex].note !== undefined || pageData[pageDataIndex].note !== null || pageData[pageDataIndex].note !== "") alert("ملاحظتك السابقة عن الزبون : \n" + pageData[pageDataIndex].note);
+  if (pageData[pageDataIndex] !== undefined || pageData[pageDataIndex] !== null) if (pageData[pageDataIndex].note !== undefined || pageData[pageDataIndex].note !== null || pageData[pageDataIndex].note !== "") alert("ملاحظتك السابقة عن الزبون : \n" + (pageData[pageDataIndex].note === "" ? "لا يوجد" : pageData[pageDataIndex].note));
 }
 
 
