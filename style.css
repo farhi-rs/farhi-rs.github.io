@@ -290,7 +290,8 @@ body {
 }
 
 .input:focus {
-  outline: 10px;
+  outline: 5px;
+  border-radius: 5px;
   outline-color: #2196f3;
   outline-style: dotted;
 }
