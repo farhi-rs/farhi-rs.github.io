@@ -730,6 +730,7 @@ function whenDataItemClicked(itemid) {
         } else if (itemtype == "uid") {
           newnameiteminput.focus();
         } else if (itemtype == "name") {
+          newnameiteminput.focus();
           window.scrollTo(10000, window.scrollY);
         } else {
           document.getElementById("new" + itemtype + "iteminput").focus();
@@ -2150,12 +2151,12 @@ function whenDataNameItemGetRightClicked(event, rowId) {
     
   function fill() {
     pdfFrame.contentWindow.document.getElementById("tableuiditem").innerHTML = toUid(itemdata.id);
-    pdfFrame.contentWindow.document.getElementById("tablenameitem").innerHTML = itemdata.name;
+    pdfFrame.contentWindow.document.getElementById("tablenameitem").innerHTML = unescapeHtml(itemdata.name).replace('#', '');
     pdfFrame.contentWindow.document.getElementById("tablerenewingstartdateitem").innerHTML = getArabicDate(itemdata.renewingstartdate);
-    pdfFrame.contentWindow.document.getElementById("tableninitem").innerHTML = itemdata.nin;
-    pdfFrame.contentWindow.document.getElementById("tablephonenumberitem").innerHTML = itemdata.phonenumber;
-    pdfFrame.contentWindow.document.getElementById("tableworknumberitem").innerHTML = itemdata.worknumber;
-    pdfFrame.contentWindow.document.getElementById("tableresidenceitem").innerHTML = itemdata.residence;
+    pdfFrame.contentWindow.document.getElementById("tableninitem").innerHTML = unescapeHtml(itemdata.nin).replace('#', '');
+    pdfFrame.contentWindow.document.getElementById("tablephonenumberitem").innerHTML = unescapeHtml(itemdata.phonenumber).replace('#', '');
+    pdfFrame.contentWindow.document.getElementById("tableworknumberitem").innerHTML = unescapeHtml(itemdata.worknumber).replace('#', '');
+    pdfFrame.contentWindow.document.getElementById("tableresidenceitem").innerHTML = unescapeHtml(itemdata.residence).replace('#', '');
     
     let today = new Date();
     pdfFrame.contentWindow.document.getElementById("datemessage").innerHTML = "تم تسليم هذا الوصل بيوم " + getArabicDate(today) + " بتاريخ " + today.toLocaleTimeString();
