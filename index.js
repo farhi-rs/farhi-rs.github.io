@@ -1609,7 +1609,7 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
       }
     }
     
-    window.scrollTo(window.scrollX, 0);
+    if (addingEnabled) window.scrollTo(window.scrollX, 0);
     
   } else if (event.key === "Escape") {
     // If the user presses the "Escape" key on the keyboard
@@ -1657,7 +1657,7 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
       newbirthcertificatenumberiteminput.scrollIntoView();
     }
     
-    window.scrollTo(window.scrollX, 0);
+    if (addingEnabled) window.scrollTo(window.scrollX, 0);
     
   }
 }
