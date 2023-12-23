@@ -1802,7 +1802,7 @@ function saveWholeDatabaseAsXlsx() {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); // Add the worksheet to the workbook
 
     // Generate the Excel file
-    XLSX.writeFile(wb, 'farhi_rs_batala_wholedb_backup_at_[' + new Date().toISOString() + '].xlsx'); // Download the file as 'farhi_rs_batala_wholedb.xlsx'
+    XLSX.writeFile(wb, 'farhi_rs_batala_wholedb_backup_at_[' + new Date().toISOString().split('T')[0] + '].xlsx'); // Download the file as 'farhi_rs_batala_wholedb.xlsx'
     
     
     
