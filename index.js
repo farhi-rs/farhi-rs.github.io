@@ -1544,44 +1544,43 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
     event.preventDefault();
     // Trigger the button element with a click
     
-    let _scrollY = window.scrollY;
     
     if (newiteminputid == "newnameiteminput") {
       newrenewingstartdateiteminput.focus();
-      newrenewingstartdateiteminput.scrollIntoView();
+      newrenewingstartdateiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newrenewingstartdateiteminput") {
       newphonenumberiteminput.focus();
-      newphonenumberiteminput.scrollIntoView();
+      newphonenumberiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newphonenumberiteminput") {
       newworknumberiteminput.focus();
-      newworknumberiteminput.scrollIntoView();
+      newworknumberiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newworknumberiteminput") {
       newniniteminput.focus();
-      newniniteminput.scrollIntoView();
+      newniniteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newniniteminput") {
       newcardnumberiteminput.focus();
-      newcardnumberiteminput.scrollIntoView();
+      newcardnumberiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newcardnumberiteminput") {
       newcardissuingdateiteminput.focus();
-      newcardissuingdateiteminput.scrollIntoView();
+      newcardissuingdateiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newcardissuingdateiteminput") {
       newcardexpiredateiteminput.focus();
-      newcardexpiredateiteminput.scrollIntoView();
+      newcardexpiredateiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newcardexpiredateiteminput") {
       newcardissuingplaceiteminput.focus();
-      newcardissuingplaceiteminput.scrollIntoView();
+      newcardissuingplaceiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newcardissuingplaceiteminput") {
       newbirthdateiteminput.focus();
-      newbirthdateiteminput.scrollIntoView();
+      newbirthdateiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newbirthdateiteminput") {
       newbirthplaceiteminput.focus();
-      newbirthplaceiteminput.scrollIntoView();
+      newbirthplaceiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newbirthplaceiteminput") {
       newbirthcertificatenumberiteminput.focus();
-      newbirthcertificatenumberiteminput.scrollIntoView();
+      newbirthcertificatenumberiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newbirthcertificatenumberiteminput") {
       newresidenceiteminput.focus();
-      newresidenceiteminput.scrollIntoView();
+      newresidenceiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newresidenceiteminput") {
       if ((document.getElementById('newnameiteminput') !== undefined ? (document.getElementById('newnameiteminput') !== null ? document.getElementById('newnameiteminput').innerHTML : "") : "").replaceAll(" ", "") !== "" && (document.getElementById('newrenewingstartdateiteminput') !== undefined ? (document.getElementById('newrenewingstartdateiteminput') !== null ? document.getElementById('newrenewingstartdateiteminput').value : "") : "").replaceAll(" ", "") !== "") {
         donefab.click();
@@ -1611,7 +1610,7 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
       }
     }
     
-    if (addingEnabled) window.scrollTo(window.scrollX, _scrollY);
+    if (addingEnabled) window.scrollTo(window.scrollX, 0);
     
   } else if (event.key === "Escape") {
     // If the user presses the "Escape" key on the keyboard
@@ -1625,43 +1624,43 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
       realfab.click();
     } else if (newiteminputid == "newrenewingstartdateiteminput") {
       newnameiteminput.focus();
-      newnameiteminput.scrollIntoView();
+      newnameiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newphonenumberiteminput") {
       newrenewingstartdateiteminput.focus();
-      newrenewingstartdateiteminput.scrollIntoView();
+      newrenewingstartdateiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newworknumberiteminput") {
       newphonenumberiteminput.focus();
-      newphonenumberiteminput.scrollIntoView();
+      newphonenumberiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newniniteminput") {
       newworknumberiteminput.focus();
-      newworknumberiteminput.scrollIntoView();
+      newworknumberiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newcardnumberiteminput") {
       newniniteminput.focus();
-      newniniteminput.scrollIntoView();
+      newniniteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newcardissuingdateiteminput") {
       newcardnumberiteminput.focus();
-      newcardnumberiteminput.scrollIntoView();
+      newcardnumberiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newcardexpiredateiteminput") {
       newcardissuingdateiteminput.focus();
-      newcardissuingdateiteminput.scrollIntoView();
+      newcardissuingdateiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newcardissuingplaceiteminput") {
       newcardexpiredateiteminput.focus();
-      newcardexpiredateiteminput.scrollIntoView();
+      newcardexpiredateiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newbirthdateiteminput") {
       newcardissuingplaceiteminput.focus();
-      newcardissuingplaceiteminput.scrollIntoView();
+      newcardissuingplaceiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newbirthplaceiteminput") {
       newbirthdateiteminput.focus();
-      newbirthdateiteminput.scrollIntoView();
+      newbirthdateiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newbirthcertificatenumberiteminput") {
       newbirthplaceiteminput.focus();
-      newbirthplaceiteminput.scrollIntoView();
+      newbirthplaceiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     } else if (newiteminputid == "newresidenceiteminput") {
       newbirthcertificatenumberiteminput.focus();
-      newbirthcertificatenumberiteminput.scrollIntoView();
+      newbirthcertificatenumberiteminput.scrollIntoView({ block: 'nearest', inline: 'center' });
     }
     
-    if (addingEnabled) window.scrollTo(window.scrollX, _scrollY);
+    if (addingEnabled) window.scrollTo(window.scrollX, 0);
     
   }
 }
