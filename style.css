@@ -566,6 +566,10 @@ body {
 .statusdataitem {
 }
 
+.statusdataitem:hover {
+  color: black;
+}
+
 
 #messageboxcontainer {
   pointer-events: none;
