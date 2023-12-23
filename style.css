@@ -45,7 +45,7 @@
 
 
 html {
-  filter: invert(1) contrast(1) saturate(1) hue-rotate(180deg);
+  /*filter: invert(1) contrast(1) saturate(1) hue-rotate(180deg);*/
 }
 
 body {
@@ -72,7 +72,7 @@ body {
   background-color: #2196f3;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   
-  filter: invert(1) hue-rotate(180deg);
+  /* filter: invert(1) hue-rotate(180deg); */
 }
 
 #toolbaranim {

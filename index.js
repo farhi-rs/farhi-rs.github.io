@@ -543,6 +543,7 @@ function whenDataItemClicked(itemid) {
   
   let pageDataIndex = rowId + (searchenabled ? (pageItemsLimit*pageIndex) : 0);
   
+  
   let itemtype = itemid.split("_")[0].replaceAll("table", "").replaceAll("itemat", "");
     
   // Copy the text inside the text field
@@ -2107,7 +2108,9 @@ function whenDataNameItemGetRightClicked(event, rowId) {
     document.body.appendChild(pdfFrame);
   } else {
     document.body.removeChild(pdfFrame);
-    fill();
+    try {
+      fill();
+    } catch (ex) {}
     document.body.appendChild(pdfFrame);
   }
     
@@ -2125,7 +2128,9 @@ function whenDataNameItemGetRightClicked(event, rowId) {
   }
   
   pdfFrame.onload = function() {
-    fill();
+    try {
+      fill();
+    } catch (ex) {}
     pdfFrame.contentWindow.print();
     /*
     setTimeout(function() {
