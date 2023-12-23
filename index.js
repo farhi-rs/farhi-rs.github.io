@@ -1544,6 +1544,8 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
     event.preventDefault();
     // Trigger the button element with a click
     
+    let _scrollY = window.scrollY;
+    
     if (newiteminputid == "newnameiteminput") {
       newrenewingstartdateiteminput.focus();
       newrenewingstartdateiteminput.scrollIntoView();
@@ -1609,13 +1611,15 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
       }
     }
     
-    if (addingEnabled) window.scrollTo(window.scrollX, 0);
+    if (addingEnabled) window.scrollTo(window.scrollX, _scrollY);
     
   } else if (event.key === "Escape") {
     // If the user presses the "Escape" key on the keyboard
     // Cancel the default action, if needed
     event.preventDefault();
     // Trigger the button element with a click
+    
+    let _scrollY = window.scrollY;
     
     if (newiteminputid == "newnameiteminput") {
       realfab.click();
@@ -1657,7 +1661,7 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
       newbirthcertificatenumberiteminput.scrollIntoView();
     }
     
-    if (addingEnabled) window.scrollTo(window.scrollX, 0);
+    if (addingEnabled) window.scrollTo(window.scrollX, _scrollY);
     
   }
 }
