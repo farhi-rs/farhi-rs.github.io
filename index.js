@@ -1608,6 +1608,8 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
       }
     }
     
+    window.scrollTo(window.scrollX, 0);
+    
   } else if (event.key === "Escape") {
     // If the user presses the "Escape" key on the keyboard
     // Cancel the default action, if needed
@@ -1653,6 +1655,8 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
       newbirthcertificatenumberiteminput.focus();
       newbirthcertificatenumberiteminput.scrollIntoView();
     }
+    
+    window.scrollTo(window.scrollX, 0);
     
   }
 }

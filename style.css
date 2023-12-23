@@ -478,11 +478,11 @@ body {
   display: flex;
   flex-direction: row-reverse;
   justify-content: center;
+  z-index: 2;
 }
 
 
 .fab {
-  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
