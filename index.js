@@ -727,9 +727,8 @@ function whenDataItemClicked(itemid) {
       try {
         if (itemtype == "status" || itemtype == "renewingenddate") {
           newrenewingstartdateiteminput.focus();
-        } else if (itemtype == "uid") {
+        } else if (itemtype == "uid" || itemtype == "name") {
           newnameiteminput.focus();
-        } else if (itemtype == "name") {
           newnameiteminput.focus();
           window.scrollTo(10000, window.scrollY);
         } else {
