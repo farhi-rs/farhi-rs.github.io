@@ -482,6 +482,7 @@ body {
 
 
 .fab {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -491,7 +492,7 @@ body {
   width: fit-content;
   height: 70px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-  z-index: 3;
+  z-index: 2;
 }
 
 .fab:hover {
