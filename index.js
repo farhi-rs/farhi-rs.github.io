@@ -1318,6 +1318,8 @@ donefab.onclick = function() {
             realfabicon.innerHTML = 'close';
           }
           
+          window.scrollTo(10000, window.scrollY);
+          
           messageboxicon.innerHTML = "done_all";
     
           messageboxtext.innerHTML = "تم تعديل الصف بنجاح";
@@ -2162,7 +2164,7 @@ function whenDataNameItemGetRightClicked(event, rowId) {
     pdfFrame.contentWindow.document.getElementById("tableresidenceitem").innerHTML = unescapeHtml(itemdata.residence).replace('#', '');
     
     let today = new Date();
-    pdfFrame.contentWindow.document.getElementById("datemessage").innerHTML = "تم تسليم هذا الوصل بيوم " + getArabicDate(today) + " بتاريخ " + today.toLocaleTimeString();
+    pdfFrame.contentWindow.document.getElementById("datemessage").innerHTML = "تم تسليم هذا الوصل بيوم " + getArabicDate(today) + " بتوقيت " + today.toLocaleTimeString();
   }
   
   pdfFrame.onload = function() {
