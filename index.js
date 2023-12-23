@@ -1585,7 +1585,7 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
         donefab.click();
       } else {
         try {
-          newnameiteminput.focus();
+          window.scrollTo(10000, window.scrollY);
         } catch (ex) {
           // Ignore...
         }

@@ -290,9 +290,9 @@ body {
 }
 
 .input:focus {
-  outline: 0;
-  outline-color: transparent;
-  outline-style: none;
+  outline: 10px;
+  outline-color: #2196f3;
+  outline-style: dotted;
 }
 
 .newlyaddeditem {
