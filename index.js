@@ -729,6 +729,8 @@ function whenDataItemClicked(itemid) {
           newrenewingstartdateiteminput.focus();
         } else if (itemtype == "uid") {
           newnameiteminput.focus();
+        } else if (itemtype == "name") {
+          window.scrollTo(10000, window.scrollY);
         } else {
           document.getElementById("new" + itemtype + "iteminput").focus();
         }
@@ -1544,28 +1546,40 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
     
     if (newiteminputid == "newnameiteminput") {
       newrenewingstartdateiteminput.focus();
+      newrenewingstartdateiteminput.scrollIntoView();
     } else if (newiteminputid == "newrenewingstartdateiteminput") {
       newphonenumberiteminput.focus();
+      newphonenumberiteminput.scrollIntoView();
     } else if (newiteminputid == "newphonenumberiteminput") {
       newworknumberiteminput.focus();
+      newworknumberiteminput.scrollIntoView();
     } else if (newiteminputid == "newworknumberiteminput") {
       newniniteminput.focus();
+      newniniteminput.scrollIntoView();
     } else if (newiteminputid == "newniniteminput") {
       newcardnumberiteminput.focus();
+      newcardnumberiteminput.scrollIntoView();
     } else if (newiteminputid == "newcardnumberiteminput") {
       newcardissuingdateiteminput.focus();
+      newcardissuingdateiteminput.scrollIntoView();
     } else if (newiteminputid == "newcardissuingdateiteminput") {
       newcardexpiredateiteminput.focus();
+      newcardexpiredateiteminput.scrollIntoView();
     } else if (newiteminputid == "newcardexpiredateiteminput") {
       newcardissuingplaceiteminput.focus();
+      newcardissuingplaceiteminput.scrollIntoView();
     } else if (newiteminputid == "newcardissuingplaceiteminput") {
       newbirthdateiteminput.focus();
+      newbirthdateiteminput.scrollIntoView();
     } else if (newiteminputid == "newbirthdateiteminput") {
       newbirthplaceiteminput.focus();
+      newbirthplaceiteminput.scrollIntoView();
     } else if (newiteminputid == "newbirthplaceiteminput") {
       newbirthcertificatenumberiteminput.focus();
+      newbirthcertificatenumberiteminput.scrollIntoView();
     } else if (newiteminputid == "newbirthcertificatenumberiteminput") {
       newresidenceiteminput.focus();
+      newresidenceiteminput.scrollIntoView();
     } else if (newiteminputid == "newresidenceiteminput") {
       if ((document.getElementById('newnameiteminput') !== undefined ? (document.getElementById('newnameiteminput') !== null ? document.getElementById('newnameiteminput').innerHTML : "") : "").replaceAll(" ", "") !== "" && (document.getElementById('newrenewingstartdateiteminput') !== undefined ? (document.getElementById('newrenewingstartdateiteminput') !== null ? document.getElementById('newrenewingstartdateiteminput').value : "") : "").replaceAll(" ", "") !== "") {
         donefab.click();
@@ -1604,28 +1618,40 @@ function whenKeyPressOnNewItemInput(event, newiteminputid) {
       realfab.click();
     } else if (newiteminputid == "newrenewingstartdateiteminput") {
       newnameiteminput.focus();
+      newnameiteminput.scrollIntoView();
     } else if (newiteminputid == "newphonenumberiteminput") {
       newrenewingstartdateiteminput.focus();
+      newrenewingstartdateiteminput.scrollIntoView();
     } else if (newiteminputid == "newworknumberiteminput") {
       newphonenumberiteminput.focus();
+      newphonenumberiteminput.scrollIntoView();
     } else if (newiteminputid == "newniniteminput") {
       newworknumberiteminput.focus();
+      newworknumberiteminput.scrollIntoView();
     } else if (newiteminputid == "newcardnumberiteminput") {
       newniniteminput.focus();
+      newniniteminput.scrollIntoView();
     } else if (newiteminputid == "newcardissuingdateiteminput") {
       newcardnumberiteminput.focus();
+      newcardnumberiteminput.scrollIntoView();
     } else if (newiteminputid == "newcardexpiredateiteminput") {
       newcardissuingdateiteminput.focus();
+      newcardissuingdateiteminput.scrollIntoView();
     } else if (newiteminputid == "newcardissuingplaceiteminput") {
       newcardexpiredateiteminput.focus();
+      newcardexpiredateiteminput.scrollIntoView();
     } else if (newiteminputid == "newbirthdateiteminput") {
       newcardissuingplaceiteminput.focus();
+      newcardissuingplaceiteminput.scrollIntoView();
     } else if (newiteminputid == "newbirthplaceiteminput") {
       newbirthdateiteminput.focus();
+      newbirthdateiteminput.scrollIntoView();
     } else if (newiteminputid == "newbirthcertificatenumberiteminput") {
       newbirthplaceiteminput.focus();
+      newbirthplaceiteminput.scrollIntoView();
     } else if (newiteminputid == "newresidenceiteminput") {
       newbirthcertificatenumberiteminput.focus();
+      newbirthcertificatenumberiteminput.scrollIntoView();
     }
     
   }
@@ -2160,3 +2186,35 @@ if (canxlsxbackup == "true") {
     saveWholeDatabaseAsXlsx();
   }, 1000);
 }
+
+
+let dontsavetheme = false;
+const changetheme = function() {
+  let theme = (localStorage.getItem("theme") === undefined || localStorage.getItem("theme") === null || localStorage.getItem("theme") === "") ? 'dark' : localStorage.getItem("theme");
+  
+  if (theme === (dontsavetheme ? 'light' : 'dark')) {
+    theme = 'light';
+    document.documentElement.style.animationName = "bodyLightThemeAnimation";
+    document.getElementById('toolbar').style.animationName = "toolbarLightThemeAnimation";
+    toolbarthemeicon.innerHTML = "dark_mode";
+  } else {
+    theme = 'dark';
+    document.documentElement.style.animationName = "bodyDarkThemeAnimation";
+    document.getElementById('toolbar').style.animationName = "toolbarDarkThemeAnimation";
+    toolbarthemeicon.innerHTML = "light_mode";
+  }
+  
+  document.documentElement.style.animationDuration = "0.25s";
+  document.documentElement.style.animationFillMode = "forwards";
+  
+  document.getElementById('toolbar').style.animationDuration = "0.25s";
+  document.getElementById('toolbar').style.animationFillMode = "forwards";
+  
+  if (!dontsavetheme) localStorage.setItem("theme", theme);
+}
+
+dontsavetheme = true;
+changetheme();
+dontsavetheme = false;
+
+toolbarthemebutton.onclick = changetheme;
