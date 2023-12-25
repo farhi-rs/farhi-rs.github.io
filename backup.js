@@ -77,10 +77,12 @@ function handleWb(workbook) {
   // Accessing sheet names
 const sheetNames = workbook.SheetNames;
 
+let sheetindex = 0;
 
+analyzeWorkbook(sheetNames[sheetindex]);
 
 // Loop through each sheet in the workbook
-sheetNames.forEach(sheetName => {
+function analyzeWorkbook(sheetName) {
     // Accessing worksheet by name
     const worksheet = workbook.Sheets[sheetName];
 
@@ -294,19 +296,21 @@ sheetNames.forEach(sheetName => {
         
         let query = batala.put(itemdata);
         
-        let wait = true;
+        
         
         query.onsuccess = function(event) {
           progress++;
+          sheetindex++;
           console.clear();
           console.log("Progress : " + (100 * progress / total));
-          wait = false;
+          analyzeWorkbook(sheetNames[sheetindex]);
         }
         
-        while (wait) {}
+        
         
     });
-});
+
+}
 
 }
 
