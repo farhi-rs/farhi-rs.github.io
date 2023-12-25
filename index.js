@@ -576,8 +576,7 @@ function whenDataItemClicked(itemid) {
     navigator.clipboard.writeText(copiedcontent);
     
     if (lastClickedDataItem != "") {
-      lastClickedDataItem.style.backgroundColor = "white";
-      lastClickedDataItem.style.color = "black";
+      lastClickedDataItem.style = "";
     }
     
     dataitem.style.backgroundColor = "black";
@@ -614,6 +613,9 @@ function whenDataItemClicked(itemid) {
       // when data item get clicked 2 times (doubleclicked)
       // We replace the corresponding data row with an editable one
       
+      if (lastClickedDataItem != "") {
+        lastClickedDataItem.style = "";
+      }
       
       let hamzarow = rowId == -1;
       
@@ -1170,7 +1172,7 @@ donefab.onclick = function() {
           
           messageboxicon.innerHTML = "warning";
     
-          messageboxtext.innerHTML = "هذا الزبون موجود مسبقا في التطبيق، إذا كنت تريد إضافته على أي حال إضغط على تم";
+          messageboxtext.innerHTML = modifyingEnabled ? "لم يتم تغيير أي شئ، إذا كنت تريد المتابعة على أي حال إضغط تم مرة أخرى" : "هذا الزبون موجود مسبقا في التطبيق، إذا كنت تريد إضافته على أي حال إضغط على تم";
     
           messagebox.style.animationName = "fadeInAnimation";
           messagebox.style.animationDuration = "0.25s";
@@ -2302,17 +2304,17 @@ toolbarcheckuserbutton.onclick = function() {
   
   if (checkuser == "true") {
     localStorage.setItem("checkuser", "false");
-    toolbarcheckusericon.innerHTML = "person_off";
+    toolbarcheckusericon.innerHTML = "groups";
   } else {
     localStorage.setItem("checkuser", "true");
-    toolbarcheckusericon.innerHTML = "how_to_reg";
+    toolbarcheckusericon.innerHTML = "person";
   }
 }
 
 let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage.getItem("checkuser") === null || localStorage.getItem("checkuser") === "") ? 'true' : localStorage.getItem("checkuser");
   
   if (checkuser == "false") {
-    toolbarcheckusericon.innerHTML = "person_off";
+    toolbarcheckusericon.innerHTML = "groups";
   } else {
-    toolbarcheckusericon.innerHTML = "how_to_reg";
+    toolbarcheckusericon.innerHTML = "person";
   }
