@@ -536,6 +536,7 @@ var lasteditedrowid;
 var lasteditedpagedataindex;
 var modifyingEnabled = false;
 var lastdataitemOffsetLeft = 0;
+var lastClickedDataItem = "";
 function whenDataItemClicked(itemid) {
   let dataitem = document.getElementById(itemid);
   
@@ -573,6 +574,14 @@ function whenDataItemClicked(itemid) {
     messageboxtext.innerHTML = "تم نسخ المحتوى في الحافظة";
     
     navigator.clipboard.writeText(copiedcontent);
+    
+    if (lastClickedDataItem != "") {
+      lastClickedDataItem.style.backgroundColor = "white";
+      lastClickedDataItem.style.color = "black";
+    }
+    
+    dataitem.style.backgroundColor = "black";
+    dataitem.style.color = "white";
   }
     
   messagebox.style.animationName = "fadeInAnimation";
@@ -587,7 +596,7 @@ function whenDataItemClicked(itemid) {
       messagebox.style.animationFillMode = "forwards";
   }, 250 + 2500);
     
-    
+  lastClickedDataItem = dataitem;
   
   dataitemsclicks.set(itemid, (dataitemsclicks.get(itemid) == undefined ? 0 : dataitemsclicks.get(itemid)) + 1);
     
@@ -1131,12 +1140,66 @@ realfab.onclick = function() {
   
 }
 
-
+var newitemnamechecked = false;
 donefab.onclick = function() {
   // create a new connection  or new transaction
   const trans = farhi_rsdb.transaction('batala', 'readwrite');  
   // Save Names object using variable  
   const batala = trans.objectStore('batala');
+  
+  let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage.getItem("checkuser") === null || localStorage.getItem("checkuser") === "") ? 'true' : localStorage.getItem("checkuser");
+  
+  if (!newitemnamechecked && checkuser == "true") {
+      
+      loadingscreen.style.animationName = "fadeInAnimation";
+      loadingscreen.style.animationDuration = "0.25s";
+      loadingscreen.style.animationFillMode = "forwards";
+  
+      loadingtext.innerHTML = "جاري التحقق ...";
+      
+      batala.openCursor().onsuccess = function(event) {
+      let cursor = event.target.result;
+    
+      if (cursor) {
+        if (cursor.value.name.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") === newnameiteminput.innerHTML.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "")) {
+          loadingscreen.style.animationName = "fadeOutAnimation";
+          loadingscreen.style.animationDuration = "0.25s";
+          loadingscreen.style.animationFillMode = "forwards";
+          newitemnamechecked = true;
+          
+          
+          messageboxicon.innerHTML = "warning";
+    
+          messageboxtext.innerHTML = "هذا الزبون موجود مسبقا في التطبيق، إذا كنت تريد إضافته على أي حال إضغط على تم";
+    
+          messagebox.style.animationName = "fadeInAnimation";
+          messagebox.style.animationDuration = "0.25s";
+          messagebox.style.animationFillMode = "forwards";
+    
+          clearTimeout(messageboxtimer);
+    
+          messageboxtimer = setTimeout(function() {
+            messagebox.style.animationName = "fadeOutAnimation";
+            messagebox.style.animationDuration = "0.25s";
+            messagebox.style.animationFillMode = "forwards";
+          }, 250 + 10000);
+        } else {
+          cursor.continue();
+        }
+      
+      } else {
+        loadingscreen.style.animationName = "fadeOutAnimation";
+        loadingscreen.style.animationDuration = "0.25s";
+        loadingscreen.style.animationFillMode = "forwards";
+        newitemnamechecked = true;
+        donefab.onclick();
+      }
+    }
+  
+    return;
+  }
+  
+  newitemnamechecked = false;
     
   let itemdata = {
   name: newnameiteminput.innerHTML,
@@ -2232,3 +2295,24 @@ changetheme();
 dontsavetheme = false;
 
 toolbarthemebutton.onclick = changetheme;
+
+
+toolbarcheckuserbutton.onclick = function() {
+  let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage.getItem("checkuser") === null || localStorage.getItem("checkuser") === "") ? 'true' : localStorage.getItem("checkuser");
+  
+  if (checkuser == "true") {
+    localStorage.setItem("checkuser", "false");
+    toolbarcheckusericon.innerHTML = "person_off";
+  } else {
+    localStorage.setItem("checkuser", "true");
+    toolbarcheckusericon.innerHTML = "how_to_reg";
+  }
+}
+
+let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage.getItem("checkuser") === null || localStorage.getItem("checkuser") === "") ? 'true' : localStorage.getItem("checkuser");
+  
+  if (checkuser == "false") {
+    toolbarcheckusericon.innerHTML = "person_off";
+  } else {
+    toolbarcheckusericon.innerHTML = "how_to_reg";
+  }
