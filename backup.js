@@ -71,20 +71,18 @@ function handleXlsx(file) {
 }
 
 
-let progress = 0;
-let total = 0;
+
 function handleWb(workbook) {
   // Accessing sheet names
 const sheetNames = workbook.SheetNames;
 
-let sheetindex = 0;
-
-analyzeWorkbook(sheetNames[sheetindex]);
-
 // Loop through each sheet in the workbook
-function analyzeWorkbook(sheetName) {
+sheetNames.forEach(function(sheetName) {
     // Accessing worksheet by name
     const worksheet = workbook.Sheets[sheetName];
+
+    let progress = 0;
+    let total = 0;
 
     // Extracting all rows from the worksheet
     /*
@@ -124,9 +122,12 @@ function analyzeWorkbook(sheetName) {
     
     total = rows.length;
 
+    let rowIndex = 0;
 
+    analyzeRow(rows[rowIndex]);
+    
     // Output all rows
-    rows.forEach((row, rowIndex) => {
+    function analyzeRow(row) {
         let name = tostring(row[7]);
         let skip = false;
         if (existingitems != undefined && existingitems != null) existingitems.forEach(function(itemdata) {
@@ -255,14 +256,14 @@ function analyzeWorkbook(sheetName) {
         
         try {
           if (birthdate != "") {
-            birthdate = birthdate.split("/")[2] + "-" + birthdate.split("/")[0] + "-" + birthdate.split("/")[1];
+            birthdate = "20" + birthdate.split("/")[2] + "-" + (birthdate.split("/")[0].length == 1 ? "0" : "") + birthdate.split("/")[0] + "-" + birthdate.split("/")[1];
           }
           new Date(birthdate);
         } catch (ex) {
           birthdate = "";
         }
         
-        if (isNaN(Number(birthdate.replaceAll("/", "")))) {
+        if (isNaN(Number(birthdate.replaceAll("/", "").replaceAll("-", "").replaceAll(" ", "")))) {
           birthdate = "";
         }
         
@@ -305,21 +306,22 @@ function analyzeWorkbook(sheetName) {
         
        function onsuccess(event) {
           progress++;
-          sheetindex++;
           console.clear();
           console.log("Total : " + total);
           console.log("Progress : " + (100 * progress / total) + " %");
-          setTimeout(function() {
-            analyzeWorkbook(sheetNames[sheetindex]);
-          }, 500);
+          if (progress <= total) {
+            rowIndex++;
+            let row = rows[rowindex];
+            analyzeRow(row);
+          }
         }
         
         query.onsuccess = onsuccess;
 
-        
-    });
 
-}
+    }
+
+});
 
 }
 
