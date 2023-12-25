@@ -349,7 +349,7 @@ function analyzeSheet(sheetName) {
 
 
         if (itemdata.name != "") {
-           batalaarray.add(itemdata);
+           batalaarray.push(itemdata);
         } else {
            onsuccess(null);
         }
