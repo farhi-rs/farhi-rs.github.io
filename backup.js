@@ -71,6 +71,7 @@ function handleXlsx(file) {
 
 
 function ready() {
+    console.log(batalaarray.length);
   // create a new connection  or new transaction
   const trans = farhi_rsdb.transaction('batala', 'readwrite');  
   // Save Names object using variable  
