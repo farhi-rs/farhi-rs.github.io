@@ -335,7 +335,7 @@ function analyzeSheet(sheetName) {
 
 
         if (itemdata.name != "") {
-          query = batala.put(itemdata);
+          query = batala.add(itemdata);
         } else {
            onsuccess(null);
         }
