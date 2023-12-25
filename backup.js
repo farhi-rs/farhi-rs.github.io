@@ -96,12 +96,12 @@ function handleWb(workbook) {
   // Accessing sheet names
 const sheetNames = workbook.SheetNames;
 
-let sheetIndex = 0;
+//let sheetIndex = 0;
 
-analyzeSheet(sheetNames[sheetIndex]);
+//analyzeSheet(sheetNames[sheetIndex]);
 
 // Loop through each sheet in the workbook
-function analyzeSheet(sheetName) {
+sheetNames.forEach(function(sheetName) {
     // Accessing worksheet by name
     const worksheet = workbook.Sheets[sheetName];
 
@@ -117,7 +117,8 @@ function analyzeSheet(sheetName) {
     try {
       range = XLSX.utils.decode_range(worksheet['!ref']);
     } catch (ex) {
-      progress++;
+        /*
+     progress++;
           console.clear();
           console.log("Page " + (sheetIndex+1) + " of " + sheetNames.length);
           console.log("Total : " + total);
@@ -132,9 +133,10 @@ function analyzeSheet(sheetName) {
               analyzeSheet(sheetNames[sheetIndex]);
             } else {
                 ready();
-              
+             
             }
-          }
+          } */
+        return;
     }
 
     // Initialize an array to store rows
@@ -163,12 +165,9 @@ function analyzeSheet(sheetName) {
     
     total = rows.length;
 
-    let rowIndex = 0;
-
-    analyzeRow(rows[rowIndex]);
     
     // Output all rows
-    function analyzeRow(row) {
+    rows.forEach(function(row, rowIndex) {
         if (row == undefined) return;
         let name = tostring(row[7]);
         let skip = false;
@@ -214,6 +213,7 @@ function analyzeSheet(sheetName) {
         if (renewingstartdate !== null && renewingstartdate.length == 8 && !isNaN(Number(renewingstartdate.replaceAll("/", "")))) {
           renewingstartdate = negateSixMonths("20" + renewingstartdate.split("/")[2] + "-" + renewingstartdate.split("/")[0] + "-" + renewingstartdate.split("/")[1]);
         } else {
+            /*
           progress++;
           console.clear();
           console.log("Page " + (sheetIndex+1) + " of " + sheetNames.length);
@@ -232,6 +232,8 @@ function analyzeSheet(sheetName) {
              
             }
           }
+          */
+            return;
         }
         
         
@@ -352,11 +354,13 @@ function analyzeSheet(sheetName) {
 
         if (itemdata.name != "") {
            batalaarray.push(itemdata);
-        } else {
+        } else { /*
            onsuccess(null);
+           */
+            return;
         }
         
-        
+        /*
         function onsuccess(event) {
           progress++;
           console.clear();
@@ -377,14 +381,14 @@ function analyzeSheet(sheetName) {
             }
           }
         }
-       
+       */
         
         //query.onsuccess = onsuccess;
 
 
-    }
+    });
 
-}
+});
 
 }
 
