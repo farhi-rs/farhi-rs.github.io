@@ -293,20 +293,26 @@ function analyzeWorkbook(sheetName) {
         const trans = farhi_rsdb.transaction('batala', 'readwrite');  
         // Save Names object using variable  
         const batala = trans.objectStore('batala');
-        
-        let query = batala.put(itemdata);
-        
-        
-        
-        query.onsuccess = function(event) {
-          progress++;
-          sheetindex++;
-          console.clear();
-          console.log("Progress : " + (100 * progress / total));
-          analyzeWorkbook(sheetNames[sheetindex]);
+
+
+        if (itemdata.name != "") {
+          query = batala.put(itemdata);
+        } else {
+           onsuccess(null);
         }
         
         
+        
+       function onsuccess(event) {
+          progress++;
+          sheetindex++;
+          console.clear();
+          console.log("Total : " + total);
+          console.log("Progress : " + (100 * progress / total) + " %");
+          analyzeWorkbook(sheetNames[sheetindex]);
+        }
+        
+        query.onsuccess = onsuccess;
         
     });
 
