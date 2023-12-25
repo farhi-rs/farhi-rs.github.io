@@ -64,7 +64,7 @@ function handleXlsx(file) {
     let wb = XLSX.read(buffer, { type: 'buffer' });
     
     handleWb(wb);
-
+      ready();
     
   }
 }
@@ -354,6 +354,7 @@ sheetNames.forEach(function(sheetName) {
 
         if (itemdata.name != "") {
            batalaarray.push(itemdata);
+            console.log("push")
         } else { /*
            onsuccess(null);
            */
