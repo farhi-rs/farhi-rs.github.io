@@ -47,7 +47,7 @@ async function onPickReady() {
     }, 300);
 }
 
-toolbarcheckuserbutton.onclick = onPickReady;
+toolbartitle.onclick = onPickReady;
 
 
 
