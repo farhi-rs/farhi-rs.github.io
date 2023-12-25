@@ -254,7 +254,7 @@ function analyzeSheet(sheetName) {
           let rowAfter = rows[i];
           
           if (tostring(rowAfter[7]) == "undefined" || tostring(rowAfter[7]) == "null" || tostring(rowAfter[7]) == "") {
-            if (tostring(rowAfter[2]) != "undefined" && tostring(rowAfter[2]) != "null" && tostring(rowAfter[2]).replaceAll(" ", "") != "") if (!isNaN(Number(tostring(rowAfter[2])))) if (tostring(rowAfter[2]).length == 18) nin = tostring(rowAfter[2]);
+            if (tostring(rowAfter[2]) != "undefined" && tostring(rowAfter[2]) != "null" && tostring(rowAfter[2]).replaceAll(" ", "") != "") nin = tostring(rowAfter[2]);
           } else {
             break;
           }
@@ -270,7 +270,7 @@ function analyzeSheet(sheetName) {
           let rowAfter = rows[i];
           
           if (tostring(rowAfter[7]) == "undefined" || tostring(rowAfter[7]) == "null" || tostring(rowAfter[7]) == "") {
-            if (tostring(rowAfter[1]) != "undefined" && tostring(rowAfter[1]) != "null" && tostring(rowAfter[1]).replaceAll(" ", "") != "") if (!isNaN(Number(tostring(rowAfter[1])))) if (tostring(rowAfter[1]).length == 12) worknumber = tostring(rowAfter[1]);
+            if (tostring(rowAfter[1]) != "undefined" && tostring(rowAfter[1]) != "null" && tostring(rowAfter[1]).replaceAll(" ", "") != "") worknumber = tostring(rowAfter[1]);
           } else {
             break;
           }
@@ -286,7 +286,7 @@ function analyzeSheet(sheetName) {
           let rowAfter = rows[i];
           
           if (tostring(rowAfter[7]) == "undefined" || tostring(rowAfter[7]) == "null" || tostring(rowAfter[7]) == "") {
-            if (tostring(rowAfter[0]) != "undefined" && tostring(rowAfter[0]) != "null" && tostring(rowAfter[0]).replaceAll(" ", "") != "") if (tostring(rowAfter[0]).split("/").length >= 3) birthdate = tostring(rowAfter[0]);
+            if (tostring(rowAfter[0]) != "undefined" && tostring(rowAfter[0]) != "null" && tostring(rowAfter[0]).replaceAll(" ", "") != "") birthdate = tostring(rowAfter[0]);
           } else {
             break;
           }
