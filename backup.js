@@ -127,7 +127,7 @@ sheetNames.forEach(sheetName => {
     rows.forEach((row, rowIndex) => {
         let name = tostring(row[7]);
         let skip = false;
-        existingitems.forEach(function(itemdata) {
+        if (existingitems != undefined && existingitems != null) existingitems.forEach(function(itemdata) {
           if (itemdata.name.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") === name.replaceAll(" ", "")) {
             skip = true;
           }
