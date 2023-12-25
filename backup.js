@@ -313,6 +313,10 @@ function analyzeWorkbook(sheetName) {
         }
         
         query.onsuccess = onsuccess;
+
+        query.onerror = function() {
+          console.log("error");
+        }
         
     });
 
