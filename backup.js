@@ -76,8 +76,12 @@ function handleWb(workbook) {
   // Accessing sheet names
 const sheetNames = workbook.SheetNames;
 
+let sheetIndex = 0;
+
+analyzeSheet(sheetNames[sheetIndex]);
+
 // Loop through each sheet in the workbook
-sheetNames.forEach(function(sheetName) {
+function analyzeSheet(sheetName) {
     // Accessing worksheet by name
     const worksheet = workbook.Sheets[sheetName];
 
@@ -313,6 +317,9 @@ sheetNames.forEach(function(sheetName) {
             rowIndex++;
             let row = rows[rowindex];
             analyzeRow(row);
+          } else {
+            sheetIndex++;
+            analyzeSheet(sheetNames[sheetIndex]);
           }
         }
         
@@ -321,7 +328,7 @@ sheetNames.forEach(function(sheetName) {
 
     }
 
-});
+}
 
 }
 
