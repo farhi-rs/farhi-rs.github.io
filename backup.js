@@ -93,9 +93,9 @@ function analyzeSheet(sheetName) {
     // Get the range of the worksheet (range object will contain the sheet dimensions)
     let range = null;
     try {
-    range = XLSX.utils.decode_range(worksheet['!ref']);
+      range = XLSX.utils.decode_range(worksheet['!ref']);
     } catch (ex) {
-      return;
+      onsuccess(null);
     }
 
     // Initialize an array to store rows
@@ -174,7 +174,7 @@ function analyzeSheet(sheetName) {
         if (renewingstartdate !== null && renewingstartdate.length == 8 && !isNaN(Number(renewingstartdate.replaceAll("/", "")))) {
           renewingstartdate = negateSixMonths("20" + renewingstartdate.split("/")[2] + "-" + renewingstartdate.split("/")[0] + "-" + renewingstartdate.split("/")[1]);
         } else {
-          return;
+          onsuccess(null);
         }
         
         
