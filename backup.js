@@ -64,12 +64,33 @@ function handleXlsx(file) {
     let wb = XLSX.read(buffer, { type: 'buffer' });
     
     handleWb(wb);
+
     
   }
 }
 
 
+function ready() {
+  // create a new connection  or new transaction
+  const trans = farhi_rsdb.transaction('batala', 'readwrite');  
+  // Save Names object using variable  
+  const batala = trans.objectStore('batala');
+  batalaarray.forEach(function(itemdata) {
+    batala.put(itemdata);
+  });
 
+  // Close the transaction when the operation is complete
+    trans.oncomplete = function() {
+        console.log("Items added successfully");
+        loadingscreen.style.animationName = "fadeOutAnimation";
+              loadingscreen.style.animationDuration = "0.25s";
+              loadingscreen.style.animationFillMode = "forwards";
+        farhi_rsdb.close();
+    };
+}
+
+
+var batalaarray = [];
 function handleWb(workbook) {
   // Accessing sheet names
 const sheetNames = workbook.SheetNames;
@@ -109,9 +130,8 @@ function analyzeSheet(sheetName) {
             if (sheetIndex <= sheetNames.length) { 
               analyzeSheet(sheetNames[sheetIndex]);
             } else {
-              loadingscreen.style.animationName = "fadeOutAnimation";
-              loadingscreen.style.animationDuration = "0.25s";
-              loadingscreen.style.animationFillMode = "forwards";
+                ready();
+              
             }
           }
     }
@@ -206,9 +226,8 @@ function analyzeSheet(sheetName) {
             if (sheetIndex <= sheetNames.length) { 
               analyzeSheet(sheetNames[sheetIndex]);
             } else {
-              loadingscreen.style.animationName = "fadeOutAnimation";
-              loadingscreen.style.animationDuration = "0.25s";
-              loadingscreen.style.animationFillMode = "forwards";
+                ready();
+             
             }
           }
         }
@@ -293,9 +312,7 @@ function analyzeSheet(sheetName) {
         }
         
         try {
-          if (birthdate != "") {
-            birthdate = "20" + birthdate.split("/")[2] + "-" + (birthdate.split("/")[0].length == 1 ? "0" : "") + birthdate.split("/")[0] + "-" + birthdate.split("/")[1];
-          }
+          birthdate = "20" + birthdate.split("/")[2] + "-" + (birthdate.split("/")[0].length == 1 ? "0" : "") + birthdate.split("/")[0] + "-" + birthdate.split("/")[1];
           new Date(birthdate);
         } catch (ex) {
           birthdate = "";
@@ -328,14 +345,11 @@ function analyzeSheet(sheetName) {
         };
   
         
-        // create a new connection  or new transaction
-        const trans = farhi_rsdb.transaction('batala', 'readwrite');  
-        // Save Names object using variable  
-        const batala = trans.objectStore('batala');
+        
 
 
         if (itemdata.name != "") {
-          query = batala.add(itemdata);
+           batalaarray.add(itemdata);
         } else {
            onsuccess(null);
         }
@@ -356,15 +370,14 @@ function analyzeSheet(sheetName) {
             if (sheetIndex <= sheetNames.length) { 
               analyzeSheet(sheetNames[sheetIndex]);
             } else {
-              loadingscreen.style.animationName = "fadeOutAnimation";
-              loadingscreen.style.animationDuration = "0.25s";
-              loadingscreen.style.animationFillMode = "forwards";
+              ready();
+              
             }
           }
         }
        
         
-        query.onsuccess = onsuccess;
+        //query.onsuccess = onsuccess;
 
 
     }
