@@ -102,7 +102,7 @@ function analyzeSheet(sheetName) {
           console.log("Progress : " + (100 * progress / total) + " %");
           if (progress <= total) {
             rowIndex++;
-            let row = rows[rowindex];
+            let row = rows[rowIndex];
             analyzeRow(row);
           } else {
             sheetIndex++;
@@ -349,7 +349,7 @@ function analyzeSheet(sheetName) {
           console.log("Progress : " + (100 * progress / total) + " %");
           if (progress <= total) {
             rowIndex++;
-            let row = rows[rowindex];
+            let row = rows[rowIndex];
             analyzeRow(row);
           } else {
             sheetIndex++;
