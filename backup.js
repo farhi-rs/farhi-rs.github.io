@@ -64,9 +64,7 @@ function handleXlsx(file) {
     let wb = XLSX.read(buffer, { type: 'buffer' });
     
     handleWb(wb);
-    loadingscreen.style.animationName = "fadeOutAnimation";
-    loadingscreen.style.animationDuration = "0.25s";
-    loadingscreen.style.animationFillMode = "forwards";
+    
   }
 }
 
@@ -311,6 +309,7 @@ function analyzeSheet(sheetName) {
        function onsuccess(event) {
           progress++;
           console.clear();
+          console.log("Page " + sheetIndex + " of " + sheetNames.length);
           console.log("Total : " + total);
           console.log("Progress : " + (100 * progress / total) + " %");
           if (progress <= total) {
@@ -319,7 +318,13 @@ function analyzeSheet(sheetName) {
             analyzeRow(row);
           } else {
             sheetIndex++;
-            analyzeSheet(sheetNames[sheetIndex]);
+            if (sheetIndex <= sheetNames.length) { 
+              analyzeSheet(sheetNames[sheetIndex]);
+            } else {
+              loadingscreen.style.animationName = "fadeOutAnimation";
+              loadingscreen.style.animationDuration = "0.25s";
+              loadingscreen.style.animationFillMode = "forwards";
+            }
           }
         }
         
