@@ -73,7 +73,7 @@ function handleXlsx(file) {
 
 let progress = 0;
 let total = 0;
-async function handleWb(workbook) {
+function handleWb(workbook) {
   // Accessing sheet names
 const sheetNames = workbook.SheetNames;
 
@@ -292,7 +292,7 @@ sheetNames.forEach(sheetName => {
         // Save Names object using variable  
         const batala = trans.objectStore('batala');
         
-        query = batala.put(itemdata);
+        let query = batala.put(itemdata);
         
         let wait = true;
         
