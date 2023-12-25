@@ -309,14 +309,13 @@ function analyzeWorkbook(sheetName) {
           console.clear();
           console.log("Total : " + total);
           console.log("Progress : " + (100 * progress / total) + " %");
-          analyzeWorkbook(sheetNames[sheetindex]);
+          setTimeout(function() {
+            analyzeWorkbook(sheetNames[sheetindex]);
+          }, 500);
         }
         
         query.onsuccess = onsuccess;
 
-        query.onerror = function() {
-          console.log("error");
-        }
         
     });
 
