@@ -95,7 +95,25 @@ function analyzeSheet(sheetName) {
     try {
       range = XLSX.utils.decode_range(worksheet['!ref']);
     } catch (ex) {
-      onsuccess(null);
+      progress++;
+          console.clear();
+          console.log("Page " + (sheetIndex+1) + " of " + sheetNames.length);
+          console.log("Total : " + total);
+          console.log("Progress : " + (100 * progress / total) + " %");
+          if (progress <= total) {
+            rowIndex++;
+            let row = rows[rowindex];
+            analyzeRow(row);
+          } else {
+            sheetIndex++;
+            if (sheetIndex <= sheetNames.length) { 
+              analyzeSheet(sheetNames[sheetIndex]);
+            } else {
+              loadingscreen.style.animationName = "fadeOutAnimation";
+              loadingscreen.style.animationDuration = "0.25s";
+              loadingscreen.style.animationFillMode = "forwards";
+            }
+          }
     }
 
     // Initialize an array to store rows
@@ -174,7 +192,25 @@ function analyzeSheet(sheetName) {
         if (renewingstartdate !== null && renewingstartdate.length == 8 && !isNaN(Number(renewingstartdate.replaceAll("/", "")))) {
           renewingstartdate = negateSixMonths("20" + renewingstartdate.split("/")[2] + "-" + renewingstartdate.split("/")[0] + "-" + renewingstartdate.split("/")[1]);
         } else {
-          onsuccess(null);
+          progress++;
+          console.clear();
+          console.log("Page " + (sheetIndex+1) + " of " + sheetNames.length);
+          console.log("Total : " + total);
+          console.log("Progress : " + (100 * progress / total) + " %");
+          if (progress <= total) {
+            rowIndex++;
+            let row = rows[rowindex];
+            analyzeRow(row);
+          } else {
+            sheetIndex++;
+            if (sheetIndex <= sheetNames.length) { 
+              analyzeSheet(sheetNames[sheetIndex]);
+            } else {
+              loadingscreen.style.animationName = "fadeOutAnimation";
+              loadingscreen.style.animationDuration = "0.25s";
+              loadingscreen.style.animationFillMode = "forwards";
+            }
+          }
         }
         
         
@@ -305,11 +341,10 @@ function analyzeSheet(sheetName) {
         }
         
         
-        
-       function onsuccess(event) {
+        function onsuccess(event) {
           progress++;
           console.clear();
-          console.log("Page " + sheetIndex + " of " + sheetNames.length);
+          console.log("Page " + (sheetIndex+1) + " of " + sheetNames.length);
           console.log("Total : " + total);
           console.log("Progress : " + (100 * progress / total) + " %");
           if (progress <= total) {
@@ -327,6 +362,7 @@ function analyzeSheet(sheetName) {
             }
           }
         }
+       
         
         query.onsuccess = onsuccess;
 
@@ -336,6 +372,9 @@ function analyzeSheet(sheetName) {
 }
 
 }
+
+
+
 
 
 
