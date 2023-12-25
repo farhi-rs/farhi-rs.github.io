@@ -168,6 +168,7 @@ function analyzeSheet(sheetName) {
     
     // Output all rows
     function analyzeRow(row) {
+        if (row == undefined) return;
         let name = tostring(row[7]);
         let skip = false;
         if (existingitems != undefined && existingitems != null) existingitems.forEach(function(itemdata) {
