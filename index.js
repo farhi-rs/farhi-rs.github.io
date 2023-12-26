@@ -84,7 +84,7 @@ function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumbe
   '\n     </tr>';
   
   
-  if (name.replace('#', '').includes('#') && !searchenabled) dataitemhtml = "";
+  //if (name.replace('#', '').includes('#') && !searchenabled) dataitemhtml = "";
   
   
   if (_hamzacase) {
@@ -1257,11 +1257,11 @@ donefab.onclick = function() {
       }
       
       if (modifyingEnabled) datatablebody.rows[lasteditedrowindex].innerHTML = lasteditedrowhtml;
-      
+      /*
       if (itemdata.name.replace('#', '').includes('#')) {
         datatablebody.rows[lasteditedrowindex].innerHTML = '';
       }
-      
+      */
       if (!donehidden) {
         donefab.style.animationName = "fadeOutAnimation";
         donefab.style.animationDuration = "0.25s";
@@ -1322,7 +1322,7 @@ donefab.onclick = function() {
           
           whenDataIsReady();
           
-          if (! itemdata.name.replace('#', '').includes('#')) {
+          if (true/*! itemdata.name.replace('#', '').includes('#')*/) {
           document.getElementById("tableuiditemat_" + lasteditedpagedataindex).innerHTML = toUid(itemdata.id).replace('#', '');
           
           if (toUid(itemdata.id).includes('#')) document.getElementById("tableuiditemat_" + lasteditedpagedataindex).classList.add("redflageditem");
@@ -2333,14 +2333,14 @@ let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage
   
   function whenPaste(event, inputid) {
     let input = document.getElementById(inputid);
-    
+    /*
     const clipboardData = event.clipboardData || window.clipboardData;
     const pastedText = clipboardData.getData('text/plain');
     
     postedText = unescapeHtml(postedText);
     
     navigator.clipboard.writeText(postedText);
-    
+    */
     /*
     // Prevents the default paste action
     event.preventDefault();
