@@ -37,8 +37,6 @@ var lastdatatablebodyhtml = "";
 
 function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumber, worknumber, nin, cardnumber,  cardissuingdate, cardexpiredate, cardissuingplace, birthdate, birthplace, birthcertificatenumber, residence, _fromTop, _newlyAdded, _hamzacase) {
   
-  if (name.replace('#', '').includes('#') && !searchenabled) return;
-  
   let uid = toUid(id);
   
   _fromTop = true;
@@ -84,6 +82,9 @@ function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumbe
   '<th id ="tableresidenceitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (residence.includes('#') ? 'redflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableresidenceitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableresidenceitemat_' + rowCount + '\')">' + residence.replace('#', '') + '</th>'
   +
   '\n     </tr>';
+  
+  
+  if (name.replace('#', '').includes('#') && !searchenabled) dataitemhtml = "";
   
   
   if (_hamzacase) {
@@ -1258,7 +1259,7 @@ donefab.onclick = function() {
       if (modifyingEnabled) datatablebody.rows[lasteditedrowindex].innerHTML = lasteditedrowhtml;
       
       if (itemdata.name.replace('#', '').includes('#')) {
-        datatablebody.rows[lasteditedrowindex].style.height = "0px";
+        datatablebody.rows[lasteditedrowindex].innerHTML = '';
       }
       
       if (!donehidden) {
@@ -1321,6 +1322,7 @@ donefab.onclick = function() {
           
           whenDataIsReady();
           
+          if (! itemdata.name.replace('#', '').includes('#')) {
           document.getElementById("tableuiditemat_" + lasteditedpagedataindex).innerHTML = toUid(itemdata.id).replace('#', '');
           
           if (toUid(itemdata.id).includes('#')) document.getElementById("tableuiditemat_" + lasteditedpagedataindex).classList.add("redflageditem");
@@ -1384,7 +1386,7 @@ donefab.onclick = function() {
           
           if (itemdata.residence.includes('#')) document.getElementById("tableresidenceitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
           else document.getElementById("tableresidenceitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
-          
+          }
           
           if (searchenabled) {
             realfabtext.innerHTML = 'إلغاء';
@@ -2332,6 +2334,14 @@ let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage
   function whenPaste(event, inputid) {
     let input = document.getElementById(inputid);
     
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const pastedText = clipboardData.getData('text/plain');
+    
+    postedText = unescapeHtml(postedText);
+    
+    navigator.clipboard.writeText(postedText);
+    
+    /*
     // Prevents the default paste action
     event.preventDefault();
 
@@ -2340,10 +2350,26 @@ let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage
     const pastedText = clipboardData.getData('text/plain');
 
     // Replace the input field value with the plain text
+    
+    let currentPositionStart = input.selectionStart;
+    let currentPositionEnd = input.selectionEnd;
+    
+    console.log(currentPositionStart)
+    console.log(currentPositionEnd)
+    
+    let newvalue = (input.tagName.toLowerCase() == "input") ? input.value : input.innerHTML;
+    if (currentPositionStart != currentPositionEnd) {
+      newvalue = newvalue.replace(newvalue.substring(currentPositionStart, currentPositionEnd+1), "");
+      
+      currentPositionStart = currentPositionEnd;
+    }
+    
+    newvalue = newvalue.substring(currentPositionEnd) + pastedText + newvalue.substring(0, currentPositionStart+1);
+    
     if (input.tagName.toLowerCase() == "input") {
-      input.value = pastedText;
+      input.value = newvalue;
     } else {
-      input.innerHTML = pastedText;
+      input.innerHTML = newvalue;
     }
     
     try {
@@ -2352,7 +2378,7 @@ let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage
       // Do nothing...
     }
     
-    
+    */
     
     messageboxicon.innerHTML = "content_paste";
     
