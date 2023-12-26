@@ -575,12 +575,16 @@ function whenDataItemClicked(itemid) {
     
     navigator.clipboard.writeText(copiedcontent);
     
+    
     if (lastClickedDataItem != "") {
       lastClickedDataItem.style = "";
     }
     
     dataitem.style.backgroundColor = "black";
     dataitem.style.color = "white";
+    
+    lastClickedDataItem = dataitem;
+    
   }
     
   messagebox.style.animationName = "fadeInAnimation";
@@ -594,8 +598,6 @@ function whenDataItemClicked(itemid) {
       messagebox.style.animationDuration = "0.25s";
       messagebox.style.animationFillMode = "forwards";
   }, 250 + 2500);
-    
-  lastClickedDataItem = dataitem;
   
   dataitemsclicks.set(itemid, (dataitemsclicks.get(itemid) == undefined ? 0 : dataitemsclicks.get(itemid)) + 1);
     
@@ -613,7 +615,7 @@ function whenDataItemClicked(itemid) {
       // when data item get clicked 2 times (doubleclicked)
       // We replace the corresponding data row with an editable one
       
-      if (lastClickedDataItem != "") {
+      if (lastClickedDataItem != "" && itemtype != "status") {
         lastClickedDataItem.style = "";
       }
       
@@ -2317,4 +2319,49 @@ let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage
     toolbarcheckusericon.innerHTML = "groups";
   } else {
     toolbarcheckusericon.innerHTML = "person";
+  }
+  
+  
+  
+  function whenPaste(event, inputid) {
+    let input = document.getElementById(inputid);
+    
+    // Prevents the default paste action
+    event.preventDefault();
+
+    // Get the text content from the clipboard
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const pastedText = clipboardData.getData('text/plain');
+
+    // Replace the input field value with the plain text
+    if (input.tagName.toLowerCase() == "input") {
+      input.value = pastedText;
+    } else {
+      input.innerHTML = pastedText;
+    }
+    
+    try {
+      whenTextChange(inputid, inputid.replaceAll("input", "") + "hint");
+    } catch (ex) {
+      // Do nothing...
+    }
+    
+    
+    
+    messageboxicon.innerHTML = "content_paste";
+    
+    messageboxtext.innerHTML = "تم لصق النص بنجاح";
+    
+    messagebox.style.animationName = "fadeInAnimation";
+      
+    messagebox.style.animationDuration = "0.25s";
+    messagebox.style.animationFillMode = "forwards";
+    
+    clearTimeout(messageboxtimer);
+    
+    messageboxtimer = setTimeout(function() {
+      messagebox.style.animationName = "fadeOutAnimation";
+      messagebox.style.animationDuration = "0.25s";
+      messagebox.style.animationFillMode = "forwards";
+    }, 250 + 2500);
   }

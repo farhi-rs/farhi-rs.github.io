@@ -47,7 +47,7 @@
      <div id="toolbarsearchhint" class="styledtext inputhint">
       إبحث عن أي زبون بإستخدام المعرف الفريد
      </div>
-     <div id="toolbarsearchinput" contenteditable="true" class="styledtext input" type="text" onkeydown="whenTextChange('toolbarsearchinput', 'toolbarsearchhint'); whenSearchInputKeyDown(event)" , onchange="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oninput="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oncut="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" onpaste="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')"></div>
+     <div id="toolbarsearchinput" contenteditable="true" class="styledtext input" type="text" onkeydown="whenTextChange('toolbarsearchinput', 'toolbarsearchhint'); whenSearchInputKeyDown(event)" , onchange="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oninput="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oncut="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" onpaste="whenTextChange('toolbarsearchinput', 'toolbarsearchhint'); whenPaste(event, 'toolbarsearchinput');"></div>
     </div>
     <div id="toolbarsearchbutton" class="fabicon toolbarbutton">
      <span id="toolbarsearchicon" class="material-symbols-outlined toolbaricon"> search </span>
@@ -110,7 +110,7 @@
         <div id="newnameitemhint" class="styledtext inputhint newitemhint">
          أكتب إسم الزبون الجديد هنا
         </div>
-        <div id="newnameiteminput" contenteditable="true" class="styledtext input newiteminput" type="text" onkeydown="whenTextChange('newnameiteminput', 'newnameitemhint'); whenKeyPressOnNewItemInput(event, 'newnameiteminput')" , onchange="whenTextChange('newnameiteminput', 'newnameitemhint')" oninput="whenTextChange('newnameiteminput', 'newnameitemhint')" oncut="whenTextChange('newnameiteminput', 'newnameitemhint')" onpaste="whenTextChange('newnameiteminput', 'newnameitemhint')"></div>
+        <div id="newnameiteminput" contenteditable="true" class="styledtext input newiteminput" type="text" onkeydown="whenTextChange('newnameiteminput', 'newnameitemhint'); whenKeyPressOnNewItemInput(event, 'newnameiteminput')" , onchange="whenTextChange('newnameiteminput', 'newnameitemhint')" oninput="whenTextChange('newnameiteminput', 'newnameitemhint')" oncut="whenTextChange('newnameiteminput', 'newnameitemhint')" onpaste="whenTextChange('newnameiteminput', 'newnameitemhint'); whenPaste(event, 'newnameiteminput');"></div>
        </div>
       </th>
       <th id="newstatusitem" class="tabledataitem">إملئ تاريخ البداية أولا</th>
@@ -119,7 +119,7 @@
         <div id="newrenewingstartdateitemhint" class="styledtext inputhint newitemhint">
          أكتب تاريخ بداية التجديد هنا
         </div>
-        <input id="newrenewingstartdateiteminput" contenteditable="true" class="styledtext input newiteminput" type="date" onkeydown="whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint'); whenKeyPressOnNewItemInput(event, 'newrenewingstartdateiteminput')" , onchange="whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint')" oninput="whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint')" oncut="whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint')" onpaste="whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint')"/>
+        <input id="newrenewingstartdateiteminput" contenteditable="true" class="styledtext input newiteminput" type="date" onkeydown="whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint'); whenKeyPressOnNewItemInput(event, 'newrenewingstartdateiteminput')" , onchange="whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint')" oninput="whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint')" oncut="whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint')" onpaste="whenTextChange('newrenewingstartdateiteminput', 'newrenewingstartdateitemhint'); whenPaste(event, 'newrenewingstartdateiteminput');"/>
        </div>
       </th>
       <th id="newrenewingenddateitem" class="tabledataitem">إملئ تاريخ البداية أولا</th>
@@ -128,7 +128,7 @@
         <div id="newphonenumberitemhint" class="styledtext inputhint newitemhint">
          أكتب رقم الهاتف هنا
         </div>
-        <div id="newphonenumberiteminput" contenteditable="true" class="styledtext input newiteminput" type="tel" onkeydown="whenTextChange('newphonenumberiteminput', 'newphonenumberitemhint'); whenKeyPressOnNewItemInput(event, 'newphonenumberiteminput')" , onchange="whenTextChange('newphonenumberiteminput', 'newphonenumberitemhint')" oninput="whenTextChange('newphonenumberiteminput', 'newphonenumberitemhint')" oncut="whenTextChange('newphonenumberiteminput', 'newphonenumberitemhint')" onpaste="whenTextChange('newphonenumberiteminput', 'newphonenumberitemhint')"></div>
+        <div id="newphonenumberiteminput" contenteditable="true" class="styledtext input newiteminput" type="tel" onkeydown="whenTextChange('newphonenumberiteminput', 'newphonenumberitemhint'); whenKeyPressOnNewItemInput(event, 'newphonenumberiteminput')" , onchange="whenTextChange('newphonenumberiteminput', 'newphonenumberitemhint')" oninput="whenTextChange('newphonenumberiteminput', 'newphonenumberitemhint')" oncut="whenTextChange('newphonenumberiteminput', 'newphonenumberitemhint')" onpaste="whenTextChange('newphonenumberiteminput', 'newphonenumberitemhint'); whenPaste(event, 'newphonenumberiteminput');"></div>
        </div>
       </th>
       <th class="newitemfieldcontainer">
@@ -136,7 +136,7 @@
         <div id="newworknumberitemhint" class="styledtext inputhint newitemhint">
          أكتب رقم طلب العمل هنا
         </div>
-        <div id="newworknumberiteminput" contenteditable="true" class="styledtext input newiteminput" type="number" onkeydown="whenTextChange('newworknumberiteminput', 'newworknumberitemhint'); whenKeyPressOnNewItemInput(event, 'newworknumberiteminput')" , onchange="whenTextChange('newworknumberiteminput', 'newworknumberitemhint')" oninput="whenTextChange('newworknumberiteminput', 'newworknumberitemhint')" oncut="whenTextChange('newworknumberiteminput', 'newworknumberitemhint')" onpaste="whenTextChange('newworknumberiteminput', 'newworknumberitemhint')"></div>
+        <div id="newworknumberiteminput" contenteditable="true" class="styledtext input newiteminput" type="number" onkeydown="whenTextChange('newworknumberiteminput', 'newworknumberitemhint'); whenKeyPressOnNewItemInput(event, 'newworknumberiteminput')" , onchange="whenTextChange('newworknumberiteminput', 'newworknumberitemhint')" oninput="whenTextChange('newworknumberiteminput', 'newworknumberitemhint')" oncut="whenTextChange('newworknumberiteminput', 'newworknumberitemhint')" onpaste="whenTextChange('newworknumberiteminput', 'newworknumberitemhint'); whenPaste(event, 'newworknumberiteminput');"></div>
        </div>
       </th>
       <th class="newitemfieldcontainer">
@@ -144,7 +144,7 @@
         <div id="newninitemhint" class="styledtext inputhint newitemhint">
          أكتب الرقم البيومتري لبطاقة التعريف الوطنية أو بطاقة مماثلة هنا
         </div>
-        <div id="newniniteminput" contenteditable="true" class="styledtext input newiteminput" type="number" onkeydown="whenTextChange('newniniteminput', 'newninitemhint'); whenKeyPressOnNewItemInput(event, 'newniniteminput')" , onchange="whenTextChange('newniniteminput', 'newninitemhint')" oninput="whenTextChange('newniniteminput', 'newninitemhint')" oncut="whenTextChange('newniniteminput', 'newninitemhint')" onpaste="whenTextChange('newniniteminput', 'newninitemhint')"></div>
+        <div id="newniniteminput" contenteditable="true" class="styledtext input newiteminput" type="number" onkeydown="whenTextChange('newniniteminput', 'newninitemhint'); whenKeyPressOnNewItemInput(event, 'newniniteminput')" , onchange="whenTextChange('newniniteminput', 'newninitemhint')" oninput="whenTextChange('newniniteminput', 'newninitemhint')" oncut="whenTextChange('newniniteminput', 'newninitemhint')" onpaste="whenTextChange('newniniteminput', 'newninitemhint'); whenPaste(event, 'newniniteminput');"></div>
        </div>
       </th>
       <th class="newitemfieldcontainer">
@@ -152,7 +152,7 @@
         <div id="newcardnumberitemhint" class="styledtext inputhint newitemhint">
          أكتب رقم البطاقة هنا
         </div>
-        <div id="newcardnumberiteminput" contenteditable="true" class="styledtext input newiteminput" type="number" onkeydown="whenTextChange('newcardnumberiteminput', 'newcardnumberitemhint'); whenKeyPressOnNewItemInput(event, 'newcardnumberiteminput')" , onchange="whenTextChange('newcardnumberiteminput', 'newcardnumberitemhint')" oninput="whenTextChange('newcardnumberiteminput', 'newcardnumberitemhint')" oncut="whenTextChange('newcardnumberiteminput', 'newcardnumberitemhint')" onpaste="whenTextChange('newcardnumberiteminput', 'newcardnumberitemhint')"></div>
+        <div id="newcardnumberiteminput" contenteditable="true" class="styledtext input newiteminput" type="number" onkeydown="whenTextChange('newcardnumberiteminput', 'newcardnumberitemhint'); whenKeyPressOnNewItemInput(event, 'newcardnumberiteminput')" , onchange="whenTextChange('newcardnumberiteminput', 'newcardnumberitemhint')" oninput="whenTextChange('newcardnumberiteminput', 'newcardnumberitemhint')" oncut="whenTextChange('newcardnumberiteminput', 'newcardnumberitemhint')" onpaste="whenTextChange('newcardnumberiteminput', 'newcardnumberitemhint'); whenPaste(event, 'newcardnumberiteminput');"></div>
        </div>
       </th>
       <th class="newitemfieldcontainer">
@@ -160,7 +160,7 @@
         <div id="newcardissuingdateitemhint" class="styledtext inputhint newitemhint">
          أكتب تاريخ اصدار البطاقة هنا
         </div>
-        <input id="newcardissuingdateiteminput" contenteditable="true" class="styledtext input newiteminput" type="date" onkeydown="whenTextChange('newcardissuingdateiteminput', 'newcardissuingdateitemhint'); whenKeyPressOnNewItemInput(event, 'newcardissuingdateiteminput')" , onchange="whenTextChange('newcardissuingdateiteminput', 'newcardissuingdateitemhint')" oninput="whenTextChange('newcardissuingdateiteminput', 'newcardissuingdateitemhint')" oncut="whenTextChange('newcardissuingdateiteminput', 'newcardissuingdateitemhint')" onpaste="whenTextChange('newcardissuingdateiteminput', 'newcardissuingdateitemhint')"/>
+        <input id="newcardissuingdateiteminput" contenteditable="true" class="styledtext input newiteminput" type="date" onkeydown="whenTextChange('newcardissuingdateiteminput', 'newcardissuingdateitemhint'); whenKeyPressOnNewItemInput(event, 'newcardissuingdateiteminput')" , onchange="whenTextChange('newcardissuingdateiteminput', 'newcardissuingdateitemhint')" oninput="whenTextChange('newcardissuingdateiteminput', 'newcardissuingdateitemhint')" oncut="whenTextChange('newcardissuingdateiteminput', 'newcardissuingdateitemhint')" onpaste="whenTextChange('newcardissuingdateiteminput', 'newcardissuingdateitemhint'); whenPaste(event, 'newcardissuingdateiteminput');"/>
        </div>
       </th>
       <th class="newitemfieldcontainer">
@@ -168,7 +168,7 @@
         <div id="newcardexpiredateitemhint" class="styledtext inputhint newitemhint">
          أكتب تاريخ نهاية صلحية البطاقة هنا
         </div>
-        <input id="newcardexpiredateiteminput" contenteditable="true" class="styledtext input newiteminput" type="date" onkeydown="whenTextChange('newcardexpiredateiteminput', 'newcardexpiredateitemhint'); whenKeyPressOnNewItemInput(event, 'newcardexpiredateiteminput')" , onchange="whenTextChange('newcardexpiredateiteminput', 'newcardexpiredateitemhint')" oninput="whenTextChange('newcardexpiredateiteminput', 'newcardexpiredateitemhint')" oncut="whenTextChange('newcardexpiredateiteminput', 'newcardexpiredateitemhint')" onpaste="whenTextChange('newcardexpiredateiteminput', 'newcardexpiredateitemhint')"/>
+        <input id="newcardexpiredateiteminput" contenteditable="true" class="styledtext input newiteminput" type="date" onkeydown="whenTextChange('newcardexpiredateiteminput', 'newcardexpiredateitemhint'); whenKeyPressOnNewItemInput(event, 'newcardexpiredateiteminput')" , onchange="whenTextChange('newcardexpiredateiteminput', 'newcardexpiredateitemhint')" oninput="whenTextChange('newcardexpiredateiteminput', 'newcardexpiredateitemhint')" oncut="whenTextChange('newcardexpiredateiteminput', 'newcardexpiredateitemhint')" onpaste="whenTextChange('newcardexpiredateiteminput', 'newcardexpiredateitemhint'); whenPaste(event, 'newcardexpiredateiteminput');"/>
        </div>
       </th>
       <th class="newitemfieldcontainer">
@@ -176,7 +176,7 @@
         <div id="newcardissuingplaceitemhint" class="styledtext inputhint newitemhint">
          أكتب بلدية الاصدار هنا
         </div>
-        <div id="newcardissuingplaceiteminput" contenteditable="true" class="styledtext input newiteminput" type="text" onkeydown="whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint'); whenKeyPressOnNewItemInput(event, 'newcardissuingplaceiteminput')" , onchange="whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint')" oninput="whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint')" oncut="whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint')" onpaste="whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint')"></div>
+        <div id="newcardissuingplaceiteminput" contenteditable="true" class="styledtext input newiteminput" type="text" onkeydown="whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint'); whenKeyPressOnNewItemInput(event, 'newcardissuingplaceiteminput')" , onchange="whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint')" oninput="whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint')" oncut="whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint')" onpaste="whenTextChange('newcardissuingplaceiteminput', 'newcardissuingplaceitemhint'); whenPaste(event, 'newcardissuingplaceiteminput');"></div>
        </div>
       </th>
       <th class="newitemfieldcontainer">
@@ -184,7 +184,7 @@
         <div id="newbirthdateitemhint" class="styledtext inputhint newitemhint">
          أكتب تاريخ الميلاد هنا
         </div>
-        <input id="newbirthdateiteminput" contenteditable="true" class="styledtext input newiteminput" type="date" onkeydown="whenTextChange('newbirthdateiteminput', 'newbirthdateitemhint'); whenKeyPressOnNewItemInput(event, 'newbirthdateiteminput')" , onchange="whenTextChange('newbirthdateiteminput', 'newbirthdateitemhint')" oninput="whenTextChange('newbirthdateiteminput', 'newbirthdateitemhint')" oncut="whenTextChange('newbirthdateiteminput', 'newbirthdateitemhint')" onpaste="whenTextChange('newbirthdateiteminput', 'newbirthdateitemhint')"/>
+        <input id="newbirthdateiteminput" contenteditable="true" class="styledtext input newiteminput" type="date" onkeydown="whenTextChange('newbirthdateiteminput', 'newbirthdateitemhint'); whenKeyPressOnNewItemInput(event, 'newbirthdateiteminput')" , onchange="whenTextChange('newbirthdateiteminput', 'newbirthdateitemhint')" oninput="whenTextChange('newbirthdateiteminput', 'newbirthdateitemhint')" oncut="whenTextChange('newbirthdateiteminput', 'newbirthdateitemhint')" onpaste="whenTextChange('newbirthdateiteminput', 'newbirthdateitemhint'); whenPaste(event, 'newbirthdateiteminput');"/>
        </div>
       </th>
       <th class="newitemfieldcontainer">
@@ -192,7 +192,7 @@
         <div id="newbirthplaceitemhint" class="styledtext inputhint newitemhint">
          أكتب مكان الميلاد هنا
         </div>
-        <div id="newbirthplaceiteminput" contenteditable="true" class="styledtext input newiteminput" type="text" onkeydown="whenTextChange('newbirthplaceiteminput', 'newbirthplaceitemhint'); whenKeyPressOnNewItemInput(event, 'newbirthplaceiteminput')" , onchange="whenTextChange('newbirthplaceiteminput', 'newbirthplaceitemhint')" oninput="whenTextChange('newbirthplaceiteminput', 'newbirthplaceitemhint')" oncut="whenTextChange('newbirthplaceiteminput', 'newbirthplaceitemhint')" onpaste="whenTextChange('newbirthplaceiteminput', 'newbirthplaceitemhint')"></div>
+        <div id="newbirthplaceiteminput" contenteditable="true" class="styledtext input newiteminput" type="text" onkeydown="whenTextChange('newbirthplaceiteminput', 'newbirthplaceitemhint'); whenKeyPressOnNewItemInput(event, 'newbirthplaceiteminput')" , onchange="whenTextChange('newbirthplaceiteminput', 'newbirthplaceitemhint')" oninput="whenTextChange('newbirthplaceiteminput', 'newbirthplaceitemhint')" oncut="whenTextChange('newbirthplaceiteminput', 'newbirthplaceitemhint')" onpaste="whenTextChange('newbirthplaceiteminput', 'newbirthplaceitemhint'); whenPaste(event, 'newbirthplaceiteminput');"></div>
        </div>
       </th>
       <th class="newitemfieldcontainer">
@@ -200,7 +200,7 @@
         <div id="newbirthcertificatenumberitemhint" class="styledtext inputhint newitemhint">
          أكتب رقم شهادة الميلاد هنا
         </div>
-        <div id="newbirthcertificatenumberiteminput" contenteditable="true" class="styledtext input newiteminput" type="number" onkeydown="whenTextChange('newbirthcertificatenumberiteminput', 'newbirthcertificatenumberitemhint'); whenKeyPressOnNewItemInput(event, 'newbirthcertificatenumberiteminput')" , onchange="whenTextChange('newbirthcertificatenumberiteminput', 'newbirthcertificatenumberitemhint')" oninput="whenTextChange('newbirthcertificatenumberiteminput', 'newbirthcertificatenumberitemhint')" oncut="whenTextChange('newbirthcertificatenumberiteminput', 'newbirthcertificatenumberitemhint')" onpaste="whenTextChange('newbirthcertificatenumberiteminput', 'newbirthcertificatenumberitemhint')"></div>
+        <div id="newbirthcertificatenumberiteminput" contenteditable="true" class="styledtext input newiteminput" type="number" onkeydown="whenTextChange('newbirthcertificatenumberiteminput', 'newbirthcertificatenumberitemhint'); whenKeyPressOnNewItemInput(event, 'newbirthcertificatenumberiteminput')" , onchange="whenTextChange('newbirthcertificatenumberiteminput', 'newbirthcertificatenumberitemhint')" oninput="whenTextChange('newbirthcertificatenumberiteminput', 'newbirthcertificatenumberitemhint')" oncut="whenTextChange('newbirthcertificatenumberiteminput', 'newbirthcertificatenumberitemhint')" onpaste="whenTextChange('newbirthcertificatenumberiteminput', 'newbirthcertificatenumberitemhint'); whenPaste(event, 'newbirthcertificatenumberiteminput');"></div>
        </div>
       </th>
       <th class="newitemfieldcontainer">
@@ -208,7 +208,7 @@
         <div id="newresidenceitemhint" class="styledtext inputhint newitemhint">
          أكتب مكان الاقامة هنا
         </div>
-        <div id="newresidenceiteminput" contenteditable="true" class="styledtext input newiteminput" type="text" onkeydown="whenTextChange('newresidenceiteminput', 'newresidenceitemhint'); whenKeyPressOnNewItemInput(event, 'newresidenceiteminput')" , onchange="whenTextChange('newresidenceiteminput', 'newresidenceitemhint')" oninput="whenTextChange('newresidenceiteminput', 'newresidenceitemhint')" oncut="whenTextChange('newresidenceiteminput', 'newresidenceitemhint')" onpaste="whenTextChange('newresidenceiteminput', 'newresidenceitemhint')"></div>
+        <div id="newresidenceiteminput" contenteditable="true" class="styledtext input newiteminput" type="text" onkeydown="whenTextChange('newresidenceiteminput', 'newresidenceitemhint'); whenKeyPressOnNewItemInput(event, 'newresidenceiteminput')" , onchange="whenTextChange('newresidenceiteminput', 'newresidenceitemhint')" oninput="whenTextChange('newresidenceiteminput', 'newresidenceitemhint')" oncut="whenTextChange('newresidenceiteminput', 'newresidenceitemhint')" onpaste="whenTextChange('newresidenceiteminput', 'newresidenceitemhint'); whenPaste(event, 'newresidenceiteminput');"></div>
        </div>
       </th>
      </tr>
