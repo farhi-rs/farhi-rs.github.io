@@ -1165,7 +1165,7 @@ donefab.onclick = function() {
       let cursor = event.target.result;
     
       if (cursor) {
-        if (cursor.value.name.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") === newnameiteminput.innerHTML.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "")) {
+        if (cursor.value.name.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") === newnameiteminput.innerHTML.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") || cursor.value.nin.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") === newniniteminput.innerHTML.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") || cursor.value.worknumber.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") === newworknumberiteminput.innerHTML.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") || cursor.value.phonenumber.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") === newphonenumberiteminput.innerHTML.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "")) {
           loadingscreen.style.animationName = "fadeOutAnimation";
           loadingscreen.style.animationDuration = "0.25s";
           loadingscreen.style.animationFillMode = "forwards";
