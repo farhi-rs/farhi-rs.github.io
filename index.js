@@ -37,6 +37,8 @@ var lastdatatablebodyhtml = "";
 
 function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumber, worknumber, nin, cardnumber,  cardissuingdate, cardexpiredate, cardissuingplace, birthdate, birthplace, birthcertificatenumber, residence, _fromTop, _newlyAdded, _hamzacase) {
   
+  if (name.replace('#', '').includes('#') && !searchenabled) return;
+  
   let uid = toUid(id);
   
   _fromTop = true;
@@ -1254,6 +1256,10 @@ donefab.onclick = function() {
       }
       
       if (modifyingEnabled) datatablebody.rows[lasteditedrowindex].innerHTML = lasteditedrowhtml;
+      
+      if (itemdata.name.replace('#', '').includes('#')) {
+        datatablebody.rows[lasteditedrowindex].style.height = "0px";
+      }
       
       if (!donehidden) {
         donefab.style.animationName = "fadeOutAnimation";
