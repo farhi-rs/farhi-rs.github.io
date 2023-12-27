@@ -711,3 +711,7 @@ body {
 .redflageditem {
   background-color: #FF5050;
 }
+
+.greenflageditem {
+  background-color: #56FF55;
+}

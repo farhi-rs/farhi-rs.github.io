@@ -59,7 +59,7 @@ function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumbe
   +
   '<th id ="tablerenewingenddateitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablerenewingenddateitemat_' + rowCount + '\')">' + renewingenddate + '</th>'
   +
-  '<th id ="tablephonenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (phonenumber.includes('#') ? 'redflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablephonenumberitemat_' + rowCount + '\')">' + phonenumber.replace('#', '') + '</th>'
+  '<th id ="tablephonenumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (phonenumber.includes('#') ? 'redflageditem' : '') + (phonenumber.includes('@') ? 'greenflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tablephonenumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tablephonenumberitemat_' + rowCount + '\')">' + phonenumber.replace('#', '').replace('@', '') + '</th>'
   +
   '<th id ="tableworknumberitemat_' + rowCount + '" class="tabledataitem ' + (_newlyAdded ? 'newlyaddeditem' : '') + (worknumber.includes('#') ? 'redflageditem' : '') + (_hamzacase ? 'hamzaitem' : '') + '" onclick="whenDataItemClicked(\'' + 'tableworknumberitemat_' + rowCount + '\')" onmouseenter="whenDataItemHovered(\'' + 'tableworknumberitemat_' + rowCount + '\')" onmouseleave="whenDataItemDismissed(\'' + 'tableworknumberitemat_' + rowCount + '\')">' + worknumber.replace('#', '') + '</th>'
   +
@@ -1339,10 +1339,21 @@ donefab.onclick = function() {
     
           document.getElementById("tablerenewingenddateitemat_" + lasteditedpagedataindex).innerHTML = getArabicDate(addSixMonths(itemdata.renewingstartdate));
       
-          document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.phonenumber.replace('#', '');
+          document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.phonenumber.replace('#', '').replace("@", "");
           
-          if (itemdata.phonenumber.includes('#')) document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
-          else document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
+          if (itemdata.phonenumber.includes('#')) {
+            document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
+          } else if (itemdata.phonenumber.includes('@')) {
+            document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).classList.add("greenflageditem");
+          } else {
+            try {
+              document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
+            } catch (ex) {}
+            
+            try {
+              document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).classList.remove("greenflageditem");
+            } catch (ex) {}
+          }
       
           document.getElementById("tableworknumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.worknumber.replace('#', '');
           
@@ -2241,7 +2252,7 @@ function whenDataNameItemGetRightClicked(event, rowId) {
     pdfFrame.contentWindow.document.getElementById("tablenameitem").innerHTML = unescapeHtml(itemdata.name).replace('#', '');
     pdfFrame.contentWindow.document.getElementById("tablerenewingstartdateitem").innerHTML = getArabicDate(itemdata.renewingstartdate);
     pdfFrame.contentWindow.document.getElementById("tableninitem").innerHTML = unescapeHtml(itemdata.nin).replace('#', '');
-    pdfFrame.contentWindow.document.getElementById("tablephonenumberitem").innerHTML = unescapeHtml(itemdata.phonenumber).replace('#', '');
+    pdfFrame.contentWindow.document.getElementById("tablephonenumberitem").innerHTML = unescapeHtml(itemdata.phonenumber).replace('#', '').replace('@', '');
     pdfFrame.contentWindow.document.getElementById("tableworknumberitem").innerHTML = unescapeHtml(itemdata.worknumber).replace('#', '');
     pdfFrame.contentWindow.document.getElementById("tableresidenceitem").innerHTML = unescapeHtml(itemdata.residence).replace('#', '');
     
@@ -2265,18 +2276,18 @@ function whenDataNameItemGetRightClicked(event, rowId) {
 }
 
 
-
+/*
 let yesterdayObject = new Date();
 yesterdayObject.setDate(yesterdayObject.getDate() - 1);
     
 localStorage.getItem(yesterdayObject.toISOString().split("T")[0] + "_xlsxbackup") === undefined || localStorage.getItem(yesterdayObject.toISOString().split("T")[0] + "_xlsxbackup") === null || localStorage.getItem(yesterdayObject.toISOString().split("T")[0] + "_xlsxbackup") === "" ? '' : localStorage.removeItem(yesterdayObject.toISOString().split("T")[0] + "_xlsxbackup");
-    
-let canxlsxbackup = localStorage.getItem(new Date().toISOString().split("T")[0] + "_xlsxbackup");
+    */
+let canxlsxbackup = "true"; /*localStorage.getItem(new Date().toISOString().split("T")[0] + "_xlsxbackup");*/
 
 if (canxlsxbackup === undefined || canxlsxbackup === null || canxlsxbackup === "") canxlsxbackup = "true";
 
 if (canxlsxbackup == "true") {
-  localStorage.setItem(new Date().toISOString().split("T")[0] + "_xlsxbackup", "false");
+  //localStorage.setItem(new Date().toISOString().split("T")[0] + "_xlsxbackup", "false");
   
   setTimeout(function() {
     saveWholeDatabaseAsXlsx();
