@@ -84,9 +84,6 @@ function addRow(id, name, status, renewingstartdate, renewingenddate, phonenumbe
   '\n     </tr>';
   
   
-  //if (name.replace('#', '').includes('#') && !searchenabled) dataitemhtml = "";
-  
-  
   if (_hamzacase) {
     hamzadataitemhtml = dataitemhtml;
     
@@ -1072,6 +1069,8 @@ realfab.onclick = function() {
       newresidenceiteminput.innerHTML = "العطاف - عين الدفلى";
       whenTextChange('newresidenceiteminput', 'newresidenceitemhint');
   } else if (addingEnabled || modifyingEnabled || searchenabled) {
+    
+      newitemnamechecked = false;
       
       if (!searchenabled) {
         newitemsbar.innerHTML = '';
@@ -1177,7 +1176,7 @@ donefab.onclick = function() {
           
           messageboxicon.innerHTML = "warning";
     
-          messageboxtext.innerHTML = modifyingEnabled ? "لم يتم تغيير أي شئ، إذا كنت تريد المتابعة على أي حال إضغط تم مرة أخرى" : "هذا الزبون موجود مسبقا في التطبيق، إذا كنت تريد إضافته على أي حال إضغط على تم";
+          messageboxtext.innerHTML = modifyingEnabled ? "لم يتم تغيير أي معلومة لهذا الزبون، إذا كنت تريد المتابعة على أي حال إضغط تم مرة أخرى" : "واحدة من معلومات هذا الزبون الجديد (إسمه، رقم عمله، رقم تعريفه أو رقم هاتفه) موجود مسبقا في التطبيق، إذا كنت تريد إضافته على أي حال إضغط على تم";
     
           messagebox.style.animationName = "fadeInAnimation";
           messagebox.style.animationDuration = "0.25s";
@@ -1257,11 +1256,9 @@ donefab.onclick = function() {
       }
       
       if (modifyingEnabled) datatablebody.rows[lasteditedrowindex].innerHTML = lasteditedrowhtml;
-      /*
-      if (itemdata.name.replace('#', '').includes('#')) {
-        datatablebody.rows[lasteditedrowindex].innerHTML = '';
-      }
-      */
+      
+      
+      
       if (!donehidden) {
         donefab.style.animationName = "fadeOutAnimation";
         donefab.style.animationDuration = "0.25s";
@@ -1322,7 +1319,7 @@ donefab.onclick = function() {
           
           whenDataIsReady();
           
-          if (true/*! itemdata.name.replace('#', '').includes('#')*/) {
+          
           document.getElementById("tableuiditemat_" + lasteditedpagedataindex).innerHTML = toUid(itemdata.id).replace('#', '');
           
           if (toUid(itemdata.id).includes('#')) document.getElementById("tableuiditemat_" + lasteditedpagedataindex).classList.add("redflageditem");
@@ -1386,7 +1383,7 @@ donefab.onclick = function() {
           
           if (itemdata.residence.includes('#')) document.getElementById("tableresidenceitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
           else document.getElementById("tableresidenceitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
-          }
+          
           
           if (searchenabled) {
             realfabtext.innerHTML = 'إلغاء';
@@ -2113,7 +2110,7 @@ function whenNewUidItemGetClicked() {
   
   dialogcancelbutton.onclick = dismissDialog;
   
-  dialogcontainer.onclick = dismissDialog;
+  //dialogcontainer.onclick = dismissDialog;
 }
 
 function whenDataUidItemGetRightClicked(event, rowId) {
@@ -2122,7 +2119,7 @@ function whenDataUidItemGetRightClicked(event, rowId) {
     
   let pageDataIndex = rowId + (searchenabled ? (pageItemsLimit*pageIndex) : 0);
   
-  if (pageData[pageDataIndex] !== undefined || pageData[pageDataIndex] !== null) if (pageData[pageDataIndex].note !== undefined || pageData[pageDataIndex].note !== null || pageData[pageDataIndex].note !== "") alert("ملاحظتك السابقة عن الزبون : \n" + (pageData[pageDataIndex].note === "" ? "لا يوجد" : pageData[pageDataIndex].note));
+  if (pageData[pageDataIndex] !== undefined || pageData[pageDataIndex] !== null) if (pageData[pageDataIndex].note !== undefined || pageData[pageDataIndex].note !== null || pageData[pageDataIndex].note !== "") showDialog("ملاحظتك السابقة عن الزبون : \n" + (pageData[pageDataIndex].note === "" ? "لا يوجد" : pageData[pageDataIndex].note), "info", "تم");
 }
 
 
@@ -2278,6 +2275,7 @@ if (canxlsxbackup == "true") {
 
 
 let dontsavetheme = false;
+let welcomeTimer;
 const changetheme = function() {
   let theme = (localStorage.getItem("theme") === undefined || localStorage.getItem("theme") === null || localStorage.getItem("theme") === "") ? 'dark' : localStorage.getItem("theme");
   
@@ -2285,12 +2283,36 @@ const changetheme = function() {
     theme = 'light';
     document.documentElement.style.animationName = "bodyLightThemeAnimation";
     document.getElementById('toolbar').style.animationName = "toolbarLightThemeAnimation";
-    toolbarthemeicon.innerHTML = "dark_mode";
+    toolbarthemeicon.innerHTML = "light_mode";
+    
+    function showMsg() {
+      showMessage("تم تفعيل الوضع العادي", "light_mode", 5000);
+    }
+    
+    clearTimeout(welcomeTimer);
+    
+    if (dontsavetheme) {
+      welcomeTimer = setTimeout(showMsg, 500 + 10000);
+    } else {
+      showMsg();
+    }
   } else {
     theme = 'dark';
     document.documentElement.style.animationName = "bodyDarkThemeAnimation";
     document.getElementById('toolbar').style.animationName = "toolbarDarkThemeAnimation";
-    toolbarthemeicon.innerHTML = "light_mode";
+    toolbarthemeicon.innerHTML = "dark_mode";
+    
+    function showMsg() {
+      showMessage("تم تفعيل الوضع الليلي", "dark_mode", 5000);
+    }
+    
+    clearTimeout(welcomeTimer);
+    
+    if (dontsavetheme) {
+      welcomeTimer = setTimeout(showMsg, 500 + 10000);
+    } else {
+      showMsg();
+    }
   }
   
   document.documentElement.style.animationDuration = "0.25s";
@@ -2315,9 +2337,11 @@ toolbarcheckuserbutton.onclick = function() {
   if (checkuser == "true") {
     localStorage.setItem("checkuser", "false");
     toolbarcheckusericon.innerHTML = "groups";
+    showMessage("تم تعطيل وضع التأكد قبل الإضافة أو التعديل، لن يتم تنبيهك بوجود الزبون مسبقا مجددا", "toggle_off", 10000);
   } else {
     localStorage.setItem("checkuser", "true");
-    toolbarcheckusericon.innerHTML = "person";
+    toolbarcheckusericon.innerHTML = "conditions";
+    showMessage("تم تفعيل وضع التأكد قبل الإضافة أو التعديل", "toggle_on", 10000);
   }
 }
 
@@ -2325,8 +2349,10 @@ let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage
   
   if (checkuser == "false") {
     toolbarcheckusericon.innerHTML = "groups";
+    showMessage("تم تعطيل وضع التأكد قبل الإضافة أو التعديل، لن يتم تنبيهك بوجود الزبون مسبقا مجددا", "toggle_off", 10000);
   } else {
-    toolbarcheckusericon.innerHTML = "person";
+    toolbarcheckusericon.innerHTML = "conditions";
+    showMessage("تم تفعيل وضع التأكد قبل الإضافة أو التعديل", "toggle_on", 10000);
   }
   
   
@@ -2380,9 +2406,16 @@ let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage
     
     */
     
-    messageboxicon.innerHTML = "content_paste";
     
-    messageboxtext.innerHTML = "تم لصق النص بنجاح";
+    showMessage("تم لصق النص بنجاح", "content_paste", 2500);
+  }
+  
+  
+  // I just finally wrote this function after duplicating this line alot so dont blame me if its not used alot in the program
+  function showMessage(msg, icn, dur) {
+    messageboxicon.innerHTML = icn;
+    
+    messageboxtext.innerHTML = msg;
     
     messagebox.style.animationName = "fadeInAnimation";
       
@@ -2391,9 +2424,68 @@ let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage
     
     clearTimeout(messageboxtimer);
     
+    messagedialogbuttonslayout.style.width = "0px";
+    messagedialogbuttonslayout.style.height = "0px";
+    messagedialogbuttonslayout.style.opacity = "0";
+    messagedialogbuttonslayout.style.pointerEvents = "none";
+    messagedialogbuttonslayout.style.marginTop = "0px";
+    
     messageboxtimer = setTimeout(function() {
       messagebox.style.animationName = "fadeOutAnimation";
       messagebox.style.animationDuration = "0.25s";
       messagebox.style.animationFillMode = "forwards";
-    }, 250 + 2500);
+    }, 250 + dur);
+  }
+  
+  
+  function showDialog(msg, icn, okbutton, okbuttonfunc) {
+    messageboxicon.innerHTML = icn;
+    
+    messageboxtext.innerHTML = msg;
+    
+    messagebox.style.animationName = "fadeInAnimation";
+      
+    messagebox.style.animationDuration = "0.25s";
+    messagebox.style.animationFillMode = "forwards";
+    
+    clearTimeout(messageboxtimer);
+    
+    messagedialogbuttonslayout.style.width = "fit-content";
+    messagedialogbuttonslayout.style.height = "fit-content";
+    messagedialogbuttonslayout.style.opacity = "1";
+    messagedialogbuttonslayout.style.pointerEvents = "auto";
+    messagedialogbuttonslayout.style.marginTop = "20px";
+    
+    let dismissDialog = function() {
+      messagebox.style.animationName = "fadeOutAnimation";
+      messagebox.style.animationDuration = "0.25s";
+      messagebox.style.animationFillMode = "forwards";
+      
+      messagedialogokbutton.style.opacity = "1";
+    }
+    
+    if (okbutton != undefined && okbutton != null) {
+      messagedialogokbutton.innerHTML = okbutton;
+    } else {
+      messagedialogokbutton.style.opacity = "0";
+    }
+    
+    messagedialogokbutton.onclick = function() {
+      dismissDialog();
+      if (okbuttonfunc) okbuttonfunc();
+    };
+    
+  }
+  
+  let _clearTimeout = window.clearTimeout;
+  
+  this.clearTimeout = function(timeout) {
+    if (timeout == messageboxtimer) {
+      messagedialogbuttonslayout.style.width = "0px";
+      messagedialogbuttonslayout.style.height = "0px";
+      messagedialogbuttonslayout.style.opacity = "0";
+      messagedialogbuttonslayout.style.pointerEvents = "none";
+      messagedialogbuttonslayout.style.marginTop = "0px";
+    }
+    _clearTimeout(timeout); 
   }

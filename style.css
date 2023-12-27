@@ -166,7 +166,7 @@ body {
 
 .styledtext {
   font-family: 'Alexandria', sans-serif;
-  font-size: 0.75em;
+  font-size: 1.0em;
   width: fit-content;
   min-width: 150px;
   text-align: right;
@@ -587,13 +587,12 @@ body {
 
 #messagebox {
   pointer-events: all;
-  direction: rtl;
-  opacity: 0;
-  transform: scale(0, 0);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  transform: scale(0, 0);
   position: absolute;
   bottom: 15px;
   left: 15px;
@@ -603,6 +602,18 @@ body {
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
 }
 
+#messageboxtextlayout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  direction: rtl;
+}
+
+#messagedialogbuttonslayout {
+  margin-top: 20px;
+}
+
 #messageboxicon {
   color: white;
 }
@@ -610,6 +621,9 @@ body {
 #messageboxtext {
   color: white;
   font-size: 1em;
+  white-space: pre;
+  word-wrap: break-word;
+  user-select: auto;
 }
 
 

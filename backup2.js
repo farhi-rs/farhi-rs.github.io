@@ -71,7 +71,7 @@ function handleXlsx(file) {
 
 
 function ready() {
-   console.log(batalaarray.length);
+    console.log(batalaarray.length);
   // create a new connection  or new transaction
   const trans = farhi_rsdb.transaction('batala', 'readwrite');  
   // Save Names object using variable  
@@ -152,7 +152,7 @@ sheetNames.forEach(function(sheetName) {
             
             let cellData = "";
             if (cell) {
-              if (cellAddress.includes("B")) {
+              if (cellAddress.includes("C")) {
                 cellData = tostring(cell.v);
               } else if (cellAddress.includes("C")) {
                 cellData = "";
@@ -175,7 +175,21 @@ sheetNames.forEach(function(sheetName) {
     // Output all rows
     rows.forEach(function(row, rowIndex) {
         if (row == undefined) return;
-        let name = tostring(row[7]);
+        let name = "";
+        let nameindex = 15;
+        if (tostring([15]) != "undefined" && tostring(row[15]) != "null" && tostring(row[15]) != "") {
+          nameindex = 15;
+        } else if (tostring(row[16]) != "undefined" && tostring(row[16]) != "null" && tostring(row[16]) != "") {
+          nameindex = 16;
+        } else if (tostring(row[17]) != "undefined" && tostring(row[17]) != "null" && tostring(row[17]) != "") {
+          nameindex = 17;
+        }
+        
+        if (tostring(row[nameindex]) != "undefined" && tostring(row[nameindex]) != "null") name = tostring(row[nameindex]);
+        
+        if (name == "") return;
+        
+        
         let skip = false;
         if (existingitems != undefined && existingitems != null) existingitems.forEach(function(itemdata) {
           if (itemdata.name.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") === name.replaceAll(" ", "")) {
@@ -186,7 +200,18 @@ sheetNames.forEach(function(sheetName) {
         if (skip) return;
         
         let renewingstartdate = "";
-        if (tostring(row[6]) != "undefined" && tostring(row[6]) != "null") renewingstartdate = tostring(row[6]).replaceAll(" ", "").replaceAll(".", "");
+        let startindex = 11;
+        if (tostring(row[11]) != "undefined" && tostring(row[11]) != "null" && tostring(row[11]) != "") {
+          startindex = 11;
+        } else if (tostring(row[12]) != "undefined" && tostring(row[12]) != "null" && tostring(row[11]) != "") {
+          startindex = 12;
+        } else if (tostring(row[13]) != "undefined" && tostring(row[13]) != "null" && tostring(row[13]) != "") {
+          startindex = 13;
+        } else if (tostring(row[14]) != "undefined" && tostring(row[14]) != "null" && tostring(row[14]) != "") {
+          startindex = 14;
+        }
+        
+        if (tostring(row[startindex]) != "undefined" && tostring(row[startindex]) != "null") renewingstartdate = tostring(row[startindex]).replaceAll(" ", "").replaceAll(".", "");
         
         try {
           new Date("20" + renewingstartdate.split("/")[2] + "-" + (renewingstartdate.split("/")[0].length == 1 ? "0" : "") + renewingstartdate.split("/")[0] + "-" + (renewingstartdate.split("/")[1].length == 1 ? "0" : "") + renewingstartdate.split("/")[1]).toISOString();
@@ -198,7 +223,7 @@ sheetNames.forEach(function(sheetName) {
           }
         }
         
-        
+        /*
         for (let i = rowIndex+1; i < rows.length; i++) {
           let rowAfter = rows[i];
           
@@ -221,7 +246,7 @@ sheetNames.forEach(function(sheetName) {
             break;
           }
         }
-        
+        */
         
         if (renewingstartdate != "") {
           try {
@@ -261,8 +286,17 @@ sheetNames.forEach(function(sheetName) {
         
         
         let phonenumber = "";
-        if (tostring(row[5]) != "undefined" && tostring(row[5]) != "null" && tostring(row[5]).replaceAll(" ", "") != "") if (!isNaN(Number(tostring(row[5])))) if (tostring(row[5]).length == 9 || tostring(row[5]).length == 10) phonenumber = (tostring(row[5]).length == 9 ? "0" : "") + tostring(row[5]);
+        let phoneindex = 8;
+        if (tostring(row[8]) != "undefined" && tostring(row[8]) != "null" && tostring(row[8]) != "") {
+          phoneindex = 8;
+        } else if (tostring(row[9]) != "undefined" && tostring(row[9]) != "null" && tostring(row[9]) != "") {
+          phoneindex = 9;
+        } else if (tostring(row[10]) != "undefined" && tostring(row[10]) != "null" && tostring(row[10]) != "") {
+          phoneindex = 10;
+        }
         
+        if (tostring(row[phoneindex]) != "undefined" && tostring(row[phoneindex]) != "null" && tostring(row[phoneindex]).replaceAll(" ", "") != "") if (!isNaN(Number(tostring(row[phoneindex])))) if (tostring(row[phoneindex]).length == 9 || tostring(row[phoneindex]).length == 10) phonenumber = (tostring(row[phoneindex]).length == 9 ? "0" : "") + tostring(row[phoneindex]);
+        /*
         for (let i = rowIndex+1; i < rows.length; i++) {
           let rowAfter = rows[i];
           
@@ -272,12 +306,22 @@ sheetNames.forEach(function(sheetName) {
             break;
           }
         }
-        
+        */
         
         
         let residence = "";
-        if (tostring(row[4]) != "undefined" && tostring(row[4]) != "null" && tostring(row[4]).replaceAll(" ", "") != "") residence = tostring(row[4]);
+        let resindex = 5;
+        if (tostring(row[5]) != "undefined" && tostring(row[5]) != "null" && tostring(row[5]) != "") {
+          resindex = 5;
+        } else if (tostring(row[6]) != "undefined" && tostring(row[6]) != "null" && tostring(row[6]) != "") {
+          resindex = 6;
+        } else if (tostring(row[7]) != "undefined" && tostring(row[7]) != "null" && tostring(row[7]) != "") {
+          resindex = 7;
+        }
         
+        
+        if (tostring(row[resindex]) != "undefined" && tostring(row[resindex]) != "null" && tostring(row[resindex]).replaceAll(" ", "") != "") residence = tostring(row[resindex]);
+        /*
         for (let i = rowIndex+1; i < rows.length; i++) {
           let rowAfter = rows[i];
           
@@ -287,11 +331,12 @@ sheetNames.forEach(function(sheetName) {
             break;
           }
         }
-        
+        */
         residence = residence.replaceAll("undefined", "").replaceAll("null", "");
         
         
         let nin = "";
+        /*
         if (tostring(row[2]) != "undefined" && tostring(row[2]) != "null" && tostring(row[2]).replaceAll(" ", "") != "") nin = tostring(row[2]);
         
         for (let i = rowIndex+1; i < rows.length; i++) {
@@ -303,13 +348,16 @@ sheetNames.forEach(function(sheetName) {
             break;
           }
         }
-        
+        */
         
         
         
         let worknumber = "";
-        if (tostring(row[1]) != "undefined" && tostring(row[1]) != "null" && tostring(row[1]).replaceAll(" ", "") != "") worknumber = tostring(row[1]);
+        let workindex = 2;
         
+        
+        if (tostring(row[workindex]) != "undefined" && tostring(row[workindex]) != "null" && tostring(row[workindex]).replaceAll(" ", "") != "") worknumber = tostring(row[workindex]);
+        /*
         for (let i = rowIndex+1; i < rows.length; i++) {
           let rowAfter = rows[i];
           
@@ -319,12 +367,21 @@ sheetNames.forEach(function(sheetName) {
             break;
           }
         }
-        
+        */
         
         
         
         let birthdate = "";
-        if (tostring(row[0]) != "undefined" && tostring(row[0]) != "null") birthdate = tostring(row[0]).replaceAll(" ", "").replaceAll(".", "/");
+        let birthindex = 0;
+        if (tostring(row[0]) != "undefined" && tostring(row[0]) != "null" && tostring(row[0]) != "") {
+          birthindex = 0;
+        } else if (tostring(row[1]) != "undefined" && tostring(row[1]) != "null" && tostring(row[1]) != "") {
+          birthindex = 1;
+        } else if (tostring(row[2]) != "undefined" && tostring(row[2]) != "null" && tostring(row[2]) != "") {
+          birthindex = 2;
+        }
+        
+        if (tostring(row[birthindex]) != "undefined" && tostring(row[birthindex]) != "null") birthdate = tostring(row[birthindex]).replaceAll(" ", "").replaceAll(".", "/");
         
         try {
           new Date((Number(birthdate.split("/")[2]) >= 50 ? "19" : "20") + birthdate.split("/")[2] + "-" + (birthdate.split("/")[0].length == 1 ? "0" : "") + birthdate.split("/")[0] + "-" + (birthdate.split("/")[1].length == 1 ? "0" : "") + birthdate.split("/")[1]).toISOString();
@@ -336,7 +393,7 @@ sheetNames.forEach(function(sheetName) {
           }
         }
         
-        
+        /*
         for (let i = rowIndex+1; i < rows.length; i++) {
           let rowAfter = rows[i];
           
@@ -359,7 +416,7 @@ sheetNames.forEach(function(sheetName) {
             break;
           }
         }
-        
+        */
         try {
           birthdate = (Number(birthdate.split("/")[2]) >= 50 ? "19" : "20") + birthdate.split("/")[2] + "-" + (birthdate.split("/")[0].length == 1 ? "0" : "") + birthdate.split("/")[0] + "-" + (birthdate.split("/")[1].length == 1 ? "0" : "") + birthdate.split("/")[1];
           
