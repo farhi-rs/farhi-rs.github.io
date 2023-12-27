@@ -31,7 +31,10 @@ self.addEventListener('notificationclick', event => {
         let promise = clients.openWindow(urlToOpen).then(windowClient => {
           // Use the windowClient to post a message
           if (windowClient) {
-            windowClient.postMessage({ message: name });
+            windowClient.focus();
+            setTimeout(function() {
+              windowClient.postMessage({ message: name });
+            }, 500);
           }
         })
         .catch(error => {
