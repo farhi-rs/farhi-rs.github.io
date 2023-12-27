@@ -28,8 +28,17 @@ self.addEventListener('notificationclick', event => {
     clients.matchAll().then(clientsList => {
       if (clientsList.length === 0) {
         // Open a new window only if there are no active clients
-        let promise = clients.openWindow(urlToOpen);
-        clientsList[0].postMessage({ message: name });
+        let promise = clients.openWindow(urlToOpen).then(windowClient => {
+          // Use the windowClient to post a message
+          if (windowClient) {
+            windowClient.postMessage({ message: name });
+          }
+        })
+        .catch(error => {
+          // Handle any errors that occur while opening the window
+          console.log('Error opening window');
+        });
+        
         return promise;
       } else {
         // Focus on the first available client window
