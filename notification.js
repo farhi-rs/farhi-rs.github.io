@@ -91,7 +91,7 @@ const handleNotifications = async function() {
           registration.showNotification('تنبيه', {
             body: 'الزبون ' + itemdata.name + ' ذو المعرف الفريد ' + toUid(itemdata.id) + (isRegEnded ? ' حالة تسجيله حمراء، يرجى تفقده في أقرب وقت' : ' يكاد تسجيله ينتهي، يرجى تفقده في أقرب وقت'),
             icon: './assets/imgs/site_icon.png',
-            data: { uid: itemdata.name }
+            data: { name: itemdata.name }
           });
         });
         
