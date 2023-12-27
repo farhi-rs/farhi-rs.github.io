@@ -855,10 +855,9 @@ var searchPages = [[]];
 
 var typedNote = "";
 
-var loadingData = false;
+var cancelCursor = false;
 
 function prepareDB(loadingmsg, belowToolbar) {
-  loadingData = true;
   
   loadingscreen.style.top = (belowToolbar ? toolbar.offsetHeight : 0) + "px;";
   
@@ -942,7 +941,7 @@ function prepareDB(loadingmsg, belowToolbar) {
           }
         }
         
-        if (cursor.continue) cursor.continue();
+        if (cursor.continue && !cancelCursor) cursor.continue();
       } else {
         
         loadingscreen.style.animationName = "fadeOutAnimation";
@@ -950,14 +949,6 @@ function prepareDB(loadingmsg, belowToolbar) {
         loadingscreen.style.animationFillMode = "forwards";
           
         whenDataIsReady();
-        
-        if (notificationEventWaiting != null) {
-          messageFunc(notificationEventWaiting);
-          
-          notificationEventWaiting = null;
-        }
-        
-        loadingData = false;
         
       }
     };
@@ -2151,11 +2142,11 @@ function messageFunc(event) {
 var notificationEventWaiting = null;
 // Add an event listener to receive messages from the Service Worker
 navigator.serviceWorker.addEventListener('message', event => {
-  if (! loadingData) {
-    messageFunc(event);
-  } else {
-    notificationEventWaiting = event;
-  }
+    cancelCursor = true;
+    setTimeout(function() {
+      cancelCursor = false;
+      messageFunc(event);
+    }, 500);
 });
 
 var lastGotoMessage = "";
