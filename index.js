@@ -2172,7 +2172,7 @@ toolbargotobutton.onclick = function() {
     } else {
       
     
-    emptyPage(true);
+    emptyPage();
     
     let factor = typedPageIndex > pageIndex ? +1 : -1;
   
