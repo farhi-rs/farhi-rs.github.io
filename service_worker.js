@@ -18,7 +18,7 @@ self.addEventListener("fetch", e => {
 self.addEventListener('notificationclick', event => {
   event.notification.close(); // Close the notification when clicked
   
-  const uid = event.notification.data.uid;
+  const name = event.notification.data.name;
   
   // Open a relative URL when the notification is clicked
   const urlToOpen = './index.html'; // Replace with your relative path
@@ -29,12 +29,12 @@ self.addEventListener('notificationclick', event => {
       if (clientsList.length === 0) {
         // Open a new window only if there are no active clients
         let promise = clients.openWindow(urlToOpen);
-        clientsList[0].postMessage({ message: uid });
+        clientsList[0].postMessage({ message: name });
         return promise;
       } else {
         // Focus on the first available client window
         clientsList[0].focus();
-        clientsList[0].postMessage({ message: uid });
+        clientsList[0].postMessage({ message: name });
         return Promise.resolve();
       }
     })

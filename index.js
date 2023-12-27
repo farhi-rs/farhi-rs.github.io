@@ -2127,13 +2127,13 @@ function whenDataUidItemGetRightClicked(event, rowId) {
 navigator.serviceWorker.addEventListener('message', event => {
   const receivedData = event.data; // Data received from the Service Worker
   if (receivedData && receivedData.message) {
-    const uid = receivedData.message;
+    const name = receivedData.message;
     // Process the received message from the Service Worker
-    toolbarsearchinput.innerHTML = uid;
+    toolbarsearchinput.innerHTML = name;
     whenTextChange('toolbarsearchinput', 'toolbarsearchhint');
     if (!searchenabled) {
       toolbarsearchbutton.onclick();
-      whenTitleItemClicked('tabletitleuiditem');
+      whenTitleItemClicked('tabletitlenameitem');
     }
     toolbarsearchbutton.onclick();
   }
