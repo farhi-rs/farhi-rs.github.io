@@ -550,24 +550,28 @@ function whenDataItemClicked(itemid) {
   // Copy the text inside the text field
    
   let copiedcontent = null;
-  if (rowId !== -1) if (itemtype == "uid") {
-    copiedcontent = toUid(pageData[pageDataIndex]["id"]);
-  } else if (itemtype == "status") {
-    copiedcontent = null;
-  } else if (itemtype.includes("date")) {
-    if (itemtype == "renewingenddate") {
-      copiedcontent = unescapeHtml(reverseDateStr(addSixMonths(pageData[pageDataIndex]["renewingstartdate"])).replaceAll("-", "/"));
+  try {
+    if (rowId !== -1) if (itemtype == "uid") {
+      copiedcontent = toUid(pageData[pageDataIndex]["id"]);
+    } else if (itemtype == "status") {
+      copiedcontent = null;
+    } else if (itemtype.includes("date")) {
+      if (itemtype == "renewingenddate") {
+        copiedcontent = unescapeHtml(reverseDateStr(addSixMonths(pageData[pageDataIndex]["renewingstartdate"])).replaceAll("-", "/"));
+      } else {
+        copiedcontent = unescapeHtml(reverseDateStr(pageData[pageDataIndex][itemtype]).replaceAll("-", "/"));
+      }
     } else {
-      copiedcontent = unescapeHtml(reverseDateStr(pageData[pageDataIndex][itemtype]).replaceAll("-", "/"));
+      copiedcontent = unescapeHtml(pageData[pageDataIndex][itemtype]);
     }
-  } else {
-    copiedcontent = unescapeHtml(pageData[pageDataIndex][itemtype]);
+  } catch (ex) {
+    
   }
   
   if (copiedcontent == null) {
     messageboxicon.innerHTML = "warning";
     
-    messageboxtext.innerHTML = "لا يمكنك نسخ محتوى هذا المربع";
+    messageboxtext.innerHTML = "لا يمكنك نسخ محتوى هذا المربع أو حدث خطأ أثناء النسخ";
   } else {
     messageboxicon.innerHTML = "content_copy";
     
