@@ -81,7 +81,7 @@ const handleNotifications = async function() {
     let todayShownNotificationsJson = localStorage.getItem(new Date().toISOString().split("T")[0] + "_notifications");
     let todayShownNotifications = (todayShownNotificationsJson === undefined || todayShownNotificationsJson === null || todayShownNotificationsJson === "") ? [] : JSON.parse(todayShownNotificationsJson);
     
-    if (todayShownNotifications.includes(itemdata.id)) return;
+    //if (todayShownNotifications.includes(itemdata.id)) return;
     
     // create and show the notification
     const showNotification = () => {
