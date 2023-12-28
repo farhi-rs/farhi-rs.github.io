@@ -556,12 +556,12 @@ function whenDataItemClicked(itemid) {
     copiedcontent = null;
   } else if (itemtype.includes("date")) {
     if (itemtype == "renewingenddate") {
-      copiedcontent = reverseDateStr(addSixMonths(pageData[pageDataIndex]["renewingstartdate"])).replaceAll("-", "/");
+      copiedcontent = unescapeHtml(reverseDateStr(addSixMonths(pageData[pageDataIndex]["renewingstartdate"])).replaceAll("-", "/"));
     } else {
-      copiedcontent = reverseDateStr(pageData[pageDataIndex][itemtype]).replaceAll("-", "/");
+      copiedcontent = unescapeHtml(reverseDateStr(pageData[pageDataIndex][itemtype]).replaceAll("-", "/"));
     }
   } else {
-    copiedcontent = pageData[pageDataIndex][itemtype];
+    copiedcontent = unescapeHtml(pageData[pageDataIndex][itemtype]);
   }
   
   if (copiedcontent == null) {
