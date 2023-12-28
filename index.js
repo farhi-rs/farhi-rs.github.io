@@ -247,6 +247,7 @@ toolbarsortbutton.onclick = function() {
 
 
 var searchenabled = false;
+var searchtriggered = false;
 toolbarsearchbutton.onclick = function() {
   requestSearch(searchenabled);
   //searchenabled = !searchenabled;
@@ -299,6 +300,7 @@ toolbarsearchbutton.onclick = function() {
 
 function requestSearch(canSearch) {
   if ((canSearch && toolbarsearchinput.innerHTML.replaceAll(/&nbsp;/g, ' ').replaceAll(" ", "") != "") || (sortingenabled && canSearch)) {
+    searchtriggered = true;
     emptyPage();
     pageData = [];
     if (sortingenabled) searchPages = [[]];
@@ -542,7 +544,7 @@ function whenDataItemClicked(itemid) {
   
   let rowId = parseInt(itemid.split("_")[1]);
   
-  let pageDataIndex = rowId + (searchenabled ? (pageItemsLimit*pageIndex) : 0);
+  let pageDataIndex = rowId + (searchtriggered ? (pageItemsLimit*pageIndex) : 0);
   
   
   let itemtype = itemid.split("_")[0].replaceAll("table", "").replaceAll("itemat", "");
@@ -1141,6 +1143,7 @@ realfab.onclick = function() {
         prepareDB("جاري تحميل البيانات ...");
         
         searchenabled = false;
+        searchtriggered = false;
       }
       
       modifyingEnabled = false;
