@@ -2152,7 +2152,7 @@ function whenDataUidItemGetRightClicked(event, rowId) {
     
   event.preventDefault();
     
-  let pageDataIndex = rowId + (searchenabled ? (pageItemsLimit*pageIndex) : 0);
+  let pageDataIndex = rowId + (searchtriggered ? (pageItemsLimit*pageIndex) : 0);
   
   if (pageData[pageDataIndex] !== undefined || pageData[pageDataIndex] !== null) if (pageData[pageDataIndex].note !== undefined || pageData[pageDataIndex].note !== null || pageData[pageDataIndex].note !== "") showDialog("ملاحظتك السابقة عن الزبون : \n" + (pageData[pageDataIndex].note === "" ? "لا يوجد" : pageData[pageDataIndex].note), "info", "تم");
 }
@@ -2241,7 +2241,7 @@ function whenDataNameItemGetRightClicked(event, rowId) {
   
   event.preventDefault();
   
-  let pageDataIndex = rowId + (searchenabled ? (pageItemsLimit*pageIndex) : 0);
+  let pageDataIndex = rowId + (searchtriggered ? (pageItemsLimit*pageIndex) : 0);
     
   let itemdata = pageData[pageDataIndex];
   
