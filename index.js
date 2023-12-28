@@ -565,7 +565,23 @@ function whenDataItemClicked(itemid) {
       copiedcontent = unescapeHtml(pageData[pageDataIndex][itemtype]);
     }
   } catch (ex) {
-    
+    try {
+      if (rowId !== -1) if (itemtype == "uid") {
+        copiedcontent = toUid(pageData[rowId]["id"]);
+      } else if (itemtype == "status") {
+        copiedcontent = null;
+      } else if (itemtype.includes("date")) {
+        if (itemtype == "renewingenddate") {
+          copiedcontent = unescapeHtml(reverseDateStr(addSixMonths(pageData[rowId]["renewingstartdate"])).replaceAll("-", "/"));
+        } else {
+          copiedcontent = unescapeHtml(reverseDateStr(pageData[rowId][itemtype]).replaceAll("-", "/"));
+        }
+      } else {
+        copiedcontent = unescapeHtml(pageData[rowId][itemtype]);
+      }
+    } catch (ex) {
+      
+    }
   }
   
   if (copiedcontent == null) {
