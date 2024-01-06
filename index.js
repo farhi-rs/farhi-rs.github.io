@@ -1364,6 +1364,14 @@ donefab.onclick = function() {
       
           document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).innerHTML = itemdata.phonenumber.replace('#', '').replace("@", "");
           
+          try {
+            document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).classList.remove("redflageditem");
+          } catch (ex) {}
+            
+          try {
+            document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).classList.remove("greenflageditem");
+          } catch (ex) {}
+          
           if (itemdata.phonenumber.includes('#')) {
             document.getElementById("tablephonenumberitemat_" + lasteditedpagedataindex).classList.add("redflageditem");
           } else if (itemdata.phonenumber.includes('@')) {
