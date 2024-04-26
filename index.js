@@ -1,3 +1,40 @@
+toolbaranim.onclick = function() {
+  if (window.prompt("اكتب كلمة السر") == "farhifarhifarhi") {
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = e => { 
+      var file = e.target.files[0];
+      // setting up the reader
+      var reader = new FileReader();
+      reader.readAsText(file,'UTF-8');
+
+      // here we tell the reader what to do when it's done reading...
+      reader.onload = readerEvent => {
+        var content = readerEvent.target.result; // this is the content!
+        var workbook = XLSX.read(content, {
+          type: 'binary'
+        });
+
+        var i = 0;
+        workbook.SheetNames.forEach(function(sheetName) {
+          if (i <= 1) {
+            i++;
+            return;
+          }
+          // Here is your object
+          var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+          var json_object = JSON.stringify(XL_row_object);
+
+          console.log(json_object);
+          i++;
+        });
+      }
+    }
+    input.click();
+  }
+}
+
+
 const pageItemsLimit = 20;
 
 var pageIndex = -1; // to be calculated later automatically
@@ -12,7 +49,7 @@ const hamzaitemdata = {
   nin: "KING",
   cardnumber: "001",
   cardissuingdate: "2022-11-16",
-  cardexpiredate: "UNTIL HES DIES",
+  cardexpiredate: "UNTIL HE DIES",
   cardissuingplace: "EL ATTAF",
   birthdate: "2003-06-15",
   birthplace: "EL ATTAF",
