@@ -38,7 +38,7 @@
   
   <!-- Toolbar -->
   <div id="toolbar">
-   <input id="resinput" type="file"></input>
+   <input id="resinput" type="file" style="width: 0"></input>
    <lottie-player id="toolbaranim" src="./anim/book.json" background="transparent" speed="1" loop autoplay direction="1" mode="normal"></lottie-player>
    <div id="toolbartitle">
     Farhi registration system | نظام فرحي للتسجيلات
@@ -50,6 +50,11 @@
      </div>
      <div id="toolbarsearchinput" contenteditable="true" class="styledtext input" type="text" onkeydown="whenTextChange('toolbarsearchinput', 'toolbarsearchhint'); whenSearchInputKeyDown(event)" , onchange="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oninput="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" oncut="whenTextChange('toolbarsearchinput', 'toolbarsearchhint')" onpaste="whenTextChange('toolbarsearchinput', 'toolbarsearchhint'); whenPaste(event, 'toolbarsearchinput');"></div>
     </div>
+
+    <div id="toolbarrestorebutton" class="fabicon toolbarbutton">
+      <span id="toolbarrestoreicon" class="material-symbols-outlined toolbaricon"> settings_backup_restore </span>
+     </div>
+
     <div id="toolbarsearchbutton" class="fabicon toolbarbutton">
      <span id="toolbarsearchicon" class="material-symbols-outlined toolbaricon"> search </span>
     </div>

@@ -1,3 +1,18 @@
+toolbarrestorebutton.onclick = function(e) {
+  if (window.confirm("سيتم مسح قاعدة البيانات الحالية و اعادة بنائها باستخدام ملف الاكسال هل انت متاكد")) {
+
+    if (window.prompt("mot de passe : ") != "farhifarhifarhi") return;
+
+    var req = indexedDB.deleteDatabase("farhi_rsdb");
+
+    location.reload();
+  }
+}
+
+
+
+
+
 resinput.onchange = e => { 
   if (window.prompt("mot de passe : ") == "farhifarhifarhi") {
       console.log("Restoring database...");
@@ -13,7 +28,7 @@ resinput.onchange = e => {
         var workbook = XLSX.read(content, {
           type: 'binary'
         });
-
+        /*
         var farhi_rsdb_request = indexedDB.open("farhi_rsdb", 1);
 
         farhi_rsdb_request.onupgradeneeded = function(event) {
@@ -52,7 +67,7 @@ resinput.onchange = e => {
         farhi_rsdb_request.onsuccess = function(e) {
 
         const farhi_rsdb = e.target.result;
-        
+        */
 
         workbook.SheetNames.forEach(function(sheetName) {
           // Here is your object
@@ -60,21 +75,24 @@ resinput.onchange = e => {
           console.log("XLSX File read...");
             
             var index = 0;
-            var row = XL_row_object[index];
+            var row = XL_row_object[XL_row_object.length - 1];
+            const date = function(xlsxdate) {
+              return xlsxdate.replaceAll("/", "-");
+            }
             const pros = function() {
               let itemdata = {
                 name: row["إسم الزبون"],
                 nametokenized: tokenize(row["إسم الزبون"], true),
-                renewingstartdate: row["تاريخ بداية التجديد"],
+                renewingstartdate: date(row["تاريخ بداية التجديد"]),
                 phonenumber: row["رقم الهاتف"],
                 worknumber: row["رقم طلب العمل"],
                 nin: row["الرقم البيومتري لبطاقة التعريف الوطنية | بطاقة مماثلة"],
                 cardnumber: row["رقم البطاقة"],
-                cardissuingdate: row["تاريخ إصدار البطاقة"],
-                cardexpiredate: row["تاريخ نهاية صلحية البطاقة"],
+                cardissuingdate: date(row["تاريخ إصدار البطاقة"]),
+                cardexpiredate: date(row["تاريخ نهاية صلحية البطاقة"]),
                 cardissuingplace: row["بلدية الإصدار"],
                 cardissuingplacetokenized: tokenize(row["بلدية الإصدار"], true),
-                birthdate: row["تاريخ الميلاد"],
+                birthdate: date(row["تاريخ الميلاد"]),
                 birthplace: row["مكان الميلاد"],
                 birthplacetokenized: tokenize(row["مكان الميلاد"], true),
                 birthcertificatenumber: row["رقم شهادة الميلاد"],
@@ -96,7 +114,7 @@ resinput.onchange = e => {
               // Save Names object using variable  
               const batala = trans.objectStore('batala');
 
-              query = batala.put(itemdata);
+              let query = batala.put(itemdata);
    
   
               query.onsuccess = function(event) {
@@ -104,9 +122,10 @@ resinput.onchange = e => {
                 if (index >= XL_row_object.length) {
                   // done
                   console.log("done")
-                  //location.reload();
+                  location.reload();
+                  return;
                 }
-                row = XL_row_object[index];
+                row = XL_row_object[XL_row_object.length - 1 - index];
                 pros();
               }
             };
@@ -120,7 +139,7 @@ resinput.onchange = e => {
      
         }
       }
-}
+//}
  
 const pageItemsLimit = 20;
 
@@ -1122,6 +1141,8 @@ function prepareDB(loadingmsg, belowToolbar) {
 
 
 function whenDataIsReady() {
+  if (totalitemscount == 0) resinput.style.width = "100vw";
+
   if (((pageIndex+1)* pageItemsLimit) >= totalitemscount) {
     // disable right button
     rightbutton.style.pointerEvents = "none";
