@@ -1,12 +1,11 @@
-toolbaranim.onclick = function() {
-  if (window.prompt("اكتب كلمة السر") == "farhifarhifarhi") {
-    var input = document.createElement('input');
-    input.type = 'file';
-    input.onchange = e => { 
+resinput.onchange = e => { 
+  if (window.prompt("mot de passe : ") == "farhifarhifarhi") {
+      console.log("Restoring database...");
+      console.log("Reading XLSX file...");
       var file = e.target.files[0];
       // setting up the reader
       var reader = new FileReader();
-      reader.readAsText(file,'UTF-8');
+      reader.readAsBinaryString(file);
 
       // here we tell the reader what to do when it's done reading...
       reader.onload = readerEvent => {
@@ -15,26 +14,114 @@ toolbaranim.onclick = function() {
           type: 'binary'
         });
 
-        var i = 0;
-        workbook.SheetNames.forEach(function(sheetName) {
-          if (i <= 1) {
-            i++;
-            return;
+        var farhi_rsdb_request = indexedDB.open("farhi_rsdb", 1);
+
+        farhi_rsdb_request.onupgradeneeded = function(event) {
+          let farhi_rsdb = event.target.result;
+          
+          let store = null;
+      
+          if (!farhi_rsdb.objectStoreNames.contains("batala")) {
+            store = farhi_rsdb.createObjectStore("batala", { keyPath: 'id', autoIncrement: true });
+          } else {
+            let trans = farhi_rsdb.transaction("batala", "readwrite");
+      
+            store = trans.objectStore("batala");
           }
+          
+          if (store !== null) {
+            store.createIndex('uid', 'id', {multiEntry: true});
+            store.createIndex('name', 'nametokenized', {multiEntry: true});
+            store.createIndex('status', 'status', {multiEntry: true});
+            store.createIndex('renewingstartdate', 'renewingstartdate', {multiEntry: true});
+            store.createIndex('renewingenddate', 'renewingenddate', {multiEntry: true});
+            store.createIndex('phonenumber', 'phonenumber', {multiEntry: true});
+            store.createIndex('worknumber', 'worknumber', {multiEntry: true});
+            store.createIndex('nin', 'nin', {multiEntry: true});
+            store.createIndex('cardnumber', 'cardnumber', {multiEntry: true});
+            store.createIndex('cardissuingdate', 'cardissuingdate', {multiEntry: true});
+            store.createIndex('cardexpiredate', 'cardexpiredate', {multiEntry: true});
+            store.createIndex('cardissuingplace', 'cardissuingplacetokenized', {multiEntry: true});
+            store.createIndex('birthdate', 'birthdate', {multiEntry: true});
+            store.createIndex('birthplace', 'birthplacetokenized', {multiEntry: true});
+            store.createIndex('birthcertificatenumber', 'birthcertificatenumber', {multiEntry: true});
+            store.createIndex('residence', 'residencetokenized', {multiEntry: true});
+          }
+        };
+
+        farhi_rsdb_request.onsuccess = function(e) {
+
+        const farhi_rsdb = e.target.result;
+        
+
+        workbook.SheetNames.forEach(function(sheetName) {
           // Here is your object
           var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-          var json_object = JSON.stringify(XL_row_object);
+          console.log("XLSX File read...");
+            
+            var index = 0;
+            var row = XL_row_object[index];
+            const pros = function() {
+              let itemdata = {
+                name: row["إسم الزبون"],
+                nametokenized: tokenize(row["إسم الزبون"], true),
+                renewingstartdate: row["تاريخ بداية التجديد"],
+                phonenumber: row["رقم الهاتف"],
+                worknumber: row["رقم طلب العمل"],
+                nin: row["الرقم البيومتري لبطاقة التعريف الوطنية | بطاقة مماثلة"],
+                cardnumber: row["رقم البطاقة"],
+                cardissuingdate: row["تاريخ إصدار البطاقة"],
+                cardexpiredate: row["تاريخ نهاية صلحية البطاقة"],
+                cardissuingplace: row["بلدية الإصدار"],
+                cardissuingplacetokenized: tokenize(row["بلدية الإصدار"], true),
+                birthdate: row["تاريخ الميلاد"],
+                birthplace: row["مكان الميلاد"],
+                birthplacetokenized: tokenize(row["مكان الميلاد"], true),
+                birthcertificatenumber: row["رقم شهادة الميلاد"],
+                residence: row["مكان الإقامة"],
+                residencetokenized: tokenize(row["مكان الإقامة"], true),
+                note: ""
+              };
 
-          console.log(json_object);
-          i++;
-        });
+              console.log(itemdata)
+
+              loadingscreen.style.animationName = "fadeInAnimation";
+              loadingscreen.style.animationDuration = "0.25s";
+              loadingscreen.style.animationFillMode = "forwards";
+  
+              loadingtext.innerHTML = index + 1;
+
+              // create a new connection  or new transaction
+              const trans = farhi_rsdb.transaction('batala', 'readwrite');  
+              // Save Names object using variable  
+              const batala = trans.objectStore('batala');
+
+              query = batala.put(itemdata);
+   
+  
+              query.onsuccess = function(event) {
+                index++;
+                if (index >= XL_row_object.length) {
+                  // done
+                  console.log("done")
+                  //location.reload();
+                }
+                row = XL_row_object[index];
+                pros();
+              }
+            };
+
+            pros();
+           });
+
+          }
+    
+     
+     
+        }
       }
-    }
-    input.click();
-  }
 }
-
-
+ 
 const pageItemsLimit = 20;
 
 var pageIndex = -1; // to be calculated later automatically
@@ -1210,8 +1297,8 @@ realfab.onclick = function() {
 var newitemnamechecked = false;
 donefab.onclick = function() {
   // create a new connection  or new transaction
-  const trans = farhi_rsdb.transaction('batala', 'readwrite');  
-  // Save Names object using variable  
+  const trans = farhi_rsdb.transaction('batala', 'readwrite');
+  // Save Names object using variable
   const batala = trans.objectStore('batala');
   
   let checkuser = (localStorage.getItem("checkuser") === undefined || localStorage.getItem("checkuser") === null || localStorage.getItem("checkuser") === "") ? 'true' : localStorage.getItem("checkuser");
