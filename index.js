@@ -1,4 +1,40 @@
 toolbarrestorebutton.onclick = function(e) {
+
+
+  dialogboxtitle.innerHTML = "سيتم مسح قاعدة البيانات الحالية و اعادة بنائها باستخدام ملف الاكسال هل انت متاكد";
+
+  dialogcontainer.style.animationName = "fadeInAnimation";
+  dialogcontainer.style.animationDuration = "0.25s";
+  dialogcontainer.style.animationFillMode = "forwards";
+  
+  dialogboxinput.style.opacity = "0";
+  
+  dialogboxinput.focus();
+  
+  let dismissDialog = function() {
+    dialogcontainer.style.animationName = "fadeOutAnimation";
+    dialogcontainer.style.animationDuration = "0.25s";
+    dialogcontainer.style.animationFillMode = "forwards";
+  }
+  
+  dialogokbutton.onclick = function() {
+    dialogboxinput.style.opacity = "1";
+    dialogboxtitle.innerHTML = "كلمة السر";
+    dialogboxinput.style.height = undefined;
+
+    dialogokbutton.onclick = function() {
+      if (dialogboxinput.value == "farhifarhifarhi") {
+        var req = indexedDB.deleteDatabase("farhi_rsdb");
+
+        location.reload();
+      }
+    }
+  }
+  
+  dialogcancelbutton.onclick = dismissDialog;
+
+
+/*
   if (window.confirm("سيتم مسح قاعدة البيانات الحالية و اعادة بنائها باستخدام ملف الاكسال هل انت متاكد")) {
 
     if (window.prompt("mot de passe : ") != "farhifarhifarhi") return;
@@ -7,6 +43,7 @@ toolbarrestorebutton.onclick = function(e) {
 
     location.reload();
   }
+  */
 }
 
 
@@ -14,7 +51,33 @@ toolbarrestorebutton.onclick = function(e) {
 
 
 resinput.onchange = e => { 
-  if (window.prompt("mot de passe : ") == "farhifarhifarhi") {
+
+
+  dialogboxtitle.innerHTML = "كلمة السر";
+  dialogcontainer.style.animationName = "fadeInAnimation";
+  dialogcontainer.style.animationDuration = "0.25s";
+  dialogcontainer.style.animationFillMode = "forwards";
+  
+  dialogboxinput.style.opacity = "1";
+  
+  dialogboxinput.focus();
+  
+  let dismissDialog = function() {
+    dialogcontainer.style.animationName = "fadeOutAnimation";
+    dialogcontainer.style.animationDuration = "0.25s";
+    dialogcontainer.style.animationFillMode = "forwards";
+  }
+  
+  dialogokbutton.onclick = function() {
+    doit();
+  }
+  
+  dialogcancelbutton.onclick = dismissDialog;
+
+
+
+
+  function doit() {
       console.log("Restoring database...");
       console.log("Reading XLSX file...");
       var file = e.target.files[0];
@@ -2281,6 +2344,7 @@ function whenNewUidItemGetClicked() {
   dialogcontainer.style.animationDuration = "0.25s";
   dialogcontainer.style.animationFillMode = "forwards";
   
+  dialogboxinput.style.opacity = "1";
   dialogboxinput.value = typedNote;
   
   dialogboxinput.focus();
